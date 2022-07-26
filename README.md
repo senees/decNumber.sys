@@ -1,2 +1,3 @@
 # decNumber.sys
-Bindings to decNumber 
+
+Rust bindings to decNumber C library
