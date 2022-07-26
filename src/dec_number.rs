@@ -1,8 +1,10 @@
 //! Declarations of external functions linked from `The decNumber C Library`.
-//! Most of the function descriptions are taken from source code of this library.
+//!
+//! Most of the function descriptions are taken from
+//! the source code of this library.
 //!
 //! For copyright and licensing info see the note below
-//! and the content of ICU-license.html file.
+//! and the content of the **ICU-license.html** file.
 //!
 //! ```text
 //! /* ------------------------------------------------------------------ */
@@ -26,15 +28,16 @@
 use crate::dec::*;
 
 extern "C" {
-  /// `decContextDefault` -- initialize a context structure.
+  /// `decContextDefault` initializes a context structure.
   ///
   /// `context` is the structure to be initialized.
+  ///
   /// `kind` selects the required set of default values, one of:
-  ///  - `DEC_INIT_BASE`       -- select ANSI X3-274 defaults
-  ///  - `DEC_INIT_DECIMAL32`  -- select IEEE 754 defaults, 32-bit
-  ///  - `DEC_INIT_DECIMAL64`  -- select IEEE 754 defaults, 64-bit
-  ///  - `DEC_INIT_DECIMAL128` -- select IEEE 754 defaults, 128-bit
-  ///  - For any other value a valid context is returned, but with
+  ///  - `DEC_INIT_BASE`       selects ANSI X3-274 defaults,
+  ///  - `DEC_INIT_DECIMAL32`  selects IEEE 754 defaults, 32-bit,
+  ///  - `DEC_INIT_DECIMAL64`  selects IEEE 754 defaults, 64-bit,
+  ///  - `DEC_INIT_DECIMAL128` selects IEEE 754 defaults, 128-bit,
+  ///  - for any other value a valid context is returned, but with
   ///    `Invalid_operation` set in the status field.
   ///
   ///  Returns a `context` structure with the appropriate initial values.
