@@ -26,7 +26,9 @@
 //! ```
 
 use crate::bindings::*;
+use libc::c_char;
 
+#[rustfmt::skip]
 extern "C" {
   /// `decContextDefault` initializes a context structure.
   ///
@@ -43,4 +45,27 @@ extern "C" {
   ///  Returns a `context` structure with the appropriate initial values.
   ///
   pub fn decContextDefault(context: *mut DecContext, kind: i32) -> *mut DecContext;
+  /// `decQuadAdd` adds two decQuads.
+  ///
+  /// `result` gets the result of adding `dql` and `dqr`.
+  /// `dql`    is the first decQuad (lhs).
+  /// `dqr`    is the second decQuad (rhs).
+  /// `set`    is the context.
+  /// 
+  ///  Returns `result`.
+  ///
+  pub fn decQuadAdd(result: *mut DecQuad, dql: *const DecQuad, dqr: *const DecQuad, set: *mut DecContext) -> *mut DecQuad;
+  /* ------------------------------------------------------------------ */
+  /* decFloatFromString -- conversion from numeric string               */
+  /*                                                                    */
+  /*  result  is the decFloat format number which gets the result of    */
+  /*          the conversion                                            */
+  /*  *string is the character string which should contain a valid      */
+  /*          number (which may be a special value), \0-terminated      */
+  /*          If there are too many significant digits in the           */
+  /*          coefficient it will be rounded.                           */
+  /*  set     is the context                                            */
+  /*  returns result                                                    */
+  pub fn decQuadFromString(result: *mut DecQuad, string: *const c_char, set: *mut DecContext) -> *mut DecQuad;
+  pub fn decQuadToString(arg1: *const DecQuad, arg2: *mut c_char) -> *mut c_char;
 }
