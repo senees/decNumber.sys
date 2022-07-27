@@ -28,42 +28,10 @@ use libc::{c_char, c_int, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
-  /// `decQuadAdd` adds two decQuads.
-  ///
-  /// `result` gets the result of adding `dql` and `dqr`.
-  /// 
-  /// `dql`    is the first decQuad (lhs).
-  /// 
-  /// `dqr`    is the second decQuad (rhs).
-  /// 
-  /// `set`    is the context.
-  /// 
-  ///  Returns `result`.
-  ///
-  pub fn decQuadAdd(result: *mut DecQuad, dql: *const DecQuad, dqr: *const DecQuad, set: *mut DecContext) -> *mut DecQuad;
-  
-  ///
-  pub fn decQuadFromInt32(arg1: *mut DecQuad, arg2: c_int) -> *mut DecQuad;
-  
-  ///
-  pub fn decQuadFromUInt32(arg1: *mut DecQuad, arg2: c_uint) -> *mut DecQuad;
-  
-  /// `decQuadFromString` converts decQuad from numeric string.
-  ///
-  /// `result` is the decQuad format number which gets the result of the conversion.
-  /// 
-  /// `string` is the character string which should contain a valid number (which may be a special value),
-  ///          \0-terminated. If there are too many significant digits in the coefficient it will be rounded.
-  /// 
-  /// `set`    is the context.
-  /// 
-  ///  Returns `result`.
-  /// 
-  pub fn decQuadFromString(result: *mut DecQuad, string: *const c_char, set: *mut DecContext) -> *mut DecQuad;
-  
-  ///
-  pub fn decQuadToString(arg1: *const DecQuad, arg2: *mut c_char) -> *mut c_char;
-
-  ///
-  pub fn decQuadZero(result: *mut DecQuad);
+  pub fn decQuadAdd(res: *mut DecQuad, lhs: *const DecQuad, rhs: *const DecQuad, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decQuadFromInt32(dq: *mut DecQuad, n: c_int) -> *mut DecQuad;
+  pub fn decQuadFromUInt32(dq: *mut DecQuad, n: c_uint) -> *mut DecQuad;
+  pub fn decQuadFromString(res: *mut DecQuad, s: *const c_char, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decQuadToString(dq: *const DecQuad, s: *mut c_char) -> *mut c_char;
+  pub fn decQuadZero(res: *mut DecQuad);
 }

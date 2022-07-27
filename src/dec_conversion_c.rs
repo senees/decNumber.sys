@@ -28,9 +28,6 @@ use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
-  ///
-  pub fn decimal128ToNumber(arg1: *const DecQuad, arg2: *mut DecNumber) -> *mut DecNumber;
-
-  ///
-  pub fn decimal128FromNumber(arg1: *mut DecQuad, arg2: *const DecNumber, arg3: *mut DecContext) -> *mut DecQuad;
+  pub fn decimal128ToNumber(dq: *const DecQuad, dn: *mut DecNumber) -> *mut DecNumber;
+  pub fn decimal128FromNumber(dq: *mut DecQuad, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecQuad;
 }

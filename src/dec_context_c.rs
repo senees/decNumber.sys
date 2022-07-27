@@ -26,18 +26,5 @@ use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
-  /// `decContextDefault` initializes a context structure.
-  ///
-  /// `context` is the structure to be initialized.
-  ///
-  /// `kind` selects the required set of default values, one of:
-  ///  - `DEC_INIT_BASE`       selects ANSI X3-274 defaults,
-  ///  - `DEC_INIT_DECIMAL32`  selects IEEE 754 defaults, 32-bit,
-  ///  - `DEC_INIT_DECIMAL64`  selects IEEE 754 defaults, 64-bit,
-  ///  - `DEC_INIT_DECIMAL128` selects IEEE 754 defaults, 128-bit,
-  /// For any other value a valid context is returned, but with `Invalid_operation` set in the status field.
-  ///
-  ///  Returns a `context` structure with the appropriate initial values.
-  ///
-  pub fn decContextDefault(context: *mut DecContext, kind: i32) -> *mut DecContext;
+  pub fn decContextDefault(res: *mut DecContext, kind: i32) -> *mut DecContext;
 }

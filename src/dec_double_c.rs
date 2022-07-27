@@ -22,11 +22,11 @@
 //! /// ------------------------------------------------------------------ */
 //! ```
 
-use crate::dec_single::DecSingle;
+use crate::dec_double::DecDouble;
 use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
-  pub fn decSingleAdd(res: *mut DecSingle, lhs: *const DecSingle, rhs: *const DecSingle, ctx: *mut DecContext) -> *mut DecSingle;
-  pub fn decSingleZero(res: *mut DecSingle);
+  pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, ctx: *mut DecContext) -> *mut DecDouble;
+  pub fn decDoubleZero(res: *mut DecDouble);
 }
