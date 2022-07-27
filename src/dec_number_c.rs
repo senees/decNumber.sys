@@ -28,4 +28,5 @@ use crate::DecContext;
 #[rustfmt::skip]
 extern "C" {
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberZero(res: *mut DecNumber);
 }

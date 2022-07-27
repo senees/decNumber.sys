@@ -18,6 +18,7 @@ mod dec_single_c;
 mod decimal128;
 mod decimal32;
 mod decimal64;
+mod decimal_number;
 
 pub use dec_context::{dec_context_default, ContextKind, DecContext};
 pub use dec_conversion::{
