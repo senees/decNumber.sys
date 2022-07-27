@@ -7,11 +7,7 @@ tasks:
   all:
     desc: Runs all building steps
     cmds:
-      - cmd: cargo fmt
-      - cmd: cargo clean
-      - cmd: cargo build
-      - cmd: cargo clippy
-      - cmd: cargo test
+      - cmd: cargo fmt && cargo clean && cargo build && cargo clippy -- -D warnings && cargo test && echo "SUCCESS"
 
   build:
     desc: Builds the library in debug mode

@@ -2,7 +2,7 @@
 
 extern crate libc;
 
-mod dec;
-mod dec_number;
+mod bindings;
+mod dec_number_c;
 
-pub use dec::{dec_context_default, ContextKind, DecContext};
+pub use bindings::{dec_context_default, ContextKind, DecContext};

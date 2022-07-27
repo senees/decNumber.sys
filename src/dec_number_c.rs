@@ -25,7 +25,7 @@
 //! /* ------------------------------------------------------------------ */
 //! ```
 
-use crate::dec::*;
+use crate::bindings::*;
 
 extern "C" {
   /// `decContextDefault` initializes a context structure.

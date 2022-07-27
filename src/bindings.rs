@@ -1,6 +1,6 @@
 //! Rust bindings to functions and structures from `The decNumber C Library`.  
 
-use crate::dec_number::*;
+use crate::dec_number_c::*;
 
 /// Convenient alias for [i32] numbers.
 pub type Int = i32;
