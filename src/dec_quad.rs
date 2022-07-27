@@ -7,6 +7,7 @@ use crate::dec_number_c::*;
 use crate::dec_quad_c::*;
 use libc::c_char;
 use std::ffi::{CStr, CString};
+use std::fmt::Debug;
 
 /// Length in bytes of [DecQuad] union.
 const DEC_QUAD_BYTES: usize = 16;
@@ -39,6 +40,22 @@ impl Default for DecQuad {
   /// The default value for [DecQuad] is positive zero.
   fn default() -> Self {
     DEC_QUAD_POSITIVE_ZERO
+  }
+}
+
+impl Debug for DecQuad {
+  /// Converts [DecQuad] to a string in the form of hexadecimal bytes separated with spaces.
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(
+      f,
+      "[{}]",
+      (0..16)
+        .into_iter()
+        .rev()
+        .map(|i| format!(" {:02X}", unsafe { self.bytes[i] }))
+        .collect::<String>()
+        .trim_start()
+    )
   }
 }
 

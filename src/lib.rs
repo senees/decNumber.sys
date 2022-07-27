@@ -30,3 +30,4 @@ pub use dec_quad::{
   dec_quad_zero,
 };
 pub use dec_single::{dec_single_from_string, dec_single_rescale, dec_single_to_string, dec_single_zero};
+pub use decimal128::Decimal128;
