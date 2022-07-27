@@ -22,11 +22,25 @@
 //! /// ------------------------------------------------------------------ */
 //! ```
 
-use crate::dec_number::DecNumber;
+use crate::dec_single::DecSingle;
 use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
+  /// `decSingleAdd` adds two decSingle.
   ///
-  pub fn decNumberRescale(arg1: *mut DecNumber, arg2: *const DecNumber, arg3: *const DecNumber, arg4: *mut DecContext) -> *mut DecNumber;
+  /// `result` gets the result of adding `sql` and `sqr`.
+  ///
+  /// `sql`    is the first decQuad (lhs).
+  ///
+  /// `sqr`    is the second decQuad (rhs).
+  ///
+  /// `set`    is the context.
+  ///
+  ///  Returns `result`.
+  ///
+  pub fn decSingleAdd(result: *mut DecSingle, sql: *const DecSingle, sqr: *const DecSingle, set: *mut DecContext) -> *mut DecSingle;
+  
+  ///
+  pub fn decSingleZero(result: *mut DecSingle);
 }

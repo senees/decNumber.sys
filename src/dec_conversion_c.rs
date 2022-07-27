@@ -23,10 +23,14 @@
 //! ```
 
 use crate::dec_number::DecNumber;
+use crate::dec_quad::*;
 use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
   ///
-  pub fn decNumberRescale(arg1: *mut DecNumber, arg2: *const DecNumber, arg3: *const DecNumber, arg4: *mut DecContext) -> *mut DecNumber;
+  pub fn decimal128ToNumber(arg1: *const DecQuad, arg2: *mut DecNumber) -> *mut DecNumber;
+
+  ///
+  pub fn decimal128FromNumber(arg1: *mut DecQuad, arg2: *const DecNumber, arg3: *mut DecContext) -> *mut DecQuad;
 }
