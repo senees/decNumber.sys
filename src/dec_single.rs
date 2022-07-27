@@ -2,19 +2,18 @@
 
 use crate::dec_context::DecContext;
 use crate::dec_single_c::*;
-use lazy_static::lazy_static;
-
-lazy_static! {
-  /// Convenient constant for [DecSingle] equal to zero.
-  pub static ref DEC_SINGLE_ZERO: DecSingle = dec_single_get_zero();
-}
 
 /// Length in bytes of [DecSingle] union.
 const DEC_SINGLE_BYTES: usize = 4;
 
+/// Convenient constant for [DecQuad] equal to positive zero.
+#[rustfmt::skip]
+pub(crate) const DEC_SINGLE_POSITIVE_ZERO: DecSingle = DecSingle {
+  bytes: [0x00, 0x00, 0x50, 0x22],
+};
+
 /// The `decSingle` 32-bit type, accessible by all sizes.
 #[repr(C)]
-#[derive(Copy, Clone)]
 pub union DecSingle {
   pub bytes: [u8; DEC_SINGLE_BYTES],
   pub shorts: [u16; DEC_SINGLE_BYTES / 2],
@@ -24,7 +23,7 @@ pub union DecSingle {
 impl Default for DecSingle {
   /// The default value for [DecSingle] is positive zero.
   fn default() -> Self {
-    *DEC_SINGLE_ZERO
+    DEC_SINGLE_POSITIVE_ZERO
   }
 }
 
@@ -42,11 +41,4 @@ pub fn dec_single_zero(ds: &mut DecSingle) {
   unsafe {
     decSingleZero(ds);
   }
-}
-
-/// Returns [DecSingle] set to the unsigned integer zero.
-pub fn dec_single_get_zero() -> DecSingle {
-  let mut result = DecSingle::default();
-  dec_single_zero(&mut result);
-  result
 }

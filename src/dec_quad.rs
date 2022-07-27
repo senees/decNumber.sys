@@ -101,3 +101,10 @@ pub fn dec_quad_to_string(dq: &DecQuad) -> String {
       .into_owned()
   }
 }
+
+/// Sets [DecQuad] to the unsigned integer zero.
+pub fn dec_quad_zero(ds: &mut DecQuad) {
+  unsafe {
+    decQuadZero(ds);
+  }
+}

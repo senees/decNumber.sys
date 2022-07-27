@@ -11,5 +11,4 @@ edition = "2021"
 links = "decNumber64"
 
 [dependencies]
-lazy_static = "1.4.0"
 libc = "0.2.126"

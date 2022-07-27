@@ -63,4 +63,7 @@ extern "C" {
   
   ///
   pub fn decQuadToString(arg1: *const DecQuad, arg2: *mut c_char) -> *mut c_char;
+
+  ///
+  pub fn decQuadZero(result: *mut DecQuad);
 }
