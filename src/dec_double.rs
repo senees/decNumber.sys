@@ -8,8 +8,11 @@ const DEC_DOUBLE_BYTES: usize = 8;
 
 /// Convenient constant for [DecQuad] equal to positive zero.
 #[rustfmt::skip]
-pub(crate) const DEC_DOUBLE_POSITIVE_ZERO: DecDouble = DecDouble {
-  bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x22],
+pub(crate) const DEC_DOUBLE_POSITIVE_ZERO: DecDouble = {
+  #[cfg(target_endian = "little")]
+  { DecDouble { bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecDouble { bytes: [0x22, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
 };
 
 /// The `DecDouble` 32-bit type, accessible by all sizes.

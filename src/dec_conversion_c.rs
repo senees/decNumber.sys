@@ -22,12 +22,18 @@
 //! /// ------------------------------------------------------------------ */
 //! ```
 
+use crate::dec_double::DecDouble;
 use crate::dec_number::DecNumber;
-use crate::dec_quad::*;
+use crate::dec_quad::DecQuad;
+use crate::dec_single::DecSingle;
 use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
-  pub fn decimal128ToNumber(dq: *const DecQuad, dn: *mut DecNumber) -> *mut DecNumber;
-  pub fn decimal128FromNumber(dq: *mut DecQuad, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decimal32ToNumber(d: *const DecSingle, n: *mut DecNumber) -> *mut DecNumber;
+  pub fn decimal32FromNumber(d: *mut DecSingle, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecSingle;
+  pub fn decimal64ToNumber(d: *const DecDouble, n: *mut DecNumber) -> *mut DecNumber;
+  pub fn decimal64FromNumber(d: *mut DecDouble, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecDouble;
+  pub fn decimal128ToNumber(d: *const DecQuad, n: *mut DecNumber) -> *mut DecNumber;
+  pub fn decimal128FromNumber(d: *mut DecQuad, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecQuad;
 }

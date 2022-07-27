@@ -24,9 +24,13 @@
 
 use crate::dec_single::DecSingle;
 use crate::DecContext;
+use libc::c_char;
 
 #[rustfmt::skip]
 extern "C" {
-  pub fn decSingleAdd(res: *mut DecSingle, lhs: *const DecSingle, rhs: *const DecSingle, ctx: *mut DecContext) -> *mut DecSingle;
+  pub fn decSingleFromString(res: *mut DecSingle, s: *const c_char, ctx: *mut DecContext) -> *mut DecSingle;
+  //pub fn decSingleFromWider(res: *mut DecSingle, ds: *const DecDouble, ctx: *mut DecContext) -> *mut DecSingle;
+  pub fn decSingleToString(dq: *const DecSingle, s: *mut c_char) -> *mut c_char;
+  //pub fn decSingleToWider(res: *const DecSingle, ds: *mut DecDouble, ctx: *mut DecContext) -> *mut DecDouble;
   pub fn decSingleZero(res: *mut DecSingle);
 }

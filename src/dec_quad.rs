@@ -19,8 +19,11 @@ const DEC_QUAD_STRING_BUFFER: [c_char; DEC_QUAD_STRING] = [0; DEC_QUAD_STRING];
 
 /// Convenient constant for [DecQuad] equal to positive zero.
 #[rustfmt::skip]
-pub(crate) const DEC_QUAD_POSITIVE_ZERO: DecQuad = DecQuad {
-  bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22],
+pub(crate) const DEC_QUAD_POSITIVE_ZERO: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
 };
 
 /// The `decQuad` decimal 128-bit type, accessible by all sizes.
@@ -66,7 +69,7 @@ pub fn dec_quad_from_u32(n: u32) -> DecQuad {
   result
 }
 
-/// Adds two [DecQuads](DecQuad).
+/// Converts [DecQuad] from string.
 pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
   let mut result = DecQuad::default();
@@ -78,7 +81,7 @@ pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
 
 ///
 pub fn dec_quad_rescale(q1: &DecQuad, q2: &DecQuad, ctx: &mut DecContext) -> DecQuad {
-  let mut qr = DecQuad::default();
+  let mut res = DecQuad::default();
   let mut n1 = DecNumber::default();
   let mut n2 = DecNumber::default();
   let mut nr = DecNumber::default();
@@ -86,16 +89,16 @@ pub fn dec_quad_rescale(q1: &DecQuad, q2: &DecQuad, ctx: &mut DecContext) -> Dec
     decimal128ToNumber(q1, &mut n1);
     decimal128ToNumber(q2, &mut n2);
     decNumberRescale(&mut nr, &n1, &n2, ctx);
-    decimal128FromNumber(&mut qr, &nr, ctx);
+    decimal128FromNumber(&mut res, &nr, ctx);
   }
-  qr
+  res
 }
 
 /// Converts [DecQuad] into [String].
-pub fn dec_quad_to_string(dq: &DecQuad) -> String {
+pub fn dec_quad_to_string(d: &DecQuad) -> String {
   unsafe {
     let mut buf = DEC_QUAD_STRING_BUFFER;
-    decQuadToString(dq, buf.as_mut_ptr() as *mut c_char);
+    decQuadToString(d, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
