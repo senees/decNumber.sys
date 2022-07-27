@@ -98,6 +98,19 @@ impl DecContext {
 }
 
 //--------------------------------------------------------------------------------------------------
+// DecNumber
+//--------------------------------------------------------------------------------------------------
+
+#[repr(C)]
+#[derive(Default)]
+pub struct DecNumber {
+  digits: i32,
+  exponent: i32,
+  bits: u8,
+  lsu: [u16; 12],
+}
+
+//--------------------------------------------------------------------------------------------------
 // DecQuad
 //--------------------------------------------------------------------------------------------------
 
@@ -151,6 +164,24 @@ pub fn dec_quad_add(dql: &DecQuad, dqr: &DecQuad, ctx: &mut DecContext) -> DecQu
   result
 }
 
+///
+pub fn dec_quad_from_i32(n: i32) -> DecQuad {
+  let mut result = DecQuad::default();
+  unsafe {
+    decQuadFromInt32(&mut result, n);
+  }
+  result
+}
+
+///
+pub fn dec_quad_from_u32(n: u32) -> DecQuad {
+  let mut result = DecQuad::default();
+  unsafe {
+    decQuadFromUInt32(&mut result, n);
+  }
+  result
+}
+
 /// Adds two [DecQuads](DecQuad).
 pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
@@ -159,6 +190,21 @@ pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
     decQuadFromString(&mut result, c_s.as_ptr(), ctx);
   }
   result
+}
+
+///
+pub fn dec_quad_rescale(q1: &DecQuad, q2: &DecQuad, ctx: &mut DecContext) -> DecQuad {
+  let mut qr = DecQuad::default();
+  let mut n1 = DecNumber::default();
+  let mut n2 = DecNumber::default();
+  let mut nr = DecNumber::default();
+  unsafe {
+    decimal128ToNumber(q1, &mut n1);
+    decimal128ToNumber(q2, &mut n2);
+    decNumberRescale(&mut nr, &n1, &n2, ctx);
+    decimal128FromNumber(&mut qr, &nr, ctx);
+  }
+  qr
 }
 
 /// Converts [DecQuad] into [String].

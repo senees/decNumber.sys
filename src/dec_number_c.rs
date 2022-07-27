@@ -26,10 +26,17 @@
 //! ```
 
 use crate::bindings::*;
-use libc::c_char;
+use libc::{c_char, c_int, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
+  ///
+  pub fn decimal128ToNumber(arg1: *const DecQuad, arg2: *mut DecNumber) -> *mut DecNumber;
+  ///
+  pub fn decimal128FromNumber(arg1: *mut DecQuad, arg2: *const DecNumber, arg3: *mut DecContext) -> *mut DecQuad;
+
+  pub fn decNumberRescale(arg1: *mut DecNumber, arg2: *const DecNumber, arg3: *const DecNumber, arg4: *mut DecContext) -> *mut DecNumber;
+  
   /// `decContextDefault` initializes a context structure.
   ///
   /// `context` is the structure to be initialized.
@@ -55,6 +62,10 @@ extern "C" {
   ///  Returns `result`.
   ///
   pub fn decQuadAdd(result: *mut DecQuad, dql: *const DecQuad, dqr: *const DecQuad, set: *mut DecContext) -> *mut DecQuad;
+  ///
+  pub fn decQuadFromInt32(arg1: *mut DecQuad, arg2: c_int) -> *mut DecQuad;
+  ///
+  pub fn decQuadFromUInt32(arg1: *mut DecQuad, arg2: c_uint) -> *mut DecQuad;
   /* ------------------------------------------------------------------ */
   /* decFloatFromString -- conversion from numeric string               */
   /*                                                                    */
@@ -67,5 +78,6 @@ extern "C" {
   /*  set     is the context                                            */
   /*  returns result                                                    */
   pub fn decQuadFromString(result: *mut DecQuad, string: *const c_char, set: *mut DecContext) -> *mut DecQuad;
+  ///
   pub fn decQuadToString(arg1: *const DecQuad, arg2: *mut c_char) -> *mut c_char;
 }

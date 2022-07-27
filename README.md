@@ -2,6 +2,8 @@
 
 Rust bindings to **The decNumber C Library**
 
+**WORK IN PROGRESS**
+
 ## Installing The decNumber C library 
 
 ### Fedora 36
