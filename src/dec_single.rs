@@ -1,9 +1,6 @@
 //!
 
 use crate::dec_context::DecContext;
-use crate::dec_conversion_c::{decimal32FromNumber, decimal32ToNumber};
-use crate::dec_number::DecNumber;
-use crate::dec_number_c::decNumberRescale;
 use crate::dec_single_c::*;
 use libc::c_char;
 use std::ffi::{CStr, CString};
@@ -83,21 +80,6 @@ pub fn dec_single_from_string(s: &str, ctx: &mut DecContext) -> DecSingle {
     decSingleFromString(&mut result, c_s.as_ptr(), ctx);
   }
   result
-}
-
-///
-pub fn dec_single_rescale(q1: &DecSingle, q2: &DecSingle, ctx: &mut DecContext) -> DecSingle {
-  let mut res = DecSingle::default();
-  let mut n1 = DecNumber::default();
-  let mut n2 = DecNumber::default();
-  let mut nr = DecNumber::default();
-  unsafe {
-    decimal32ToNumber(q1, &mut n1);
-    decimal32ToNumber(q2, &mut n2);
-    decNumberRescale(&mut nr, &n1, &n2, ctx);
-    decimal32FromNumber(&mut res, &nr, ctx);
-  }
-  res
 }
 
 /// Converts [DecSingle] into [String].

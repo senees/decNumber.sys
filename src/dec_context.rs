@@ -18,10 +18,14 @@ const DEC_INIT_DECIMAL128: Int = 128;
 /// Convenient enumeration of context initialization constants.
 #[repr(i32)]
 pub enum ContextKind {
-  Base = DEC_INIT_BASE,
-  Decimal32 = DEC_INIT_DECIMAL32,
-  Decimal64 = DEC_INIT_DECIMAL64,
-  Decimal128 = DEC_INIT_DECIMAL128,
+  /// ANSI X3-274 defaults with maximum number of digits.
+  Base(i32),
+  /// IEEE 754 defaults, 32-bit.
+  Decimal32,
+  /// IEEE 754 defaults, 64-bit.
+  Decimal64,
+  /// IEEE 754 defaults, 128-bit.
+  Decimal128,
 }
 
 /// Decimal context.
@@ -80,7 +84,21 @@ impl DecContext {
 pub fn dec_context_default(kind: ContextKind) -> DecContext {
   let mut context = DecContext::default();
   unsafe {
-    decContextDefault(&mut context, kind as Int);
+    match kind {
+      ContextKind::Base(digits) => {
+        decContextDefault(&mut context, DEC_INIT_BASE);
+        context.digits = digits;
+      }
+      ContextKind::Decimal32 => {
+        decContextDefault(&mut context, DEC_INIT_DECIMAL32);
+      }
+      ContextKind::Decimal64 => {
+        decContextDefault(&mut context, DEC_INIT_DECIMAL64);
+      }
+      ContextKind::Decimal128 => {
+        decContextDefault(&mut context, DEC_INIT_DECIMAL128);
+      }
+    }
   }
   context
 }

@@ -24,9 +24,11 @@
 
 use crate::dec_number::DecNumber;
 use crate::DecContext;
+use libc::c_char;
 
 #[rustfmt::skip]
 extern "C" {
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberToString(dq: *const DecNumber, s: *mut c_char) -> *mut c_char;
   pub fn decNumberZero(res: *mut DecNumber);
 }

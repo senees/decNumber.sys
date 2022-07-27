@@ -30,5 +30,6 @@ pub use dec_quad::{
   dec_quad_add, dec_quad_from_i32, dec_quad_from_string, dec_quad_from_u32, dec_quad_rescale, dec_quad_to_string,
   dec_quad_zero,
 };
-pub use dec_single::{dec_single_from_string, dec_single_rescale, dec_single_to_string, dec_single_zero};
+pub use dec_single::{dec_single_from_string, dec_single_to_string, dec_single_zero};
 pub use decimal128::Decimal128;
+pub use decimal_number::DecimalNumber;

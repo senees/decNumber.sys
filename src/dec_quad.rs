@@ -99,9 +99,9 @@ pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
 ///
 pub fn dec_quad_rescale(q1: &DecQuad, q2: &DecQuad, ctx: &mut DecContext) -> DecQuad {
   let mut res = DecQuad::default();
-  let mut n1 = DecNumber::default();
-  let mut n2 = DecNumber::default();
-  let mut nr = DecNumber::default();
+  let mut n1 = DecNumber::new(34);
+  let mut n2 = DecNumber::new(34);
+  let mut nr = DecNumber::new(34);
   unsafe {
     decimal128ToNumber(q1, &mut n1);
     decimal128ToNumber(q2, &mut n2);

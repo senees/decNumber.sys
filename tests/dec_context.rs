@@ -2,8 +2,8 @@ use dec_number_sys::{dec_context_default, ContextKind};
 
 #[test]
 fn dec_context_decimal_base() {
-  let context = dec_context_default(ContextKind::Base);
-  assert_eq!(9, *context.digits());
+  let context = dec_context_default(ContextKind::Base(34));
+  assert_eq!(34, *context.digits());
   assert_eq!(999999999, *context.emax());
   assert_eq!(-999999999, *context.emin());
   assert_eq!(2, *context.round());
