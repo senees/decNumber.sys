@@ -26,7 +26,10 @@ pub use dec_conversion::{
   decimal64_to_number,
 };
 pub use dec_double::{dec_double_add, dec_double_zero};
-pub use dec_number::{dec_number_add, dec_number_from_string, dec_number_to_string, dec_number_zero};
+pub use dec_number::{
+  dec_number_add, dec_number_divide, dec_number_from_string, dec_number_multiply, dec_number_subtract,
+  dec_number_to_string, dec_number_zero,
+};
 pub use dec_quad::{
   dec_quad_add, dec_quad_from_i32, dec_quad_from_string, dec_quad_from_u32, dec_quad_rescale, dec_quad_to_string,
   dec_quad_zero,

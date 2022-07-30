@@ -87,6 +87,15 @@ pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) ->
   res
 }
 
+///
+pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberDivide(&mut res, dn1, dn2, ctx);
+  }
+  res
+}
+
 /// Converts [DecNumber]  from string.
 pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
@@ -98,10 +107,28 @@ pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
 }
 
 ///
+pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberMultiply(&mut res, dn1, dn2, ctx);
+  }
+  res
+}
+
+///
 pub fn dec_number_reduce(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
     decNumberReduce(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
+pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberSubtract(&mut res, dn1, dn2, ctx);
   }
   res
 }

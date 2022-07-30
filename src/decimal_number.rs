@@ -72,3 +72,63 @@ impl std::ops::AddAssign<DecimalNumber> for DecimalNumber {
     self.0 = dec_number_reduce(&dec_number_add(&self.0, &rhs.0, &mut ctx), &mut ctx);
   }
 }
+
+impl std::ops::Sub<DecimalNumber> for DecimalNumber {
+  type Output = Self;
+  ///
+  fn sub(self, rhs: Self) -> Self::Output {
+    let mut ctx = Self::default_context();
+    Self(dec_number_reduce(
+      &dec_number_subtract(&self.0, &rhs.0, &mut ctx),
+      &mut ctx,
+    ))
+  }
+}
+
+impl std::ops::SubAssign<DecimalNumber> for DecimalNumber {
+  ///
+  fn sub_assign(&mut self, rhs: Self) {
+    let mut ctx = Self::default_context();
+    self.0 = dec_number_reduce(&dec_number_subtract(&self.0, &rhs.0, &mut ctx), &mut ctx);
+  }
+}
+
+impl std::ops::Mul<DecimalNumber> for DecimalNumber {
+  type Output = Self;
+  ///
+  fn mul(self, rhs: Self) -> Self::Output {
+    let mut ctx = Self::default_context();
+    Self(dec_number_reduce(
+      &dec_number_multiply(&self.0, &rhs.0, &mut ctx),
+      &mut ctx,
+    ))
+  }
+}
+
+impl std::ops::MulAssign<DecimalNumber> for DecimalNumber {
+  ///
+  fn mul_assign(&mut self, rhs: Self) {
+    let mut ctx = Self::default_context();
+    self.0 = dec_number_reduce(&dec_number_multiply(&self.0, &rhs.0, &mut ctx), &mut ctx);
+  }
+}
+
+impl std::ops::Div<DecimalNumber> for DecimalNumber {
+  type Output = Self;
+  ///
+  fn div(self, rhs: Self) -> Self::Output {
+    let mut ctx = Self::default_context();
+    Self(dec_number_reduce(
+      &dec_number_divide(&self.0, &rhs.0, &mut ctx),
+      &mut ctx,
+    ))
+  }
+}
+
+impl std::ops::DivAssign<DecimalNumber> for DecimalNumber {
+  ///
+  fn div_assign(&mut self, rhs: Self) {
+    let mut ctx = Self::default_context();
+    self.0 = dec_number_reduce(&dec_number_divide(&self.0, &rhs.0, &mut ctx), &mut ctx);
+  }
+}
