@@ -161,6 +161,8 @@ impl PartialEq<DecimalNumber> for DecimalNumber {
   }
 }
 
+impl Eq for DecimalNumber {}
+
 impl PartialOrd<DecimalNumber> for DecimalNumber {
   ///
   fn partial_cmp(&self, rhs: &Self) -> Option<Ordering> {
@@ -173,5 +175,19 @@ impl PartialOrd<DecimalNumber> for DecimalNumber {
       return Some(Ordering::Less);
     }
     Some(Ordering::Greater)
+  }
+}
+
+impl Ord for DecimalNumber {
+  fn cmp(&self, rhs: &Self) -> Ordering {
+    let mut ctx = Self::default_context();
+    let flag = dec_number_compare(&self.0, &rhs.0, &mut ctx);
+    if dec_number_is_zero(&flag) {
+      return Ordering::Equal;
+    }
+    if dec_number_is_negative(&flag) {
+      return Ordering::Less;
+    }
+    Ordering::Greater
   }
 }
