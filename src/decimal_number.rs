@@ -1,6 +1,6 @@
 use crate::dec_context::*;
 use crate::dec_number::*;
-use crate::ContextKind::Base;
+use crate::ContextKind::Decimal128;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -32,7 +32,7 @@ impl From<&str> for DecimalNumber {
 impl DecimalNumber {
   ///
   fn default_context() -> DecContext {
-    dec_context_default(Base(34))
+    dec_context_default(Decimal128)
   }
   ///
   pub fn zero() -> Self {
@@ -53,6 +53,16 @@ impl DecimalNumber {
   ///
   pub fn one_thousand() -> Self {
     Self(DecNumber::one_thousand())
+  }
+  ///
+  pub fn ln(&self) -> DecimalNumber {
+    let mut ctx = Self::default_context();
+    Self(dec_number_ln(&self.0, &mut ctx))
+  }
+  ///
+  pub fn exp(&self) -> DecimalNumber {
+    let mut ctx = Self::default_context();
+    Self(dec_number_exp(&self.0, &mut ctx))
   }
 }
 

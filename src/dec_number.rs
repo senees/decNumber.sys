@@ -79,6 +79,24 @@ impl DecNumber {
 }
 
 ///
+pub fn dec_number_ln(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberLn(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
+pub fn dec_number_exp(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberExp(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
 pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {

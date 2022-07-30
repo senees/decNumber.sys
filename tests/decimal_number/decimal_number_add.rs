@@ -29,3 +29,10 @@ fn decimal_number_add_0004() {
   dn1 += dn2;
   assert_eq!("0.333111", dn1.to_string());
 }
+
+#[test]
+fn decimal_number_add_0005() {
+  let dn1 = DecimalNumber::from("0.1000000000");
+  let dn2 = DecimalNumber::from("0.20000");
+  assert_eq!("0.3", (dn1 + dn2).to_string());
+}
