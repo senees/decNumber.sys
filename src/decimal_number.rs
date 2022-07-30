@@ -64,3 +64,11 @@ impl std::ops::Add<DecimalNumber> for DecimalNumber {
     Self(dec_number_reduce(&dec_number_add(&self.0, &rhs.0, &mut ctx), &mut ctx))
   }
 }
+
+impl std::ops::AddAssign<DecimalNumber> for DecimalNumber {
+  ///
+  fn add_assign(&mut self, rhs: Self) {
+    let mut ctx = Self::default_context();
+    self.0 = dec_number_reduce(&dec_number_add(&self.0, &rhs.0, &mut ctx), &mut ctx);
+  }
+}
