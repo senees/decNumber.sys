@@ -5,6 +5,17 @@ use crate::DecContext;
 use libc::c_char;
 use std::ffi::{CStr, CString};
 
+/// Sign; 1=negative, 0=positive or zero.
+const DEC_NEG: u8 = 0x80;
+/// 1 = Infinity
+const DEC_INF: u8 = 0x40;
+/// 1 = NaN
+const DEC_NAN: u8 = 0x20;
+/// 1 = sNaN
+const DEC_SNAN: u8 = 0x10;
+/// Any special value.
+const DEC_SPECIAL: u8 = DEC_INF | DEC_NAN | DEC_SNAN;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct DecNumber {
@@ -88,6 +99,15 @@ pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) ->
 }
 
 ///
+pub fn dec_number_compare(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberCompare(&mut res, dn1, dn2, ctx);
+  }
+  res
+}
+
+///
 pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -134,6 +154,11 @@ pub fn dec_number_from_u32(n: u32) -> DecNumber {
 }
 
 ///
+pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
+  dn.lsu[0] == 0 && dn.digits == 1 && (dn.bits & DEC_SPECIAL == 0)
+}
+
+///
 pub fn dec_number_ln(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -158,6 +183,11 @@ pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContex
     decNumberMultiply(&mut res, dn1, dn2, ctx);
   }
   res
+}
+
+///
+pub fn dec_number_is_negative(dn: &DecNumber) -> bool {
+  dn.bits & DEC_NEG != 0
 }
 
 ///

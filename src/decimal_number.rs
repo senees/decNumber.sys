@@ -1,6 +1,7 @@
 use crate::dec_context::*;
 use crate::dec_number::*;
 use crate::ContextKind::Decimal128;
+use std::cmp::Ordering;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -149,5 +150,28 @@ impl std::ops::DivAssign<DecimalNumber> for DecimalNumber {
   fn div_assign(&mut self, rhs: Self) {
     let mut ctx = Self::default_context();
     self.0 = dec_number_reduce(&dec_number_divide(&self.0, &rhs.0, &mut ctx), &mut ctx);
+  }
+}
+
+impl PartialEq<DecimalNumber> for DecimalNumber {
+  ///
+  fn eq(&self, rhs: &Self) -> bool {
+    let mut ctx = Self::default_context();
+    dec_number_is_zero(&dec_number_compare(&self.0, &rhs.0, &mut ctx))
+  }
+}
+
+impl PartialOrd<DecimalNumber> for DecimalNumber {
+  ///
+  fn partial_cmp(&self, rhs: &Self) -> Option<Ordering> {
+    let mut ctx = Self::default_context();
+    let flag = dec_number_compare(&self.0, &rhs.0, &mut ctx);
+    if dec_number_is_zero(&flag) {
+      return Some(Ordering::Equal);
+    }
+    if dec_number_is_negative(&flag) {
+      return Some(Ordering::Less);
+    }
+    Some(Ordering::Greater)
   }
 }

@@ -30,16 +30,17 @@ use libc::{c_char, c_int, c_uint};
 extern "C" {
   pub fn decNumberAdd(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberDivide(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberCompare(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberExp(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
-  pub fn decNumberFromInt32(dq: *mut DecNumber, n: c_int) -> *mut DecNumber;
+  pub fn decNumberFromInt32(res: *mut DecNumber, n: c_int) -> *mut DecNumber;
   pub fn decNumberFromString(res: *mut DecNumber, s: *const c_char, ctx: *mut DecContext) -> *mut DecNumber;
-  pub fn decNumberFromUInt32(dq: *mut DecNumber, n: c_uint) -> *mut DecNumber;
+  pub fn decNumberFromUInt32(res: *mut DecNumber, n: c_uint) -> *mut DecNumber;
   pub fn decNumberLn(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberMinus(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberSubtract(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
-  pub fn decNumberToString(dq: *const DecNumber, s: *mut c_char) -> *mut c_char;
+  pub fn decNumberToString(dn: *const DecNumber, s: *mut c_char) -> *mut c_char;
   pub fn decNumberZero(res: *mut DecNumber);
 }

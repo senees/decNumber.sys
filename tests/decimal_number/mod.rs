@@ -1,4 +1,5 @@
 mod decimal_number_add;
+mod decimal_number_compare;
 mod decimal_number_default;
 mod decimal_number_divide;
 mod decimal_number_exp;
