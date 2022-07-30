@@ -30,6 +30,7 @@ use libc::c_char;
 extern "C" {
   pub fn decNumberAdd(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberFromString(res: *mut DecNumber, s: *const c_char, ctx: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberToString(dq: *const DecNumber, s: *mut c_char) -> *mut c_char;
   pub fn decNumberZero(res: *mut DecNumber);

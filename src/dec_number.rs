@@ -6,7 +6,7 @@ use libc::c_char;
 use std::ffi::{CStr, CString};
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct DecNumber {
   digits: i32,
   exponent: i32,
@@ -95,6 +95,15 @@ pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
     decNumberFromString(&mut value, c_s.as_ptr(), ctx);
   }
   value
+}
+
+///
+pub fn dec_number_reduce(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberReduce(&mut res, dn, ctx);
+  }
+  res
 }
 
 /// Converts [DecNumber] into [String].

@@ -88,15 +88,19 @@ pub fn dec_context_default(kind: ContextKind) -> DecContext {
       ContextKind::Base(digits) => {
         decContextDefault(&mut context, DEC_INIT_BASE);
         context.digits = digits;
+        context.traps = 0;
       }
       ContextKind::Decimal32 => {
         decContextDefault(&mut context, DEC_INIT_DECIMAL32);
+        context.traps = 0;
       }
       ContextKind::Decimal64 => {
         decContextDefault(&mut context, DEC_INIT_DECIMAL64);
+        context.traps = 0;
       }
       ContextKind::Decimal128 => {
         decContextDefault(&mut context, DEC_INIT_DECIMAL128);
+        context.traps = 0;
       }
     }
   }

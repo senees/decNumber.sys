@@ -1,8 +1,9 @@
-use crate::dec_number::{dec_number_to_string, DecNumber};
+use crate::dec_context::*;
+use crate::dec_number::*;
 use crate::ContextKind::Base;
-use crate::{dec_context_default, dec_number_from_string, DecContext};
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct DecimalNumber(DecNumber);
 
 impl Default for DecimalNumber {
@@ -52,5 +53,14 @@ impl DecimalNumber {
   ///
   pub fn one_thousand() -> Self {
     Self(DecNumber::one_thousand())
+  }
+}
+
+impl std::ops::Add<DecimalNumber> for DecimalNumber {
+  type Output = Self;
+  ///
+  fn add(self, rhs: Self) -> Self::Output {
+    let mut ctx = Self::default_context();
+    Self(dec_number_reduce(&dec_number_add(&self.0, &rhs.0, &mut ctx), &mut ctx))
   }
 }

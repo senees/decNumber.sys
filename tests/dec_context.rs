@@ -7,7 +7,7 @@ fn dec_context_decimal_base() {
   assert_eq!(999999999, *context.emax());
   assert_eq!(-999999999, *context.emin());
   assert_eq!(2, *context.round());
-  assert_eq!(8927, *context.traps());
+  assert_eq!(0, *context.traps());
   assert_eq!(0, *context.status());
   assert_eq!(0, *context.clamp());
 }
