@@ -79,24 +79,6 @@ impl DecNumber {
 }
 
 ///
-pub fn dec_number_ln(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
-  let mut res = DecNumber::default();
-  unsafe {
-    decNumberLn(&mut res, dn, ctx);
-  }
-  res
-}
-
-///
-pub fn dec_number_exp(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
-  let mut res = DecNumber::default();
-  unsafe {
-    decNumberExp(&mut res, dn, ctx);
-  }
-  res
-}
-
-///
 pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -114,6 +96,24 @@ pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext)
   res
 }
 
+///
+pub fn dec_number_exp(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberExp(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
+pub fn dec_number_from_i32(n: i32) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberFromInt32(&mut res, n);
+  }
+  res
+}
+
 /// Converts [DecNumber]  from string.
 pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
@@ -122,6 +122,33 @@ pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
     decNumberFromString(&mut value, c_s.as_ptr(), ctx);
   }
   value
+}
+
+///
+pub fn dec_number_from_u32(n: u32) -> DecNumber {
+  let mut result = DecNumber::default();
+  unsafe {
+    decNumberFromUInt32(&mut result, n);
+  }
+  result
+}
+
+///
+pub fn dec_number_ln(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberLn(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
+pub fn dec_number_minus(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberMinus(&mut res, dn, ctx);
+  }
+  res
 }
 
 ///
@@ -138,6 +165,15 @@ pub fn dec_number_reduce(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
     decNumberReduce(&mut res, dn, ctx);
+  }
+  res
+}
+
+///
+pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberRescale(&mut res, dn1, dn2, ctx);
   }
   res
 }

@@ -64,6 +64,15 @@ impl DecimalNumber {
     let mut ctx = Self::default_context();
     Self(dec_number_exp(&self.0, &mut ctx))
   }
+  ///
+  pub fn round_dp(&self, dp: i32) -> Self {
+    let mut ctx = Self::default_context();
+    Self(dec_number_rescale(
+      &self.0,
+      &dec_number_minus(&dec_number_from_i32(dp), &mut ctx),
+      &mut ctx,
+    ))
+  }
 }
 
 impl std::ops::Add<DecimalNumber> for DecimalNumber {
