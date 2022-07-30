@@ -8,7 +8,7 @@ use test::Bencher;
 #[bench]
 fn bench_dec_context_base(b: &mut Bencher) {
   b.iter(|| {
-    let _ = dec_context_default(ContextKind::Base);
+    let _ = dec_context_default(ContextKind::Base(34));
   });
 }
 

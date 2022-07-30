@@ -1,10 +1,12 @@
 //!
 
 use crate::dec_number_c::*;
+use crate::DecContext;
 use libc::c_char;
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 
 #[repr(C)]
+#[derive(Debug)]
 pub struct DecNumber {
   digits: i32,
   exponent: i32,
@@ -12,15 +14,87 @@ pub struct DecNumber {
   lsu: [u16; 12],
 }
 
+impl Default for DecNumber {
+  /// Default value for [DecNumber] is zero.
+  fn default() -> Self {
+    let mut dn = Self {
+      digits: 1,
+      exponent: 0,
+      bits: 0,
+      lsu: [0; 12],
+    };
+    unsafe {
+      decNumberZero(&mut dn);
+    }
+    dn
+  }
+}
+
 impl DecNumber {
-  pub fn new(digits: i32) -> Self {
-    Self {
-      digits,
+  ///
+  pub fn zero() -> Self {
+    DecNumber {
+      digits: 1,
       exponent: 0,
       bits: 0,
       lsu: [0; 12],
     }
   }
+  ///
+  pub fn one() -> Self {
+    DecNumber {
+      digits: 1,
+      exponent: 0,
+      bits: 0,
+      lsu: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }
+  }
+  ///
+  pub fn ten() -> Self {
+    DecNumber {
+      digits: 2,
+      exponent: 0,
+      bits: 0,
+      lsu: [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }
+  }
+  ///
+  pub fn one_hundred() -> Self {
+    DecNumber {
+      digits: 3,
+      exponent: 0,
+      bits: 0,
+      lsu: [100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }
+  }
+  ///
+  pub fn one_thousand() -> Self {
+    DecNumber {
+      digits: 4,
+      exponent: 0,
+      bits: 0,
+      lsu: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }
+  }
+}
+
+///
+pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberAdd(&mut res, dn1, dn2, ctx);
+  }
+  res
+}
+
+/// Converts [DecNumber]  from string.
+pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
+  let c_s = CString::new(s).unwrap();
+  let mut value = DecNumber::default();
+  unsafe {
+    decNumberFromString(&mut value, c_s.as_ptr(), ctx);
+  }
+  value
 }
 
 /// Converts [DecNumber] into [String].

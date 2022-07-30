@@ -1,1 +1,2 @@
 mod decimal_number_default;
+mod decimal_number_from_string;
