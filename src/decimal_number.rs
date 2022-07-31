@@ -84,6 +84,14 @@ impl DecimalNumber {
   }
 }
 
+impl std::ops::Neg for DecimalNumber {
+  type Output = Self;
+  fn neg(self) -> Self::Output {
+    let ctx = &mut Self::default_context();
+    Self(dec_number_minus(&self.0, ctx))
+  }
+}
+
 impl std::ops::Add<DecimalNumber> for DecimalNumber {
   type Output = Self;
   ///
