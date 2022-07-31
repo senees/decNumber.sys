@@ -191,3 +191,45 @@ impl Ord for DecimalNumber {
     Ordering::Greater
   }
 }
+
+impl From<u8> for DecimalNumber {
+  /// Converts [DecimalNumber] from [u8].
+  fn from(n: u8) -> Self {
+    Self(dec_number_from_u32(n as u32))
+  }
+}
+
+impl From<i8> for DecimalNumber {
+  /// Converts [DecimalNumber] from [i8].
+  fn from(n: i8) -> Self {
+    Self(dec_number_from_i32(n as i32))
+  }
+}
+
+impl From<u16> for DecimalNumber {
+  /// Converts [DecimalNumber] from [u16].
+  fn from(n: u16) -> Self {
+    Self(dec_number_from_u32(n as u32))
+  }
+}
+
+impl From<i16> for DecimalNumber {
+  /// Converts [DecimalNumber] from [i16].
+  fn from(n: i16) -> Self {
+    Self(dec_number_from_i32(n as i32))
+  }
+}
+
+impl From<u32> for DecimalNumber {
+  /// Converts [DecimalNumber] from [u32].
+  fn from(n: u32) -> Self {
+    Self(dec_number_from_u32(n))
+  }
+}
+
+impl From<i32> for DecimalNumber {
+  /// Converts [DecimalNumber] from [i32].
+  fn from(n: i32) -> Self {
+    Self(dec_number_from_i32(n))
+  }
+}
