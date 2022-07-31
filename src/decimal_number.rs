@@ -2,6 +2,8 @@ use crate::dec_context::*;
 use crate::dec_number::*;
 use crate::ContextKind::Decimal128;
 use std::cmp::Ordering;
+use std::convert::Infallible;
+use std::str::FromStr;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -25,15 +27,6 @@ impl std::fmt::Display for DecimalNumber {
   /// Converts [DecimalNumber] into string.
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     write!(f, "{}", dec_number_to_string(&self.0))
-  }
-}
-
-impl From<&str> for DecimalNumber {
-  ///
-  fn from(s: &str) -> Self {
-    let mut ctx = Self::default_context();
-    let dn = dec_number_from_string(s, &mut ctx);
-    Self(dn)
   }
 }
 
@@ -219,6 +212,23 @@ impl Ord for DecimalNumber {
       return Ordering::Less;
     }
     Ordering::Greater
+  }
+}
+
+impl From<&str> for DecimalNumber {
+  ///
+  fn from(s: &str) -> Self {
+    let mut ctx = Self::default_context();
+    let dn = dec_number_from_string(s, &mut ctx);
+    Self(dn)
+  }
+}
+
+impl FromStr for DecimalNumber {
+  type Err = Infallible;
+  ///
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    Ok(s.into())
   }
 }
 
