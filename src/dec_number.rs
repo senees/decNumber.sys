@@ -2,7 +2,7 @@
 
 use crate::dec_number_c::*;
 use crate::DecContext;
-use libc::c_char;
+use libc::{c_char, c_uchar};
 use std::ffi::{CStr, CString};
 
 /// Sign; 1=negative, 0=positive or zero.
@@ -134,6 +134,42 @@ pub fn dec_number_from_i32(n: i32) -> DecNumber {
   res
 }
 
+///
+pub fn dec_number_from_u32(n: u32) -> DecNumber {
+  let mut result = DecNumber::default();
+  unsafe {
+    decNumberFromUInt32(&mut result, n);
+  }
+  result
+}
+
+///
+pub fn dec_number_from_u64(n: u64) -> DecNumber {
+  let mut res = DecNumber::default();
+  let digits = u64_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+  }
+  res
+}
+
+///
+pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  let (digits, minus) = i64_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+    if minus {
+      decNumberMinus(&mut res, &res, ctx);
+    }
+  }
+  res
+}
+
 /// Converts [DecNumber]  from string.
 pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
@@ -142,15 +178,6 @@ pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
     decNumberFromString(&mut value, c_s.as_ptr(), ctx);
   }
   value
-}
-
-///
-pub fn dec_number_from_u32(n: u32) -> DecNumber {
-  let mut result = DecNumber::default();
-  unsafe {
-    decNumberFromUInt32(&mut result, n);
-  }
-  result
 }
 
 ///
@@ -232,5 +259,57 @@ pub fn dec_number_to_string(dn: &DecNumber) -> String {
 pub fn dec_number_zero(dn: &mut DecNumber) {
   unsafe {
     decNumberZero(dn);
+  }
+}
+
+///
+fn u64_to_bcd(n: u64) -> Vec<u8> {
+  let mut v = n;
+  let mut digits = Vec::<u8>::with_capacity(20);
+  loop {
+    digits.push((v % 10) as u8);
+    v /= 10;
+    if v == 0 {
+      break;
+    }
+  }
+  digits.reverse();
+  digits
+}
+
+///
+fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
+  let mut v;
+  let minus;
+  if n >= 0 {
+    v = n as u64;
+    minus = false;
+  } else {
+    v = n.unsigned_abs() as u64;
+    minus = true;
+  }
+  let mut digits = Vec::<u8>::with_capacity(20);
+  loop {
+    digits.push((v % 10) as u8);
+    v /= 10;
+    if v == 0 {
+      break;
+    }
+  }
+  digits.reverse();
+  (digits, minus)
+}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  #[test]
+  #[rustfmt::skip]
+  fn test_u64_to_bcd() {
+    assert_eq!(vec![0_u8], u64_to_bcd(0));
+    assert_eq!(vec![1_u8], u64_to_bcd(1));
+    assert_eq!(vec![1_u8, 0_u8], u64_to_bcd(10));
+    assert_eq!(vec![1_u8, 8_u8,4_u8,4_u8,6_u8,7_u8,4_u8,4_u8,0_u8,7_u8,3_u8,7_u8,0_u8,9_u8,5_u8,5_u8,1_u8,6_u8,1_u8,5_u8], u64_to_bcd(18446744073709551615));
   }
 }

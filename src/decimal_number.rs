@@ -233,3 +233,18 @@ impl From<i32> for DecimalNumber {
     Self(dec_number_from_i32(n))
   }
 }
+
+impl From<u64> for DecimalNumber {
+  /// Converts [DecimalNumber] from [u64].
+  fn from(n: u64) -> Self {
+    Self(dec_number_from_u64(n))
+  }
+}
+
+impl From<i64> for DecimalNumber {
+  /// Converts [DecimalNumber] from [i64].
+  fn from(n: i64) -> Self {
+    let mut ctx = Self::default_context();
+    Self(dec_number_from_i64(n, &mut ctx))
+  }
+}

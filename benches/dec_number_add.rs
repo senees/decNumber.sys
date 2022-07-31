@@ -7,7 +7,7 @@ use test::Bencher;
 
 #[bench]
 fn bench_dec_number_add_0001(b: &mut Bencher) {
-  let ctx = &mut dec_context_default(ContextKind::Base(34));
+  let ctx = &mut dec_context_default(ContextKind::Decimal128);
   let dnl = &dec_number_from_string("0.1", ctx);
   let dnr = &dec_number_from_string("0.2", ctx);
   b.iter(|| {
@@ -17,7 +17,7 @@ fn bench_dec_number_add_0001(b: &mut Bencher) {
 
 #[bench]
 fn bench_dec_number_add_0002(b: &mut Bencher) {
-  let ctx = &mut dec_context_default(ContextKind::Base(34));
+  let ctx = &mut dec_context_default(ContextKind::Decimal128);
   let dnl = &dec_number_from_string("0.111111", ctx);
   let dnr = &dec_number_from_string("0.222", ctx);
   b.iter(|| {
