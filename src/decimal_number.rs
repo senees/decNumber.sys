@@ -40,8 +40,16 @@ impl DecimalNumber {
     Self(DecNumber::zero())
   }
   ///
+  pub fn is_zero(&self) -> bool {
+    dec_number_is_zero(&self.0)
+  }
+  ///
   pub fn one() -> Self {
     Self(DecNumber::one())
+  }
+  ///
+  pub fn two() -> Self {
+    Self(DecNumber::two())
   }
   ///
   pub fn ten() -> Self {

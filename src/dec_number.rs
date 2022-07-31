@@ -61,6 +61,15 @@ impl DecNumber {
     }
   }
   ///
+  pub fn two() -> Self {
+    DecNumber {
+      digits: 1,
+      exponent: 0,
+      bits: 0,
+      lsu: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }
+  }
+  ///
   pub fn ten() -> Self {
     DecNumber {
       digits: 2,

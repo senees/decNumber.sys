@@ -8,11 +8,18 @@ fn decimal_number_default() {
 #[test]
 fn decimal_number_zero() {
   assert_eq!("0", DecimalNumber::zero().to_string());
+  assert!(DecimalNumber::zero().is_zero());
 }
 
 #[test]
 fn decimal_number_one() {
   assert_eq!("1", DecimalNumber::one().to_string());
+  assert!(!DecimalNumber::one().is_zero());
+}
+
+#[test]
+fn decimal_number_two() {
+  assert_eq!("2", DecimalNumber::two().to_string());
 }
 
 #[test]
