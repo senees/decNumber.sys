@@ -14,6 +14,13 @@ impl Default for DecimalNumber {
   }
 }
 
+impl std::fmt::Debug for DecimalNumber {
+  /// Converts [DecimalNumber] into string in debug mode.
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "{}", dec_number_to_string(&self.0))
+  }
+}
+
 impl std::fmt::Display for DecimalNumber {
   /// Converts [DecimalNumber] into string.
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -34,6 +41,13 @@ impl DecimalNumber {
   ///
   fn default_context() -> DecContext {
     dec_context_default(Decimal128)
+  }
+  ///
+  pub fn new(n: i64, s: i32) -> Self {
+    let ctx = &mut Self::default_context();
+    let base = &dec_number_from_i64(n, ctx);
+    let scale = &dec_number_from_i32(-s);
+    Self(dec_number_scale_b(base, scale, ctx))
   }
   ///
   pub fn zero() -> Self {

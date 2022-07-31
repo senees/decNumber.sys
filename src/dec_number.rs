@@ -299,6 +299,15 @@ pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext
 }
 
 ///
+pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberScaleB(&mut res, dn1, dn2, ctx);
+  }
+  res
+}
+
+///
 pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {

@@ -40,6 +40,7 @@ extern "C" {
   pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberScaleB(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberSetBCD(res: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
   pub fn decNumberSubtract(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, ctx: *mut DecContext) -> *mut DecNumber;
   pub fn decNumberToString(dn: *const DecNumber, s: *mut c_char) -> *mut c_char;
