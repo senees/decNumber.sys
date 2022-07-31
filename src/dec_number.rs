@@ -170,6 +170,60 @@ pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
   res
 }
 
+///
+pub fn dec_number_from_u128(n: u128) -> DecNumber {
+  let mut res = DecNumber::default();
+  let digits = u128_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+  }
+  res
+}
+
+///
+pub fn dec_number_from_i128(n: i128, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  let (digits, minus) = i128_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+    if minus {
+      decNumberMinus(&mut res, &res, ctx);
+    }
+  }
+  res
+}
+
+///
+pub fn dec_number_from_usize(n: usize) -> DecNumber {
+  let mut res = DecNumber::default();
+  let digits = usize_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+  }
+  res
+}
+
+///
+pub fn dec_number_from_isize(n: isize, ctx: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  let (digits, minus) = isize_to_bcd(n);
+  let count = digits.len();
+  res.digits = count as i32;
+  unsafe {
+    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
+    if minus {
+      decNumberMinus(&mut res, &res, ctx);
+    }
+  }
+  res
+}
+
 /// Converts [DecNumber]  from string.
 pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
@@ -264,6 +318,36 @@ pub fn dec_number_zero(dn: &mut DecNumber) {
 
 ///
 fn u64_to_bcd(n: u64) -> Vec<u8> {
+  bcd_digits(n as u128)
+}
+
+///
+fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
+  (bcd_digits(n.unsigned_abs() as u128), n < 0)
+}
+
+///
+fn u128_to_bcd(n: u128) -> Vec<u8> {
+  bcd_digits(n)
+}
+
+///
+fn i128_to_bcd(n: i128) -> (Vec<u8>, bool) {
+  (bcd_digits(n.unsigned_abs()), n < 0)
+}
+
+///
+fn usize_to_bcd(n: usize) -> Vec<u8> {
+  bcd_digits(n as u128)
+}
+
+///
+fn isize_to_bcd(n: isize) -> (Vec<u8>, bool) {
+  (bcd_digits(n.unsigned_abs() as u128), n < 0)
+}
+
+///
+fn bcd_digits(n: u128) -> Vec<u8> {
   let mut v = n;
   let mut digits = Vec::<u8>::with_capacity(20);
   loop {
@@ -275,21 +359,6 @@ fn u64_to_bcd(n: u64) -> Vec<u8> {
   }
   digits.reverse();
   digits
-}
-
-///
-fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
-  let mut v = n.unsigned_abs();
-  let mut digits = Vec::<u8>::with_capacity(20);
-  loop {
-    digits.push((v % 10) as u8);
-    v /= 10;
-    if v == 0 {
-      break;
-    }
-  }
-  digits.reverse();
-  (digits, n < 0)
 }
 
 #[cfg(test)]

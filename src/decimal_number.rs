@@ -248,3 +248,33 @@ impl From<i64> for DecimalNumber {
     Self(dec_number_from_i64(n, &mut ctx))
   }
 }
+
+impl From<u128> for DecimalNumber {
+  /// Converts [DecimalNumber] from [u128].
+  fn from(n: u128) -> Self {
+    Self(dec_number_from_u128(n))
+  }
+}
+
+impl From<i128> for DecimalNumber {
+  /// Converts [DecimalNumber] from [i128].
+  fn from(n: i128) -> Self {
+    let mut ctx = Self::default_context();
+    Self(dec_number_from_i128(n, &mut ctx))
+  }
+}
+
+impl From<usize> for DecimalNumber {
+  /// Converts [DecimalNumber] from [usize].
+  fn from(n: usize) -> Self {
+    Self(dec_number_from_usize(n))
+  }
+}
+
+impl From<isize> for DecimalNumber {
+  /// Converts [DecimalNumber] from [isize].
+  fn from(n: isize) -> Self {
+    let mut ctx = Self::default_context();
+    Self(dec_number_from_isize(n, &mut ctx))
+  }
+}
