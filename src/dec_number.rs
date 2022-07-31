@@ -146,7 +146,7 @@ pub fn dec_number_from_u32(n: u32) -> DecNumber {
 ///
 pub fn dec_number_from_u64(n: u64) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = u64_to_bcd(n);
+  let digits = bcd_digits(n as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -158,12 +158,12 @@ pub fn dec_number_from_u64(n: u64) -> DecNumber {
 ///
 pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let (digits, minus) = i64_to_bcd(n);
+  let digits = bcd_digits(n.unsigned_abs() as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if minus {
+    if n < 0 {
       decNumberMinus(&mut res, &res, ctx);
     }
   }
@@ -173,7 +173,7 @@ pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
 ///
 pub fn dec_number_from_u128(n: u128) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = u128_to_bcd(n);
+  let digits = bcd_digits(n);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -185,12 +185,12 @@ pub fn dec_number_from_u128(n: u128) -> DecNumber {
 ///
 pub fn dec_number_from_i128(n: i128, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let (digits, minus) = i128_to_bcd(n);
+  let digits = bcd_digits(n.unsigned_abs());
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if minus {
+    if n < 0 {
       decNumberMinus(&mut res, &res, ctx);
     }
   }
@@ -200,7 +200,7 @@ pub fn dec_number_from_i128(n: i128, ctx: &mut DecContext) -> DecNumber {
 ///
 pub fn dec_number_from_usize(n: usize) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = usize_to_bcd(n);
+  let digits = bcd_digits(n as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -212,12 +212,12 @@ pub fn dec_number_from_usize(n: usize) -> DecNumber {
 ///
 pub fn dec_number_from_isize(n: isize, ctx: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let (digits, minus) = isize_to_bcd(n);
+  let digits = bcd_digits(n.unsigned_abs() as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if minus {
+    if n < 0 {
       decNumberMinus(&mut res, &res, ctx);
     }
   }
@@ -232,11 +232,6 @@ pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
     decNumberFromString(&mut value, c_s.as_ptr(), ctx);
   }
   value
-}
-
-///
-pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
-  dn.lsu[0] == 0 && dn.digits == 1 && (dn.bits & DEC_SPECIAL == 0)
 }
 
 ///
@@ -269,6 +264,11 @@ pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContex
 ///
 pub fn dec_number_is_negative(dn: &DecNumber) -> bool {
   dn.bits & DEC_NEG != 0
+}
+
+///
+pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
+  dn.lsu[0] == 0 && dn.digits == 1 && (dn.bits & DEC_SPECIAL == 0)
 }
 
 ///
@@ -317,36 +317,6 @@ pub fn dec_number_zero(dn: &mut DecNumber) {
 }
 
 ///
-fn u64_to_bcd(n: u64) -> Vec<u8> {
-  bcd_digits(n as u128)
-}
-
-///
-fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
-  (bcd_digits(n.unsigned_abs() as u128), n < 0)
-}
-
-///
-fn u128_to_bcd(n: u128) -> Vec<u8> {
-  bcd_digits(n)
-}
-
-///
-fn i128_to_bcd(n: i128) -> (Vec<u8>, bool) {
-  (bcd_digits(n.unsigned_abs()), n < 0)
-}
-
-///
-fn usize_to_bcd(n: usize) -> Vec<u8> {
-  bcd_digits(n as u128)
-}
-
-///
-fn isize_to_bcd(n: isize) -> (Vec<u8>, bool) {
-  (bcd_digits(n.unsigned_abs() as u128), n < 0)
-}
-
-///
 fn bcd_digits(n: u128) -> Vec<u8> {
   let mut v = n;
   let mut digits = Vec::<u8>::with_capacity(20);
@@ -359,18 +329,4 @@ fn bcd_digits(n: u128) -> Vec<u8> {
   }
   digits.reverse();
   digits
-}
-
-#[cfg(test)]
-mod tests {
-  use super::*;
-
-  #[test]
-  #[rustfmt::skip]
-  fn test_u64_to_bcd() {
-    assert_eq!(vec![0_u8], u64_to_bcd(0));
-    assert_eq!(vec![1_u8], u64_to_bcd(1));
-    assert_eq!(vec![1_u8, 0_u8], u64_to_bcd(10));
-    assert_eq!(vec![1_u8, 8_u8,4_u8,4_u8,6_u8,7_u8,4_u8,4_u8,0_u8,7_u8,3_u8,7_u8,0_u8,9_u8,5_u8,5_u8,1_u8,6_u8,1_u8,5_u8], u64_to_bcd(18446744073709551615));
-  }
 }
