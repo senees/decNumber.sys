@@ -279,15 +279,7 @@ fn u64_to_bcd(n: u64) -> Vec<u8> {
 
 ///
 fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
-  let mut v;
-  let minus;
-  if n >= 0 {
-    v = n as u64;
-    minus = false;
-  } else {
-    v = n.unsigned_abs() as u64;
-    minus = true;
-  }
+  let mut v = n.unsigned_abs();
   let mut digits = Vec::<u8>::with_capacity(20);
   loop {
     digits.push((v % 10) as u8);
@@ -297,7 +289,7 @@ fn i64_to_bcd(n: i64) -> (Vec<u8>, bool) {
     }
   }
   digits.reverse();
-  (digits, minus)
+  (digits, n < 0)
 }
 
 #[cfg(test)]
