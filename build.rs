@@ -1,5 +1,31 @@
-/// Links to `The decNumber C Library` installed on Fedora 36.
+/*
+ * MIT license
+ *
+ * Copyright (c) 2018-2022 Dariusz Depta Engos Software
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 fn main() {
-  println!("cargo:rustc-link-lib=decNumber64");
-  println!("cargo:rustc-link-search=/usr/lib64");
+  let output_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
+  let target_endian = if cfg!(target_endian = "little") { "1" } else { "0" };
+  cc::Build::new()
+    .define("DECLITEND", Some(target_endian))
+    .file("decNumber-icu-368/decimal128.c")
+    .file("decNumber-icu-368/decimal64.c")
+    .file("decNumber-icu-368/decimal32.c")
+    .file("decNumber-icu-368/decContext.c")
+    .file("decNumber-icu-368/decNumber.c")
+    .file("decNumber-icu-368/decSingle.c")
+    .file("decNumber-icu-368/decDouble.c")
+    .file("decNumber-icu-368/decQuad.c")
+    .file("decNumber-icu-368/decPacked.c")
+    .out_dir(output_dir.join("lib"))
+    .compile("decnumber-icu-368");
 }
