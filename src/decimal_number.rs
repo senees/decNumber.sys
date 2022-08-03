@@ -6,7 +6,7 @@ use std::convert::Infallible;
 use std::str::FromStr;
 
 #[macro_export]
-macro_rules! decimal_number {
+macro_rules! decnum {
   ($e:expr) => {{
     DecimalNumber::from(stringify!($e))
   }};
