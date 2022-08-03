@@ -5,6 +5,13 @@ use std::cmp::Ordering;
 use std::convert::Infallible;
 use std::str::FromStr;
 
+#[macro_export]
+macro_rules! decimal_number {
+  ($e:expr) => {{
+    DecimalNumber::from(stringify!($e))
+  }};
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DecimalNumber(DecNumber);
