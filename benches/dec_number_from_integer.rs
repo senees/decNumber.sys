@@ -14,7 +14,7 @@ fn bench_dec_number_from_integer_u64(b: &mut Bencher) {
 
 #[bench]
 fn bench_dec_number_from_integer_i64(b: &mut Bencher) {
-  let dc = &mut dec_context_default(ContextKind::Decimal128);
+  let dc = &mut dec_context_128();
   b.iter(|| {
     let _ = dec_number_from_i64(-9_223_372_036_854_775_808_i64, dc);
   });

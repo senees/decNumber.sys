@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! Decimal conversion functions.
 
@@ -31,50 +31,50 @@ use crate::dec_quad::DecQuad;
 use crate::dec_single::DecSingle;
 use crate::DecContext;
 
-///
-pub fn decimal32_to_number(d: &DecSingle, n: &mut DecNumber) {
+/// Safe binding to *decimal32ToNumber* function.
+pub fn decimal32_to_number(ds: &DecSingle, dn: &mut DecNumber) {
   unsafe {
-    decimal32ToNumber(d, n);
+    decimal32ToNumber(ds, dn);
   }
 }
 
-///
-pub fn decimal32_from_number(n: &DecNumber, dc: &mut DecContext) -> DecSingle {
-  let mut res = DecSingle::default();
+/// Safe binding to *decimal32FromNumber* function.
+pub fn decimal32_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecSingle {
+  let mut ds_res = DecSingle::default();
   unsafe {
-    decimal32FromNumber(&mut res, n, dc);
+    decimal32FromNumber(&mut ds_res, dn, dc);
   }
-  res
+  ds_res
 }
 
-///
-pub fn decimal64_to_number(d: &DecDouble, n: &mut DecNumber) {
+/// Safe binding to *decimal64ToNumber* function.
+pub fn decimal64_to_number(dd: &DecDouble, dn: &mut DecNumber) {
   unsafe {
-    decimal64ToNumber(d, n);
-  }
-}
-
-///
-pub fn decimal64_from_number(n: &DecNumber, dc: &mut DecContext) -> DecDouble {
-  let mut res = DecDouble::default();
-  unsafe {
-    decimal64FromNumber(&mut res, n, dc);
-  }
-  res
-}
-
-///
-pub fn decimal128_to_number(d: &DecQuad, n: &mut DecNumber) {
-  unsafe {
-    decimal128ToNumber(d, n);
+    decimal64ToNumber(dd, dn);
   }
 }
 
-///
-pub fn decimal128_from_number(n: &DecNumber, dc: &mut DecContext) -> DecQuad {
-  let mut res = DecQuad::default();
+/// Safe binding to *decimal64FromNumber* function.
+pub fn decimal64_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecDouble {
+  let mut dd_res = DecDouble::default();
   unsafe {
-    decimal128FromNumber(&mut res, n, dc);
+    decimal64FromNumber(&mut dd_res, dn, dc);
   }
-  res
+  dd_res
+}
+
+/// Safe binding to *decimal128ToNumber* function.
+pub fn decimal128_to_number(dq: &DecQuad, dn: &mut DecNumber) {
+  unsafe {
+    decimal128ToNumber(dq, dn);
+  }
+}
+
+/// Safe binding to *decimal128FromNumber* function.
+pub fn decimal128_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decimal128FromNumber(&mut dq_res, dn, dc);
+  }
+  dq_res
 }

@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! `C` bindings for decimal context.
 
@@ -28,8 +28,8 @@ use crate::DecContext;
 
 #[rustfmt::skip]
 extern "C" {
-  /// `C` binding to *decContextDefault* function. 
+  /// Unsafe binding to *decContextDefault* function. 
   pub fn decContextDefault(dc: *mut DecContext, kind: i32) -> *mut DecContext;
-  /// `C` binding to *decContextZeroStatus* function. 
+  /// Unsafe binding to *decContextZeroStatus* function. 
   pub fn decContextZeroStatus(dc: *mut DecContext) -> *mut DecContext;
 }

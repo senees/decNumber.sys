@@ -1,8 +1,8 @@
-use dec_number_sys::{dec_context_default, ContextKind};
+use dec_number_sys::{dec_context_128, dec_context_32, dec_context_64, dec_context_base};
 
 #[test]
 fn dec_context_decimal_base() {
-  let context = dec_context_default(ContextKind::Base(34));
+  let context = dec_context_base(34);
   assert_eq!(34, context.digits);
   assert_eq!(999999999, context.emax);
   assert_eq!(-999999999, context.emin);
@@ -14,7 +14,7 @@ fn dec_context_decimal_base() {
 
 #[test]
 fn dec_context_decimal_32() {
-  let context = dec_context_default(ContextKind::Decimal32);
+  let context = dec_context_32();
   assert_eq!(7, context.digits);
   assert_eq!(96, context.emax);
   assert_eq!(-95, context.emin);
@@ -26,7 +26,7 @@ fn dec_context_decimal_32() {
 
 #[test]
 fn dec_context_decimal_64() {
-  let context = dec_context_default(ContextKind::Decimal64);
+  let context = dec_context_64();
   assert_eq!(16, context.digits);
   assert_eq!(384, context.emax);
   assert_eq!(-383, context.emin);
@@ -38,7 +38,7 @@ fn dec_context_decimal_64() {
 
 #[test]
 fn dec_context_decimal_128() {
-  let context = dec_context_default(ContextKind::Decimal128);
+  let context = dec_context_128();
   assert_eq!(34, context.digits);
   assert_eq!(6144, context.emax);
   assert_eq!(-6143, context.emin);

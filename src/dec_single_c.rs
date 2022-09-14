@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! `C` bindings for 32-bit decimal.
 
@@ -29,14 +29,14 @@ use libc::c_char;
 
 #[rustfmt::skip]
 extern "C" {
-  /// `C` binding to *decSingleFromString* function.
+  /// Unsafe binding to *decSingleFromString* function.
   pub fn decSingleFromString(res: *mut DecSingle, s: *const c_char, dc: *mut DecContext) -> *mut DecSingle;
-  /// `C` binding to *decSingleFromWider* function.
+  /// Unsafe binding to *decSingleFromWider* function.
   pub fn decSingleFromWider(res: *mut DecSingle, ds: *const DecDouble, dc: *mut DecContext) -> *mut DecSingle;
-  /// `C` binding to *decSingleToString* function.
+  /// Unsafe binding to *decSingleToString* function.
   pub fn decSingleToString(ds: *const DecSingle, s: *mut c_char) -> *mut c_char;
-  /// `C` binding to *decSingleToWider* function.
+  /// Unsafe binding to *decSingleToWider* function.
   pub fn decSingleToWider(res: *const DecSingle, ds: *mut DecDouble, dc: *mut DecContext) -> *mut DecDouble;
-  /// `C` binding to *decSingleZero* function.
+  /// Unsafe binding to *decSingleZero* function.
   pub fn decSingleZero(res: *mut DecSingle);
 }

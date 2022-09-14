@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! Decimal context definitions.
 
@@ -37,19 +37,6 @@ pub const DEC_INIT_DECIMAL64: i32 = 64;
 
 /// Initializes context to IEEE 754 defaults, 128-bit.
 pub const DEC_INIT_DECIMAL128: i32 = 128;
-
-/// Enumeration of context initialization constants.
-#[repr(i32)]
-pub enum ContextKind {
-  /// ANSI X3-274 defaults with maximum number of digits.
-  Base(i32),
-  /// IEEE 754 defaults, 32-bit.
-  Decimal32,
-  /// IEEE 754 defaults, 64-bit.
-  Decimal64,
-  /// IEEE 754 defaults, 128-bit.
-  Decimal128,
-}
 
 /// Decimal context.
 #[repr(C)]
@@ -71,29 +58,33 @@ pub struct DecContext {
   pub clamp: u8,
 }
 
-/// Returns decimal context initialized according the specified [ContextKind] value.
-pub fn dec_context_default(kind: ContextKind) -> DecContext {
+/// Returns decimal context initialized with maximum specified number of digits.
+pub fn dec_context_base(digits: i32) -> DecContext {
   let mut context = DecContext::default();
   unsafe {
-    match kind {
-      ContextKind::Base(digits) => {
-        decContextDefault(&mut context, DEC_INIT_BASE);
-        context.digits = digits;
-        context.traps = 0;
-      }
-      ContextKind::Decimal32 => {
-        decContextDefault(&mut context, DEC_INIT_DECIMAL32);
-        context.traps = 0;
-      }
-      ContextKind::Decimal64 => {
-        decContextDefault(&mut context, DEC_INIT_DECIMAL64);
-        context.traps = 0;
-      }
-      ContextKind::Decimal128 => {
-        decContextDefault(&mut context, DEC_INIT_DECIMAL128);
-        context.traps = 0;
-      }
-    }
+    decContextDefault(&mut context, DEC_INIT_BASE);
+    context.digits = digits;
+    context.traps = 0;
+  }
+  context
+}
+
+/// Returns decimal context initialized for 32-bit decimals.
+pub fn dec_context_32() -> DecContext {
+  let mut context = DecContext::default();
+  unsafe {
+    decContextDefault(&mut context, DEC_INIT_DECIMAL32);
+    context.traps = 0;
+  }
+  context
+}
+
+/// Returns decimal context initialized for 64-bit decimals.
+pub fn dec_context_64() -> DecContext {
+  let mut context = DecContext::default();
+  unsafe {
+    decContextDefault(&mut context, DEC_INIT_DECIMAL64);
+    context.traps = 0;
   }
   context
 }
@@ -108,7 +99,17 @@ pub fn dec_context_128() -> DecContext {
   context
 }
 
-/// Clears (sets to zero) all the status bits in the `status` field of a decimal context.
+/// Safe binding to *decContextDefault* function.
+pub fn dec_context_default(kind: i32) -> DecContext {
+  unsafe {
+    let mut context = DecContext::default();
+    decContextDefault(&mut context, kind);
+    context.traps = 0;
+    context
+  }
+}
+
+/// Safe binding to *decContextZeroStatus* function.
 pub fn dec_context_zero_status(dc: &mut DecContext) {
   unsafe {
     decContextZeroStatus(dc);

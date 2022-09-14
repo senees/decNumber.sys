@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! `C` bindings for 128-bit decimal.
 
@@ -29,18 +29,34 @@ use libc::{c_char, c_int, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
-  /// `C` binding to *decQuadAbs* function.
+  /// Unsafe binding to *decQuadAbs* function.
   pub fn decQuadAbs(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
-  /// `C` binding to *decQuadAdd* function.
+  /// Unsafe binding to *decQuadAdd* function.
   pub fn decQuadAdd(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
-  /// `C` binding to *decQuadFromInt32* function.
+  /// Unsafe binding to *decQuadFromInt32* function.
   pub fn decQuadFromInt32(res: *mut DecQuad, n: c_int) -> *mut DecQuad;
-  /// `C` binding to *decQuadFromUInt32* function.
+  /// Unsafe binding to *decQuadFromUInt32* function.
   pub fn decQuadFromUInt32(res: *mut DecQuad, n: c_uint) -> *mut DecQuad;
-  /// `C` binding to *decQuadFromString* function.
+  /// Unsafe binding to *decQuadFromString* function.
   pub fn decQuadFromString(res: *mut DecQuad, s: *const c_char, dc: *mut DecContext) -> *mut DecQuad;
-  /// `C` binding to *decQuadToString* function.
+  /// Unsafe binding to *decQuadToIntegralValue* function.
+  pub fn decQuadToIntegralValue(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext, rounding: u32) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadIsFinite* function.
+  pub fn decQuadIsFinite(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsInteger* function.
+  pub fn decQuadIsInteger(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsNegative* function.
+  pub fn decQuadIsNegative(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsPositive* function.
+  pub fn decQuadIsPositive(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsZero* function.
+  pub fn decQuadIsZero(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadReduce* function.
+  pub fn decQuadReduce(res: *mut DecQuad, dn: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadScaleB* function.
+  pub fn decQuadScaleB(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadToString* function.
   pub fn decQuadToString(res: *const DecQuad, s: *mut c_char) -> *mut c_char;
-  /// `C` binding to *decQuadZero* function.
+  /// Unsafe binding to *decQuadZero* function.
   pub fn decQuadZero(res: *mut DecQuad);
 }

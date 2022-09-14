@@ -20,15 +20,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! 128-bit decimal definitions.
 
 use crate::decContextZeroStatus;
 use crate::dec_context::DecContext;
-use crate::dec_conversion_c::*;
-use crate::dec_number::DecNumber;
-use crate::dec_number_c::*;
 use crate::dec_quad_c::*;
 use libc::c_char;
 use std::ffi::{CStr, CString};
@@ -151,7 +148,6 @@ impl Debug for DecQuad {
 pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
-    decContextZeroStatus(dc);
     decQuadAbs(&mut dq_res, dq, dc);
   }
   dq_res
@@ -161,7 +157,6 @@ pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
 pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
-    decContextZeroStatus(dc);
     decQuadAdd(&mut dq_res, dq1, dq2, dc);
   }
   dq_res
@@ -196,36 +191,29 @@ pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   dq_res
 }
 
-///
-pub fn dec_quad_rescale(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+/// Safe binding to *decQuadReduce* function.
+pub fn dec_quad_reduce(dn: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
-  let mut n1 = DecNumber::default();
-  let mut n2 = DecNumber::default();
-  let mut n_res = DecNumber::default();
   unsafe {
-    decimal128ToNumber(dq1, &mut n1);
-    decimal128ToNumber(dq2, &mut n2);
-    decContextZeroStatus(dc);
-    decNumberRescale(&mut n_res, &n1, &n2, dc);
-    decContextZeroStatus(dc);
-    decimal128FromNumber(&mut dq_res, &n_res, dc);
+    decQuadReduce(&mut dq_res, dn, dc);
   }
   dq_res
 }
 
-///
+/// Safe binding to *decQuadScaleB* function.
 pub fn dec_quad_scale_b(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
-  let mut n1 = DecNumber::default();
-  let mut n2 = DecNumber::default();
-  let mut n_res = DecNumber::default();
   unsafe {
-    decimal128ToNumber(dq1, &mut n1);
-    decimal128ToNumber(dq2, &mut n2);
-    decContextZeroStatus(dc);
-    decNumberScaleB(&mut n_res, &n1, &n2, dc);
-    decContextZeroStatus(dc);
-    decimal128FromNumber(&mut dq_res, &n_res, dc);
+    decQuadScaleB(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
+/// Converts [DecQuad] into integral value.
+pub fn dec_quad_to_integral_value(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadToIntegralValue(&mut dq_res, dq, dc, rounding);
   }
   dq_res
 }

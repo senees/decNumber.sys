@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! `C` bindings for arbitrary precision decimal.
 
@@ -29,38 +29,38 @@ use libc::{c_char, c_int, c_uchar, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
-  /// `C` binding to *decNumberAdd* function.
+  /// Unsafe binding to *decNumberAdd* function.
   pub fn decNumberAdd(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberDivide* function.
+  /// Unsafe binding to *decNumberDivide* function.
   pub fn decNumberDivide(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberCompare* function.
+  /// Unsafe binding to *decNumberCompare* function.
   pub fn decNumberCompare(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberExp* function.
+  /// Unsafe binding to *decNumberExp* function.
   pub fn decNumberExp(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberFromInt32* function.
+  /// Unsafe binding to *decNumberFromInt32* function.
   pub fn decNumberFromInt32(res: *mut DecNumber, n: c_int) -> *mut DecNumber;
-  /// `C` binding to *decNumberFromString* function.
+  /// Unsafe binding to *decNumberFromString* function.
   pub fn decNumberFromString(res: *mut DecNumber, s: *const c_char, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberFromUInt32* function.
+  /// Unsafe binding to *decNumberFromUInt32* function.
   pub fn decNumberFromUInt32(res: *mut DecNumber, n: c_uint) -> *mut DecNumber;
-  /// `C` binding to *decNumberLn* function.
+  /// Unsafe binding to *decNumberLn* function.
   pub fn decNumberLn(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberMinus* function.
+  /// Unsafe binding to *decNumberMinus* function.
   pub fn decNumberMinus(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberMultiply* function.
+  /// Unsafe binding to *decNumberMultiply* function.
   pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberReduce* function.
+  /// Unsafe binding to *decNumberReduce* function.
   pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberRescale* function.
+  /// Unsafe binding to *decNumberRescale* function.
   pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberScaleB* function.
+  /// Unsafe binding to *decNumberScaleB* function.
   pub fn decNumberScaleB(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberSetBCD* function.
+  /// Unsafe binding to *decNumberSetBCD* function.
   pub fn decNumberSetBCD(res: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
-  /// `C` binding to *decNumberSubtract* function.
+  /// Unsafe binding to *decNumberSubtract* function.
   pub fn decNumberSubtract(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// `C` binding to *decNumberToString* function.
+  /// Unsafe binding to *decNumberToString* function.
   pub fn decNumberToString(dn: *const DecNumber, s: *mut c_char) -> *mut c_char;
-  /// `C` binding to *decNumberZero* function.
+  /// Unsafe binding to *decNumberZero* function.
   pub fn decNumberZero(res: *mut DecNumber);
 }

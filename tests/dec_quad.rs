@@ -1,83 +1,103 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
 //! [DecQuad] smoke tests.
+//!
+//! The purpose of smoke tests is to verify if bindings compile properly.
 
 use dec_number_sys::*;
 
+macro_rules! c {
+  () => {
+    &mut dec_context_128()
+  };
+}
+
+macro_rules! n {
+  ($s:expr) => {
+    dec_quad_from_string(stringify!($s), c!())
+  };
+}
+
+macro_rules! s {
+  ($v:expr) => {
+    dec_quad_to_string(&$v)
+  };
+}
+
 #[test]
 fn test_dec_quad_abs() {
-  let dc = &mut dec_context_128();
-  dec_context_zero_status(dc);
-  let dq = &dec_quad_from_string("-5.751", dc);
-  assert_eq!(0, dc.status);
-  let dq_res = &dec_quad_abs(dq, dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("5.751", dec_quad_to_string(dq_res));
+  assert_eq!("5.751", s!(dec_quad_abs(&n!(-5.751), c!())));
 }
 
 #[test]
 fn test_dec_quad_add() {
-  let dc = &mut dec_context_128();
-  dec_context_zero_status(dc);
-  let dq1 = &dec_quad_from_string("5.75", dc);
-  assert_eq!(0, dc.status);
-  dec_context_zero_status(dc);
-  let dq2 = &dec_quad_from_string("3.3", dc);
-  assert_eq!(0, dc.status);
-  dec_context_zero_status(dc);
-  let dq_res = &dec_quad_add(dq1, dq2, dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("9.05", dec_quad_to_string(dq_res));
+  assert_eq!("9.05", s!(dec_quad_add(&n!(5.75), &n!(3.3), c!())));
 }
 
 #[test]
 #[rustfmt::skip]
 fn test_dec_quad_constants() {
-  let dc = &mut dec_context_128();
-  // zero
-  dec_context_zero_status(dc);
-  let dq_zero = &dec_quad_from_string("0", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", dq_zero));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", n!(0)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", DEC_QUAD_ZERO));
   // one
-  dec_context_zero_status(dc);
-  let dq_one = &dec_quad_from_string("1", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 01]", format!("{:?}", dq_one));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 01]", format!("{:?}", n!(1)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 01]", format!("{:?}", DEC_QUAD_ONE));
   // two
-  dec_context_zero_status(dc);
-  let dq_two = &dec_quad_from_string("2", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 02]", format!("{:?}", dq_two));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 02]", format!("{:?}", n!(2)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 02]", format!("{:?}", DEC_QUAD_TWO));
   // ten
-  dec_context_zero_status(dc);
-  let dq_ten = &dec_quad_from_string("10", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 10]", format!("{:?}", dq_ten));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 10]", format!("{:?}", n!(10)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 10]", format!("{:?}", DEC_QUAD_TEN));
   // hundred
-  dec_context_zero_status(dc);
-  let dq_hundred = &dec_quad_from_string("100", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 80]", format!("{:?}", dq_hundred));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 80]", format!("{:?}", n!(100)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 80]", format!("{:?}", DEC_QUAD_HUNDRED));
   // thousand
-  dec_context_zero_status(dc);
-  let dq_thousand = &dec_quad_from_string("1000", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 04 00]", format!("{:?}", dq_thousand));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 04 00]", format!("{:?}", n!(1000)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 04 00]", format!("{:?}", DEC_QUAD_THOUSAND));
   // million
-  dec_context_zero_status(dc);
-  let dq_million = &dec_quad_from_string("1000000", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 10 00 00]", format!("{:?}", dq_million));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 10 00 00]", format!("{:?}", n!(1000000)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 10 00 00]", format!("{:?}", DEC_QUAD_MILLION));
   // billion
-  dec_context_zero_status(dc);
-  let dq_billion = &dec_quad_from_string("1000000000", dc);
-  assert_eq!(0, dc.status);
-  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 40 00 00 00]", format!("{:?}", dq_billion));
+  assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 40 00 00 00]", format!("{:?}", n!(1000000000)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 40 00 00 00]", format!("{:?}", DEC_QUAD_BILLION));
+}
+
+#[test]
+fn test_dec_quad_reduce() {
+  assert_eq!("1.2345678E+11", s!(dec_quad_reduce(&n!(12345678E+4), c!())));
+}
+
+#[test]
+fn test_dec_quad_scale_b() {
+  assert_eq!("1234.5678", s!(dec_quad_scale_b(&n!(12345678), &n!(-4), c!())));
+}
+
+#[test]
+fn test_dec_quad_to_integral_value() {
+  assert_eq!(
+    "-0",
+    s!(dec_quad_to_integral_value(&n!(-0.75), c!(), DEC_ROUND_CEILING))
+  );
 }

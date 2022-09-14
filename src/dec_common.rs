@@ -22,34 +22,28 @@
  * SOFTWARE.
  */
 
-//! Rust bindings for **The decNumber C library** by IBM Fellow Mike Cowlishaw.
+//! Common definitions.
 
-extern crate libc;
+/// Round towards +Infinity.
+pub const DEC_ROUND_CEILING: u32 = 0;
 
-mod dec_common;
-mod dec_context;
-mod dec_context_c;
-mod dec_conversion;
-mod dec_conversion_c;
-mod dec_double;
-mod dec_double_c;
-mod dec_number;
-mod dec_number_c;
-mod dec_quad;
-mod dec_quad_c;
-mod dec_single;
-mod dec_single_c;
+/// Round away from 0.
+pub const DEC_ROUND_UP: u32 = 1;
 
-pub use dec_common::*;
-pub use dec_context::*;
-pub use dec_context_c::*;
-pub use dec_conversion::*;
-pub use dec_conversion_c::*;
-pub use dec_double::*;
-pub use dec_double_c::*;
-pub use dec_number::*;
-pub use dec_number_c::*;
-pub use dec_quad::*;
-pub use dec_quad_c::*;
-pub use dec_single::*;
-pub use dec_single_c::*;
+/// 0.5 rounds up.
+pub const DEC_ROUND_HALF_UP: u32 = 2;
+
+/// 0.5 rounds to nearest even.
+pub const DEC_ROUND_HALF_EVEN: u32 = 3;
+
+/// 0.5 rounds down.
+pub const DEC_ROUND_HALF_DOWN: u32 = 4;
+
+/// Round towards 0 (truncate).
+pub const DEC_ROUND_DOWN: u32 = 5;
+
+/// Round towards -Infinity.
+pub const DEC_ROUND_FLOOR: u32 = 6;
+
+/// Round for reround.
+pub const DEC_ROUND_05UP: u32 = 7;

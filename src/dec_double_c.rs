@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! `C` bindings for 64-bit decimal.
 
@@ -28,8 +28,8 @@ use crate::{DecContext, DecDouble};
 
 #[rustfmt::skip]
 extern "C" {
-  /// `C` binding to *decDoubleAdd* function.
+  /// Unsafe binding to *decDoubleAdd* function.
   pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, dc: *mut DecContext) -> *mut DecDouble;
-  /// `C` binding to *decDoubleZero* function.
+  /// Unsafe binding to *decDoubleZero* function.
   pub fn decDoubleZero(res: *mut DecDouble);
 }

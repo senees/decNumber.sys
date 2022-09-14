@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 //! 32-bit decimal definitions.
 
@@ -96,28 +96,28 @@ impl Default for DecSingle {
 //   result
 // }
 
-/// Converts [DecSingle] from string.
+/// Safe binding to *decSingleFromString* function.
 pub fn dec_single_from_string(s: &str, dc: &mut DecContext) -> DecSingle {
   let c_s = CString::new(s).unwrap();
-  let mut result = DecSingle::default();
+  let mut ds_res = DecSingle::default();
   unsafe {
-    decSingleFromString(&mut result, c_s.as_ptr(), dc);
+    decSingleFromString(&mut ds_res, c_s.as_ptr(), dc);
   }
-  result
+  ds_res
 }
 
-/// Converts [DecSingle] into [String].
-pub fn dec_single_to_string(d: &DecSingle) -> String {
+/// Safe binding to *decSingleToString* function.
+pub fn dec_single_to_string(ds: &DecSingle) -> String {
   unsafe {
     let mut buf = DEC_SINGLE_STRING_BUFFER;
-    decSingleToString(d, buf.as_mut_ptr() as *mut c_char);
+    decSingleToString(ds, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
   }
 }
 
-/// Sets [DecSingle] to the unsigned integer zero.
+/// Safe binding to *decSingleZero* function.
 pub fn dec_single_zero(ds: &mut DecSingle) {
   unsafe {
     decSingleZero(ds);

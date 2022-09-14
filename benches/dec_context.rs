@@ -8,27 +8,27 @@ use test::Bencher;
 #[bench]
 fn bench_dec_context_base(b: &mut Bencher) {
   b.iter(|| {
-    let _ = dec_context_default(ContextKind::Base(34));
+    let _ = dec_context_base(34);
   });
 }
 
 #[bench]
 fn bench_dec_context_32(b: &mut Bencher) {
   b.iter(|| {
-    let _ = dec_context_default(ContextKind::Decimal32);
+    let _ = dec_context_32();
   });
 }
 
 #[bench]
 fn bench_dec_context_64(b: &mut Bencher) {
   b.iter(|| {
-    let _ = dec_context_default(ContextKind::Decimal64);
+    let _ = dec_context_64();
   });
 }
 
 #[bench]
 fn bench_dec_context_128(b: &mut Bencher) {
   b.iter(|| {
-    let _ = dec_context_default(ContextKind::Decimal128);
+    let _ = dec_context_128();
   });
 }
