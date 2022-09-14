@@ -1,15 +1,15 @@
 [package]
 name = "dec-number-sys"
-version = "0.0.12"
+version = "0.0.13"
 authors = ["Dariusz Depta <dariusz.depta@engos.software>"]
-description = "Rust bindings for 'The decNumber C library'"
+description = "Rust bindings for The decNumber C library by IBM Fellow Mike Cowlishaw"
 documentation = "https://docs.rs/dec-number-sys"
 repository = "https://github.com/EngosSoftware/decNumber.sys.git"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
-libc = "0.2.126"
+libc = "0.2.132"
 
 [build-dependencies]
 cc = "1.0.73"
