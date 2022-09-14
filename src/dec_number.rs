@@ -25,7 +25,7 @@
 //! Arbitrary precision decimal definitions.
 
 use crate::dec_number_c::*;
-use crate::DecContext;
+use crate::{bcd, DecContext};
 use libc::{c_char, c_uchar};
 use std::ffi::{CStr, CString};
 
@@ -184,7 +184,7 @@ pub fn dec_number_from_u32(n: u32) -> DecNumber {
 ///
 pub fn dec_number_from_u64(n: u64) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n as u128);
+  let digits = bcd(n as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -196,7 +196,7 @@ pub fn dec_number_from_u64(n: u64) -> DecNumber {
 ///
 pub fn dec_number_from_i64(n: i64, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n.unsigned_abs() as u128);
+  let digits = bcd(n.unsigned_abs() as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -211,7 +211,7 @@ pub fn dec_number_from_i64(n: i64, dc: &mut DecContext) -> DecNumber {
 ///
 pub fn dec_number_from_u128(n: u128) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n);
+  let digits = bcd(n);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -223,7 +223,7 @@ pub fn dec_number_from_u128(n: u128) -> DecNumber {
 ///
 pub fn dec_number_from_i128(n: i128, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n.unsigned_abs());
+  let digits = bcd(n.unsigned_abs());
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -238,7 +238,7 @@ pub fn dec_number_from_i128(n: i128, dc: &mut DecContext) -> DecNumber {
 ///
 pub fn dec_number_from_usize(n: usize) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n as u128);
+  let digits = bcd(n as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -250,7 +250,7 @@ pub fn dec_number_from_usize(n: usize) -> DecNumber {
 ///
 pub fn dec_number_from_isize(n: isize, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
-  let digits = bcd_digits(n.unsigned_abs() as u128);
+  let digits = bcd(n.unsigned_abs() as u128);
   let count = digits.len();
   res.digits = count as i32;
   unsafe {
@@ -361,19 +361,4 @@ pub fn dec_number_zero(dn: &mut DecNumber) {
   unsafe {
     decNumberZero(dn);
   }
-}
-
-///
-fn bcd_digits(n: u128) -> Vec<u8> {
-  let mut v = n;
-  let mut digits = Vec::<u8>::with_capacity(20);
-  loop {
-    digits.push((v % 10) as u8);
-    v /= 10;
-    if v == 0 {
-      break;
-    }
-  }
-  digits.reverse();
-  digits
 }

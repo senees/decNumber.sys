@@ -85,6 +85,17 @@ fn test_dec_quad_constants() {
 }
 
 #[test]
+#[rustfmt::skip]
+fn test_dec_quad_from_bcd() {
+  assert_eq!("2366920938463463374607431768211455", s!(dec_quad_from_bcd(&bcd_quad(u128::MAX), 0, false)));
+  assert_eq!("18446744073709551615", s!(dec_quad_from_bcd(&bcd_quad(u64::MAX.into()), 0, false)));
+  assert_eq!("-18446744073709551615", s!(dec_quad_from_bcd(&bcd_quad(u64::MAX.into()), 0, true)));
+  assert_eq!("9223372036854775807", s!(dec_quad_from_bcd(&bcd_quad(i64::MAX.unsigned_abs().into()), 0, false)));
+  assert_eq!("-9223372036854775808", s!(dec_quad_from_bcd(&bcd_quad(i64::MIN.unsigned_abs().into()), 0, true)));
+  assert_eq!("1844674407.3709551615", s!(dec_quad_from_bcd(&bcd_quad(u64::MAX.into()), -10, false)));
+}
+
+#[test]
 fn test_dec_quad_reduce() {
   assert_eq!("1.2345678E+11", s!(dec_quad_reduce(&n!(12345678E+4), c!())));
 }

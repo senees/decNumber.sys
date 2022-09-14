@@ -24,9 +24,9 @@
 
 //! 128-bit decimal definitions.
 
-use crate::decContextZeroStatus;
 use crate::dec_context::DecContext;
 use crate::dec_quad_c::*;
+use crate::{DEC_FLOAT_SIGN, DEC_QUAD_PMAX};
 use libc::c_char;
 use std::ffi::{CStr, CString};
 use std::fmt::Debug;
@@ -162,6 +162,15 @@ pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQua
   dq_res
 }
 
+/// Safe binding to *decQuadFromBCD* function.
+pub fn dec_quad_from_bcd(bcd: &[u8; DEC_QUAD_PMAX], exp: i32, sign: bool) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadFromBCD(&mut dq_res, exp, bcd.as_ptr(), if sign { DEC_FLOAT_SIGN } else { 0 });
+  }
+  dq_res
+}
+
 /// Converts [DecQuad] from signed integer.
 pub fn dec_quad_from_i32(n: i32) -> DecQuad {
   let mut dq_res = DecQuad::default();
@@ -185,7 +194,6 @@ pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
   let mut dq_res = DecQuad::default();
   unsafe {
-    decContextZeroStatus(dc);
     decQuadFromString(&mut dq_res, c_s.as_ptr(), dc);
   }
   dq_res

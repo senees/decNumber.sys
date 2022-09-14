@@ -25,7 +25,7 @@
 //! `C` bindings for 128-bit decimal.
 
 use crate::{DecContext, DecQuad};
-use libc::{c_char, c_int, c_uint};
+use libc::{c_char, c_int, c_uchar, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
@@ -33,6 +33,8 @@ extern "C" {
   pub fn decQuadAbs(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadAdd* function.
   pub fn decQuadAdd(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadFromBCD* function.
+  pub fn decQuadFromBCD(res: *mut DecQuad, exp: c_int, bcd: *const c_uchar, sign: c_int) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromInt32* function.
   pub fn decQuadFromInt32(res: *mut DecQuad, n: c_int) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromUInt32* function.
