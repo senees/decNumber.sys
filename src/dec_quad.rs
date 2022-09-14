@@ -1,4 +1,28 @@
-//!
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+//! 128-bit decimal definitions.
 
 use crate::dec_context::DecContext;
 use crate::dec_conversion_c::*;
@@ -10,24 +34,24 @@ use std::ffi::{CStr, CString};
 use std::fmt::Debug;
 
 /// Length in bytes of [DecQuad] union.
-const DEC_QUAD_BYTES: usize = 16;
+pub const DEC_QUAD_BYTES: usize = 16;
 
 /// Maximum length of the [DecQuad] string.
-const DEC_QUAD_STRING: usize = 43;
+pub const DEC_QUAD_STRING: usize = 43;
 
 /// Buffer for [DecQuad] string.
-const DEC_QUAD_STRING_BUFFER: [c_char; DEC_QUAD_STRING] = [0; DEC_QUAD_STRING];
+pub const DEC_QUAD_STRING_BUFFER: [c_char; DEC_QUAD_STRING] = [0; DEC_QUAD_STRING];
 
 /// Convenient constant for [DecQuad] equal to positive zero.
 #[rustfmt::skip]
-pub(crate) const DEC_QUAD_POSITIVE_ZERO: DecQuad = {
+pub const DEC_QUAD_ZERO: DecQuad = {
   #[cfg(target_endian = "little")]
   { DecQuad { bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
   #[cfg(target_endian = "big")]
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
 };
 
-/// The `decQuad` decimal 128-bit type, accessible by all sizes.
+/// 128-bit decimal type, accessible by all sizes.
 #[repr(C)]
 pub union DecQuad {
   pub bytes: [u8; DEC_QUAD_BYTES],
@@ -39,7 +63,7 @@ pub union DecQuad {
 impl Default for DecQuad {
   /// The default value for [DecQuad] is positive zero.
   fn default() -> Self {
-    DEC_QUAD_POSITIVE_ZERO
+    DEC_QUAD_ZERO
   }
 }
 

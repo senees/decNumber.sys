@@ -1,4 +1,28 @@
-//!
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+//! 32-bit decimal definitions.
 
 use crate::dec_context::DecContext;
 use crate::dec_single_c::*;
@@ -6,24 +30,24 @@ use libc::c_char;
 use std::ffi::{CStr, CString};
 
 /// Length in bytes of [DecSingle] union.
-const DEC_SINGLE_BYTES: usize = 4;
+pub const DEC_SINGLE_BYTES: usize = 4;
 
 /// Maximum length of the [DecSingle] string.
-const DEC_SINGLE_STRING: usize = 16;
+pub const DEC_SINGLE_STRING: usize = 16;
 
 /// Buffer for [DecSingle] string.
-const DEC_SINGLE_STRING_BUFFER: [c_char; DEC_SINGLE_STRING] = [0; DEC_SINGLE_STRING];
+pub const DEC_SINGLE_STRING_BUFFER: [c_char; DEC_SINGLE_STRING] = [0; DEC_SINGLE_STRING];
 
-/// Convenient constant for [DecQuad] equal to positive zero.
+/// Convenient constant for [DecSingle] equal to positive zero.
 #[rustfmt::skip]
-pub(crate) const DEC_SINGLE_POSITIVE_ZERO: DecSingle = {
+pub const DEC_SINGLE_ZERO: DecSingle = {
   #[cfg(target_endian = "little")]
   { DecSingle { bytes: [0x00, 0x00, 0x50, 0x22] }}
   #[cfg(target_endian = "big")]
   { DecSingle { bytes: [0x22, 0x50, 0x00, 0x00] }}
 };
 
-/// The `decSingle` 32-bit type, accessible by all sizes.
+/// 32-bit decimal type, accessible by all sizes.
 #[repr(C)]
 pub union DecSingle {
   pub bytes: [u8; DEC_SINGLE_BYTES],
@@ -34,7 +58,7 @@ pub union DecSingle {
 impl Default for DecSingle {
   /// The default value for [DecSingle] is positive zero.
   fn default() -> Self {
-    DEC_SINGLE_POSITIVE_ZERO
+    DEC_SINGLE_ZERO
   }
 }
 

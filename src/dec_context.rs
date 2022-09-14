@@ -1,21 +1,44 @@
-//!
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
 
-use crate::dec_common::{Int, Ubyte, Uint};
+//! Decimal context definitions.
+
 use crate::dec_context_c::*;
 
 /// Initializes context to ANSI X3-274 defaults.
-const DEC_INIT_BASE: Int = 0;
+pub const DEC_INIT_BASE: i32 = 0;
 
 /// Initializes context to IEEE 754 defaults, 32-bit.
-const DEC_INIT_DECIMAL32: Int = 32;
+pub const DEC_INIT_DECIMAL32: i32 = 32;
 
 /// Initializes context to IEEE 754 defaults, 64-bit.
-const DEC_INIT_DECIMAL64: Int = 64;
+pub const DEC_INIT_DECIMAL64: i32 = 64;
 
 /// Initializes context to IEEE 754 defaults, 128-bit.
-const DEC_INIT_DECIMAL128: Int = 128;
+pub const DEC_INIT_DECIMAL128: i32 = 128;
 
-/// Convenient enumeration of context initialization constants.
+/// Enumeration of context initialization constants.
 #[repr(i32)]
 pub enum ContextKind {
   /// ANSI X3-274 defaults with maximum number of digits.
@@ -33,54 +56,22 @@ pub enum ContextKind {
 #[derive(Default, Clone)]
 pub struct DecContext {
   /// Working precision.
-  digits: Int,
+  pub digits: i32,
   /// Maximum positive exponent.
-  emax: Int,
+  pub emax: i32,
   /// Minimum negative exponent.
-  emin: Int,
+  pub emin: i32,
   /// Rounding mode.
-  round: Uint,
+  pub round: u32,
   /// Trap-enabler flags.
-  traps: Uint,
+  pub traps: u32,
   /// Status flags.
-  status: Uint,
-  /// flag: apply IEEE exponent clamp.
-  clamp: Ubyte,
+  pub status: u32,
+  /// Flag: apply IEEE exponent clamp.
+  pub clamp: u8,
 }
 
-impl DecContext {
-  /// Returns reference to digits.
-  pub fn digits(&self) -> &Int {
-    &self.digits
-  }
-  /// Returns reference to emax.
-  pub fn emax(&self) -> &Int {
-    &self.emax
-  }
-  /// Returns reference to emin.
-  pub fn emin(&self) -> &Int {
-    &self.emin
-  }
-  /// Returns reference to rounding flag.
-  pub fn round(&self) -> &Uint {
-    &self.round
-  }
-  /// Returns reference to traps flag.
-  pub fn traps(&self) -> &Uint {
-    &self.traps
-  }
-  /// Returns reference to status.
-  pub fn status(&self) -> &Uint {
-    &self.status
-  }
-  /// Returns reference to clamp flag.
-  pub fn clamp(&self) -> &Ubyte {
-    &self.clamp
-  }
-}
-
-/// Returns the default context for decimal arithmetic initialized
-/// according the specified [ContextKind] value.
+/// Returns decimal context initialized according the specified [ContextKind] value.
 pub fn dec_context_default(kind: ContextKind) -> DecContext {
   let mut context = DecContext::default();
   unsafe {

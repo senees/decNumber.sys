@@ -1,8 +1,31 @@
-//!
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+//! Rust bindings for **The decNumber C library** by IBM Fellow Mike Cowlishaw.
 
 extern crate libc;
 
-mod dec_common;
 mod dec_context;
 mod dec_context_c;
 mod dec_conversion;
@@ -15,27 +38,16 @@ mod dec_quad;
 mod dec_quad_c;
 mod dec_single;
 mod dec_single_c;
-mod decimal128;
-mod decimal32;
-mod decimal64;
-mod decimal_number;
 
-pub use dec_context::{dec_context_default, ContextKind, DecContext};
-pub use dec_conversion::{
-  decimal128_from_number, decimal128_to_number, decimal32_from_number, decimal32_to_number, decimal64_from_number,
-  decimal64_to_number,
-};
-pub use dec_double::{dec_double_add, dec_double_zero};
-pub use dec_number::{
-  dec_number_add, dec_number_compare, dec_number_divide, dec_number_exp, dec_number_from_i128, dec_number_from_i32,
-  dec_number_from_i64, dec_number_from_isize, dec_number_from_string, dec_number_from_u128, dec_number_from_u32,
-  dec_number_from_u64, dec_number_from_usize, dec_number_is_zero, dec_number_ln, dec_number_minus, dec_number_multiply,
-  dec_number_scale_b, dec_number_subtract, dec_number_to_string, dec_number_zero,
-};
-pub use dec_quad::{
-  dec_quad_add, dec_quad_from_i32, dec_quad_from_string, dec_quad_from_u32, dec_quad_rescale, dec_quad_to_string,
-  dec_quad_zero,
-};
-pub use dec_single::{dec_single_from_string, dec_single_to_string, dec_single_zero};
-pub use decimal128::Decimal128;
-pub use decimal_number::DecimalNumber;
+pub use dec_context::*;
+pub use dec_context_c::*;
+pub use dec_conversion::*;
+pub use dec_conversion_c::*;
+pub use dec_double::*;
+pub use dec_double_c::*;
+pub use dec_number::*;
+pub use dec_number_c::*;
+pub use dec_quad::*;
+pub use dec_quad_c::*;
+pub use dec_single::*;
+pub use dec_single_c::*;

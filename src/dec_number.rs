@@ -1,21 +1,50 @@
-//!
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 Dariusz Depta Engos Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+//! Arbitrary precision decimal definitions.
 
 use crate::dec_number_c::*;
 use crate::DecContext;
 use libc::{c_char, c_uchar};
 use std::ffi::{CStr, CString};
 
-/// Sign; 1=negative, 0=positive or zero.
-const DEC_NEG: u8 = 0x80;
-/// 1 = Infinity
-const DEC_INF: u8 = 0x40;
-/// 1 = NaN
-const DEC_NAN: u8 = 0x20;
-/// 1 = sNaN
-const DEC_SNAN: u8 = 0x10;
-/// Any special value.
-const DEC_SPECIAL: u8 = DEC_INF | DEC_NAN | DEC_SNAN;
+/// Sign: 1=negative, 0=positive or zero.
+pub const DEC_NEG: u8 = 0x80;
 
+/// 1 = Infinity
+pub const DEC_INF: u8 = 0x40;
+
+/// 1 = NaN
+pub const DEC_NAN: u8 = 0x20;
+
+/// 1 = sNaN
+pub const DEC_SNAN: u8 = 0x10;
+
+/// Any special value.
+pub const DEC_SPECIAL: u8 = DEC_INF | DEC_NAN | DEC_SNAN;
+
+/// Arbitrary precision decimal type.
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct DecNumber {
