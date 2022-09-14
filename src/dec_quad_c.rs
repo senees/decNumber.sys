@@ -29,16 +29,18 @@ use libc::{c_char, c_int, c_uint};
 
 #[rustfmt::skip]
 extern "C" {
+  /// `C` binding to *decQuadAbs* function.
+  pub fn decQuadAbs(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// `C` binding to *decQuadAdd* function.
-  pub fn decQuadAdd(res: *mut DecQuad, lhs: *const DecQuad, rhs: *const DecQuad, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decQuadAdd(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// `C` binding to *decQuadFromInt32* function.
-  pub fn decQuadFromInt32(dq: *mut DecQuad, n: c_int) -> *mut DecQuad;
+  pub fn decQuadFromInt32(res: *mut DecQuad, n: c_int) -> *mut DecQuad;
   /// `C` binding to *decQuadFromUInt32* function.
-  pub fn decQuadFromUInt32(dq: *mut DecQuad, n: c_uint) -> *mut DecQuad;
+  pub fn decQuadFromUInt32(res: *mut DecQuad, n: c_uint) -> *mut DecQuad;
   /// `C` binding to *decQuadFromString* function.
-  pub fn decQuadFromString(res: *mut DecQuad, s: *const c_char, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decQuadFromString(res: *mut DecQuad, s: *const c_char, dc: *mut DecContext) -> *mut DecQuad;
   /// `C` binding to *decQuadToString* function.
-  pub fn decQuadToString(dq: *const DecQuad, s: *mut c_char) -> *mut c_char;
+  pub fn decQuadToString(res: *const DecQuad, s: *mut c_char) -> *mut c_char;
   /// `C` binding to *decQuadZero* function.
   pub fn decQuadZero(res: *mut DecQuad);
 }

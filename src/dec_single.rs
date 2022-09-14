@@ -63,15 +63,15 @@ impl Default for DecSingle {
 }
 
 // /// Adds two [DecSingles](DecSingle).
-// pub fn dec_single_add(lhs: &DecSingle, rhs: &DecSingle, ctx: &mut DecContext) -> DecSingle {
+// pub fn dec_single_add(lhs: &DecSingle, rhs: &DecSingle, dc: &mut DecContext) -> DecSingle {
 //   let mut result = DecSingle::default();
 //   let mut dl = DecDouble::default();
 //   let mut dr = DecDouble::default();
 //   let mut d_res = DecDouble::default();
 //   unsafe {
-//     decSingleToWider(lhs, &mut dl, ctx);
-//     decSingleToWider(rhs, &mut dr, ctx);
-//     decSingleAdd(&mut result, lhs, rhs, ctx);
+//     decSingleToWider(lhs, &mut dl, dc);
+//     decSingleToWider(rhs, &mut dr, dc);
+//     decSingleAdd(&mut result, lhs, rhs, dc);
 //   }
 //   result
 // }
@@ -97,11 +97,11 @@ impl Default for DecSingle {
 // }
 
 /// Converts [DecSingle] from string.
-pub fn dec_single_from_string(s: &str, ctx: &mut DecContext) -> DecSingle {
+pub fn dec_single_from_string(s: &str, dc: &mut DecContext) -> DecSingle {
   let c_s = CString::new(s).unwrap();
   let mut result = DecSingle::default();
   unsafe {
-    decSingleFromString(&mut result, c_s.as_ptr(), ctx);
+    decSingleFromString(&mut result, c_s.as_ptr(), dc);
   }
   result
 }

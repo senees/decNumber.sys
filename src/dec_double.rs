@@ -56,10 +56,10 @@ impl Default for DecDouble {
 }
 
 /// Adds two [DecDoubles](DecDouble).
-pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, ctx: &mut DecContext) -> DecDouble {
+pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, dc: &mut DecContext) -> DecDouble {
   let mut res = DecDouble::default();
   unsafe {
-    decDoubleAdd(&mut res, lhs, rhs, ctx);
+    decDoubleAdd(&mut res, lhs, rhs, dc);
   }
   res
 }

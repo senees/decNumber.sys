@@ -7,10 +7,10 @@ use test::Bencher;
 
 #[bench]
 fn bench_dec_quad_add_0001(b: &mut Bencher) {
-  let ctx = &mut dec_context_default(ContextKind::Decimal128);
-  let dql = &dec_quad_from_string("0.1", ctx);
-  let dqr = &dec_quad_from_string("0.2", ctx);
+  let dc = &mut dec_context_default(ContextKind::Decimal128);
+  let dql = &dec_quad_from_string("0.1", dc);
+  let dqr = &dec_quad_from_string("0.2", dc);
   b.iter(|| {
-    let _ = dec_quad_add(dql, dqr, ctx);
+    let _ = dec_quad_add(dql, dqr, dc);
   });
 }

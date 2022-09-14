@@ -31,13 +31,13 @@ extern "C" {
   /// `C` binding to *decimal32ToNumber* function.
   pub fn decimal32ToNumber(d: *const DecSingle, n: *mut DecNumber) -> *mut DecNumber;
   /// `C` binding to *decimal32FromNumber* function.
-  pub fn decimal32FromNumber(d: *mut DecSingle, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecSingle;
+  pub fn decimal32FromNumber(d: *mut DecSingle, n: *const DecNumber, dc: *mut DecContext) -> *mut DecSingle;
   /// `C` binding to *decimal64ToNumber* function.
   pub fn decimal64ToNumber(d: *const DecDouble, n: *mut DecNumber) -> *mut DecNumber;
   /// `C` binding to *decimal64FromNumber* function.
-  pub fn decimal64FromNumber(d: *mut DecDouble, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecDouble;
+  pub fn decimal64FromNumber(d: *mut DecDouble, n: *const DecNumber, dc: *mut DecContext) -> *mut DecDouble;
   /// `C` binding to *decimal128ToNumber* function.
   pub fn decimal128ToNumber(d: *const DecQuad, n: *mut DecNumber) -> *mut DecNumber;
   /// `C` binding to *decimal128FromNumber* function.
-  pub fn decimal128FromNumber(d: *mut DecQuad, n: *const DecNumber, ctx: *mut DecContext) -> *mut DecQuad;
+  pub fn decimal128FromNumber(d: *mut DecQuad, n: *const DecNumber, dc: *mut DecContext) -> *mut DecQuad;
 }

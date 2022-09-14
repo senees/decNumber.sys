@@ -39,10 +39,10 @@ pub fn decimal32_to_number(d: &DecSingle, n: &mut DecNumber) {
 }
 
 ///
-pub fn decimal32_from_number(n: &DecNumber, ctx: &mut DecContext) -> DecSingle {
+pub fn decimal32_from_number(n: &DecNumber, dc: &mut DecContext) -> DecSingle {
   let mut res = DecSingle::default();
   unsafe {
-    decimal32FromNumber(&mut res, n, ctx);
+    decimal32FromNumber(&mut res, n, dc);
   }
   res
 }
@@ -55,10 +55,10 @@ pub fn decimal64_to_number(d: &DecDouble, n: &mut DecNumber) {
 }
 
 ///
-pub fn decimal64_from_number(n: &DecNumber, ctx: &mut DecContext) -> DecDouble {
+pub fn decimal64_from_number(n: &DecNumber, dc: &mut DecContext) -> DecDouble {
   let mut res = DecDouble::default();
   unsafe {
-    decimal64FromNumber(&mut res, n, ctx);
+    decimal64FromNumber(&mut res, n, dc);
   }
   res
 }
@@ -71,10 +71,10 @@ pub fn decimal128_to_number(d: &DecQuad, n: &mut DecNumber) {
 }
 
 ///
-pub fn decimal128_from_number(n: &DecNumber, ctx: &mut DecContext) -> DecQuad {
+pub fn decimal128_from_number(n: &DecNumber, dc: &mut DecContext) -> DecQuad {
   let mut res = DecQuad::default();
   unsafe {
-    decimal128FromNumber(&mut res, n, ctx);
+    decimal128FromNumber(&mut res, n, dc);
   }
   res
 }

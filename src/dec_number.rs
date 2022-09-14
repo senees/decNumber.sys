@@ -128,37 +128,37 @@ impl DecNumber {
 }
 
 ///
-pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberAdd(&mut res, dn1, dn2, ctx);
+    decNumberAdd(&mut res, dn1, dn2, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_compare(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_compare(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberCompare(&mut res, dn1, dn2, ctx);
+    decNumberCompare(&mut res, dn1, dn2, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberDivide(&mut res, dn1, dn2, ctx);
+    decNumberDivide(&mut res, dn1, dn2, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_exp(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_exp(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberExp(&mut res, dn, ctx);
+    decNumberExp(&mut res, dn, dc);
   }
   res
 }
@@ -194,7 +194,7 @@ pub fn dec_number_from_u64(n: u64) -> DecNumber {
 }
 
 ///
-pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_from_i64(n: i64, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   let digits = bcd_digits(n.unsigned_abs() as u128);
   let count = digits.len();
@@ -202,7 +202,7 @@ pub fn dec_number_from_i64(n: i64, ctx: &mut DecContext) -> DecNumber {
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
     if n < 0 {
-      decNumberMinus(&mut res, &res, ctx);
+      decNumberMinus(&mut res, &res, dc);
     }
   }
   res
@@ -221,7 +221,7 @@ pub fn dec_number_from_u128(n: u128) -> DecNumber {
 }
 
 ///
-pub fn dec_number_from_i128(n: i128, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_from_i128(n: i128, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   let digits = bcd_digits(n.unsigned_abs());
   let count = digits.len();
@@ -229,7 +229,7 @@ pub fn dec_number_from_i128(n: i128, ctx: &mut DecContext) -> DecNumber {
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
     if n < 0 {
-      decNumberMinus(&mut res, &res, ctx);
+      decNumberMinus(&mut res, &res, dc);
     }
   }
   res
@@ -248,7 +248,7 @@ pub fn dec_number_from_usize(n: usize) -> DecNumber {
 }
 
 ///
-pub fn dec_number_from_isize(n: isize, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_from_isize(n: isize, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   let digits = bcd_digits(n.unsigned_abs() as u128);
   let count = digits.len();
@@ -256,45 +256,45 @@ pub fn dec_number_from_isize(n: isize, ctx: &mut DecContext) -> DecNumber {
   unsafe {
     decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
     if n < 0 {
-      decNumberMinus(&mut res, &res, ctx);
+      decNumberMinus(&mut res, &res, dc);
     }
   }
   res
 }
 
 /// Converts [DecNumber]  from string.
-pub fn dec_number_from_string(s: &str, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_from_string(s: &str, dc: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
   let mut value = DecNumber::default();
   unsafe {
-    decNumberFromString(&mut value, c_s.as_ptr(), ctx);
+    decNumberFromString(&mut value, c_s.as_ptr(), dc);
   }
   value
 }
 
 ///
-pub fn dec_number_ln(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_ln(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberLn(&mut res, dn, ctx);
+    decNumberLn(&mut res, dn, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_minus(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_minus(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberMinus(&mut res, dn, ctx);
+    decNumberMinus(&mut res, dn, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberMultiply(&mut res, dn1, dn2, ctx);
+    decNumberMultiply(&mut res, dn1, dn2, dc);
   }
   res
 }
@@ -310,37 +310,37 @@ pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
 }
 
 ///
-pub fn dec_number_reduce(dn: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_reduce(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberReduce(&mut res, dn, ctx);
+    decNumberReduce(&mut res, dn, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberRescale(&mut res, dn1, dn2, ctx);
+    decNumberRescale(&mut res, dn1, dn2, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberScaleB(&mut res, dn1, dn2, ctx);
+    decNumberScaleB(&mut res, dn1, dn2, dc);
   }
   res
 }
 
 ///
-pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, ctx: &mut DecContext) -> DecNumber {
+pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
-    decNumberSubtract(&mut res, dn1, dn2, ctx);
+    decNumberSubtract(&mut res, dn1, dn2, dc);
   }
   res
 }

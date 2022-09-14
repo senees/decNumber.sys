@@ -97,3 +97,20 @@ pub fn dec_context_default(kind: ContextKind) -> DecContext {
   }
   context
 }
+
+/// Returns decimal context initialized for 128-bit decimals.
+pub fn dec_context_128() -> DecContext {
+  let mut context = DecContext::default();
+  unsafe {
+    decContextDefault(&mut context, DEC_INIT_DECIMAL128);
+    context.traps = 0;
+  }
+  context
+}
+
+/// Clears (sets to zero) all the status bits in the `status` field of a decimal context.
+pub fn dec_context_zero_status(dc: &mut DecContext) {
+  unsafe {
+    decContextZeroStatus(dc);
+  }
+}

@@ -30,4 +30,6 @@ use crate::DecContext;
 extern "C" {
   /// `C` binding to *decContextDefault* function. 
   pub fn decContextDefault(dc: *mut DecContext, kind: i32) -> *mut DecContext;
+  /// `C` binding to *decContextZeroStatus* function. 
+  pub fn decContextZeroStatus(dc: *mut DecContext) -> *mut DecContext;
 }

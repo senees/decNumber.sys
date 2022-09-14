@@ -32,11 +32,11 @@ extern "C" {
   /// `C` binding to *decSingleFromString* function.
   pub fn decSingleFromString(res: *mut DecSingle, s: *const c_char, dc: *mut DecContext) -> *mut DecSingle;
   /// `C` binding to *decSingleFromWider* function.
-  pub fn decSingleFromWider(res: *mut DecSingle, ds: *const DecDouble, ctx: *mut DecContext) -> *mut DecSingle;
+  pub fn decSingleFromWider(res: *mut DecSingle, ds: *const DecDouble, dc: *mut DecContext) -> *mut DecSingle;
   /// `C` binding to *decSingleToString* function.
   pub fn decSingleToString(ds: *const DecSingle, s: *mut c_char) -> *mut c_char;
   /// `C` binding to *decSingleToWider* function.
-  pub fn decSingleToWider(res: *const DecSingle, ds: *mut DecDouble, ctx: *mut DecContext) -> *mut DecDouble;
+  pub fn decSingleToWider(res: *const DecSingle, ds: *mut DecDouble, dc: *mut DecContext) -> *mut DecDouble;
   /// `C` binding to *decSingleZero* function.
   pub fn decSingleZero(res: *mut DecSingle);
 }

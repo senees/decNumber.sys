@@ -24,6 +24,7 @@
 
 //! 128-bit decimal definitions.
 
+use crate::decContextZeroStatus;
 use crate::dec_context::DecContext;
 use crate::dec_conversion_c::*;
 use crate::dec_number::DecNumber;
@@ -42,13 +43,76 @@ pub const DEC_QUAD_STRING: usize = 43;
 /// Buffer for [DecQuad] string.
 pub const DEC_QUAD_STRING_BUFFER: [c_char; DEC_QUAD_STRING] = [0; DEC_QUAD_STRING];
 
-/// Convenient constant for [DecQuad] equal to positive zero.
+/// [DecQuad] equal to zero `0`.
 #[rustfmt::skip]
 pub const DEC_QUAD_ZERO: DecQuad = {
   #[cfg(target_endian = "little")]
   { DecQuad { bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
   #[cfg(target_endian = "big")]
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
+};
+
+/// [DecQuad] equal to one `1`.
+#[rustfmt::skip]
+pub const DEC_QUAD_ONE: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01] }}
+};
+
+/// [DecQuad] equal to two `2`.
+#[rustfmt::skip]
+pub const DEC_QUAD_TWO: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02] }}
+};
+
+/// [DecQuad] equal to ten `10`.
+#[rustfmt::skip]
+pub const DEC_QUAD_TEN: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10] }}
+};
+
+/// [DecQuad] equal to hundred `100`.
+#[rustfmt::skip]
+pub const DEC_QUAD_HUNDRED: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80] }}
+};
+
+/// [DecQuad] equal to thousand `1000`.
+#[rustfmt::skip]
+pub const DEC_QUAD_THOUSAND: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x04, 0x00] }}
+};
+
+/// [DecQuad] equal to million `1000000`.
+#[rustfmt::skip]
+pub const DEC_QUAD_MILLION: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00] }}
+};
+
+/// [DecQuad] equal to billion `1000000000`.
+#[rustfmt::skip]
+pub const DEC_QUAD_BILLION: DecQuad = {
+  #[cfg(target_endian = "little")]
+  { DecQuad { bytes: [0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x22] }}
+  #[cfg(target_endian = "big")]
+  { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00] }}
 };
 
 /// 128-bit decimal type, accessible by all sizes.
@@ -83,72 +147,103 @@ impl Debug for DecQuad {
   }
 }
 
+/// Returns absolute value of [DecQuad].
+pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decContextZeroStatus(dc);
+    decQuadAbs(&mut dq_res, dq, dc);
+  }
+  dq_res
+}
+
 /// Adds two [DecQuads](DecQuad).
-pub fn dec_quad_add(dql: &DecQuad, dqr: &DecQuad, ctx: &mut DecContext) -> DecQuad {
-  let mut result = DecQuad::default();
+pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
   unsafe {
-    decQuadAdd(&mut result, dql, dqr, ctx);
+    decContextZeroStatus(dc);
+    decQuadAdd(&mut dq_res, dq1, dq2, dc);
   }
-  result
+  dq_res
 }
 
-///
+/// Converts [DecQuad] from signed integer.
 pub fn dec_quad_from_i32(n: i32) -> DecQuad {
-  let mut result = DecQuad::default();
+  let mut dq_res = DecQuad::default();
   unsafe {
-    decQuadFromInt32(&mut result, n);
+    decQuadFromInt32(&mut dq_res, n);
   }
-  result
+  dq_res
 }
 
-///
+/// Converts [DecQuad] from unsigned integer.
 pub fn dec_quad_from_u32(n: u32) -> DecQuad {
-  let mut result = DecQuad::default();
+  let mut dq_res = DecQuad::default();
   unsafe {
-    decQuadFromUInt32(&mut result, n);
+    decQuadFromUInt32(&mut dq_res, n);
   }
-  result
+  dq_res
 }
 
 /// Converts [DecQuad] from string.
-pub fn dec_quad_from_string(s: &str, ctx: &mut DecContext) -> DecQuad {
+pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
-  let mut result = DecQuad::default();
+  let mut dq_res = DecQuad::default();
   unsafe {
-    decQuadFromString(&mut result, c_s.as_ptr(), ctx);
+    decContextZeroStatus(dc);
+    decQuadFromString(&mut dq_res, c_s.as_ptr(), dc);
   }
-  result
+  dq_res
 }
 
 ///
-pub fn dec_quad_rescale(q1: &DecQuad, q2: &DecQuad, ctx: &mut DecContext) -> DecQuad {
-  let mut res = DecQuad::default();
+pub fn dec_quad_rescale(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
   let mut n1 = DecNumber::default();
   let mut n2 = DecNumber::default();
-  let mut nr = DecNumber::default();
+  let mut n_res = DecNumber::default();
   unsafe {
-    decimal128ToNumber(q1, &mut n1);
-    decimal128ToNumber(q2, &mut n2);
-    decNumberRescale(&mut nr, &n1, &n2, ctx);
-    decimal128FromNumber(&mut res, &nr, ctx);
+    decimal128ToNumber(dq1, &mut n1);
+    decimal128ToNumber(dq2, &mut n2);
+    decContextZeroStatus(dc);
+    decNumberRescale(&mut n_res, &n1, &n2, dc);
+    decContextZeroStatus(dc);
+    decimal128FromNumber(&mut dq_res, &n_res, dc);
   }
-  res
+  dq_res
+}
+
+///
+pub fn dec_quad_scale_b(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  let mut n1 = DecNumber::default();
+  let mut n2 = DecNumber::default();
+  let mut n_res = DecNumber::default();
+  unsafe {
+    decimal128ToNumber(dq1, &mut n1);
+    decimal128ToNumber(dq2, &mut n2);
+    decContextZeroStatus(dc);
+    decNumberScaleB(&mut n_res, &n1, &n2, dc);
+    decContextZeroStatus(dc);
+    decimal128FromNumber(&mut dq_res, &n_res, dc);
+  }
+  dq_res
 }
 
 /// Converts [DecQuad] into [String].
-pub fn dec_quad_to_string(d: &DecQuad) -> String {
+pub fn dec_quad_to_string(dq: &DecQuad) -> String {
   unsafe {
     let mut buf = DEC_QUAD_STRING_BUFFER;
-    decQuadToString(d, buf.as_mut_ptr() as *mut c_char);
+    decQuadToString(dq, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
   }
 }
 
-/// Sets [DecQuad] to the unsigned integer zero.
-pub fn dec_quad_zero(ds: &mut DecQuad) {
+/// Sets [DecQuad] to zero.
+pub fn dec_quad_zero(dq: &mut DecQuad) {
   unsafe {
-    decQuadZero(ds);
+    decQuadZero(dq);
   }
 }

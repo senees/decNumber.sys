@@ -29,7 +29,7 @@ use crate::{DecContext, DecDouble};
 #[rustfmt::skip]
 extern "C" {
   /// `C` binding to *decDoubleAdd* function.
-  pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, ctx: *mut DecContext) -> *mut DecDouble;
+  pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, dc: *mut DecContext) -> *mut DecDouble;
   /// `C` binding to *decDoubleZero* function.
   pub fn decDoubleZero(res: *mut DecDouble);
 }
