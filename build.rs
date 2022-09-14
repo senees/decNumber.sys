@@ -21,11 +21,11 @@ fn main() {
     .file("decNumber-icu-368/decimal64.c")
     .file("decNumber-icu-368/decimal32.c")
     .file("decNumber-icu-368/decContext.c")
-    .file("decNumber-icu-368/decNumber.c")
     .file("decNumber-icu-368/decSingle.c")
     .file("decNumber-icu-368/decDouble.c")
     .file("decNumber-icu-368/decQuad.c")
     .file("decNumber-icu-368/decPacked.c")
+    .file("decNumber-icu-368/decNumber.c")
     .out_dir(output_dir.join("lib"))
     .compile("decnumber-icu-368");
 }
