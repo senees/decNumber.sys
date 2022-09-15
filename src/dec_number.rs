@@ -234,6 +234,15 @@ pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext
   res
 }
 
+/// Safe binding to *decNumberPower* function.
+pub fn dec_number_power(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberPower(&mut res, dn1, dn2, dc);
+  }
+  res
+}
+
 /// Safe binding to *decNumberReduce* function.
 pub fn dec_number_reduce(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
