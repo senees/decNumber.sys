@@ -114,6 +114,7 @@ pub const DEC_QUAD_BILLION: DecQuad = {
 
 /// 128-bit decimal number.
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub union DecQuad {
   pub bytes: [u8; DEC_QUAD_BYTES],
   pub shorts: [u16; DEC_QUAD_BYTES / 2],
@@ -134,7 +135,7 @@ impl Debug for DecQuad {
     write!(
       f,
       "[{}]",
-      (0..16)
+      (0..DEC_QUAD_BYTES)
         .into_iter()
         .rev()
         .map(|i| format!(" {:02X}", unsafe { self.bytes[i] }))
@@ -158,6 +159,15 @@ pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQua
   let mut dq_res = DecQuad::default();
   unsafe {
     decQuadAdd(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
+/// Safe binding to *decQuadDivide* function.
+pub fn dec_quad_divide(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadDivide(&mut dq_res, dq1, dq2, dc);
   }
   dq_res
 }
@@ -204,6 +214,24 @@ pub fn dec_quad_is_finite(dn: &DecQuad) -> bool {
   unsafe { decQuadIsFinite(dn) == 1 }
 }
 
+/// Safe binding to *decQuadMinus* function.
+pub fn dec_quad_minus(dn: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadMinus(&mut dq_res, dn, dc);
+  }
+  dq_res
+}
+
+/// Safe binding to *decQuadMultiply* function.
+pub fn dec_quad_multiply(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadMultiply(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
 /// Safe binding to *decQuadReduce* function.
 pub fn dec_quad_reduce(dn: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
@@ -218,6 +246,15 @@ pub fn dec_quad_scale_b(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> De
   let mut dq_res = DecQuad::default();
   unsafe {
     decQuadScaleB(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
+/// Safe binding to *decQuadSubtract* function.
+pub fn dec_quad_subtract(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadSubtract(&mut dq_res, dq1, dq2, dc);
   }
   dq_res
 }

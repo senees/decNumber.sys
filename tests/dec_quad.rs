@@ -85,6 +85,11 @@ fn test_dec_quad_constants() {
 }
 
 #[test]
+fn test_dec_quad_divide() {
+  assert_eq!("0.25", s!(dec_quad_divide(&n!(1), &n!(4), c!())));
+}
+
+#[test]
 #[rustfmt::skip]
 fn test_dec_quad_from_bcd() {
   assert_eq!("2366920938463463374607431768211455", s!(dec_quad_from_bcd(&bcd_quad(u128::MAX), 0, false)));
@@ -96,6 +101,19 @@ fn test_dec_quad_from_bcd() {
 }
 
 #[test]
+fn test_dec_quad_minus() {
+  assert_eq!("0", s!(dec_quad_minus(&n!(-0), c!())));
+  assert_eq!("0", s!(dec_quad_minus(&n!(0), c!())));
+  assert_eq!("1.1", s!(dec_quad_minus(&n!(-1.1), c!())));
+  assert_eq!("-1.1", s!(dec_quad_minus(&n!(1.1), c!())));
+}
+
+#[test]
+fn test_dec_quad_multiply() {
+  assert_eq!("4.4", s!(dec_quad_multiply(&n!(1.1), &n!(4), c!())));
+}
+
+#[test]
 fn test_dec_quad_reduce() {
   assert_eq!("1.2345678E+11", s!(dec_quad_reduce(&n!(12345678E+4), c!())));
 }
@@ -103,6 +121,11 @@ fn test_dec_quad_reduce() {
 #[test]
 fn test_dec_quad_scale_b() {
   assert_eq!("1234.5678", s!(dec_quad_scale_b(&n!(12345678), &n!(-4), c!())));
+}
+
+#[test]
+fn test_dec_quad_subtract() {
+  assert_eq!("1.000", s!(dec_quad_subtract(&n!(1.123), &n!(0.123), c!())));
 }
 
 #[test]

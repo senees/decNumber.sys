@@ -26,6 +26,7 @@
 
 use crate::dec_context::DecContext;
 use crate::dec_double_c::*;
+use std::fmt::Debug;
 
 /// Length in bytes of [DecDouble] union.
 pub const DEC_DOUBLE_BYTES: usize = 8;
@@ -41,6 +42,7 @@ pub const DEC_DOUBLE_ZERO: DecDouble = {
 
 /// 64-bit decimal number.
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub union DecDouble {
   pub bytes: [u8; DEC_DOUBLE_BYTES],
   pub shorts: [u16; DEC_DOUBLE_BYTES / 2],
@@ -52,6 +54,22 @@ impl Default for DecDouble {
   /// The default value for [DecDouble] is positive zero.
   fn default() -> Self {
     DEC_DOUBLE_ZERO
+  }
+}
+
+impl Debug for DecDouble {
+  /// Converts [DecDouble] to a string in the form of hexadecimal bytes separated with spaces.
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(
+      f,
+      "[{}]",
+      (0..DEC_DOUBLE_BYTES)
+        .into_iter()
+        .rev()
+        .map(|i| format!(" {:02X}", unsafe { self.bytes[i] }))
+        .collect::<String>()
+        .trim_start()
+    )
   }
 }
 
