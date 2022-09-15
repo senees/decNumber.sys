@@ -74,6 +74,14 @@ fn test_number_quantize() {
 }
 
 #[test]
+fn test_number_square_root() {
+  assert_eq!(
+    "1.414213562373095048801688724209698",
+    s!(dec_number_square_root(&n!(2), c!()))
+  );
+}
+
+#[test]
 fn test_number_rescale() {
   assert_eq!("123.5", s!(dec_number_rescale(&n!(123.456), &n!(-1), c!())));
 }

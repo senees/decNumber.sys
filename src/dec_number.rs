@@ -279,6 +279,15 @@ pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext)
   res
 }
 
+/// Safe binding to *decNumberSquareRoot* function.
+pub fn dec_number_square_root(dn1: &DecNumber, dc: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberSquareRoot(&mut res, dn1, dc);
+  }
+  res
+}
+
 /// Safe binding to *decNumberSubtract* function.
 pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();

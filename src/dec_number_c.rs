@@ -61,6 +61,8 @@ extern "C" {
   pub fn decNumberScaleB(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSetBCD* function.
   pub fn decNumberSetBCD(res: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
+  /// Unsafe binding to *decNumberSquareRoot* function.
+  pub fn decNumberSquareRoot(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSubtract* function.
   pub fn decNumberSubtract(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberToString* function.
