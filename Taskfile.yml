@@ -24,6 +24,11 @@ tasks:
     cmds:
       - cmd: cargo clean
 
+  cov:
+    desc: Runs code coverage using grcov
+    cmds:
+      - cmd: ./coverage.sh
+
   doc-open:
     desc: Generates and opens the documentation in browser
     cmds:
