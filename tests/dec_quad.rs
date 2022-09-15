@@ -68,6 +68,7 @@ fn test_dec_quad_compare() {
 #[test]
 #[rustfmt::skip]
 fn test_dec_quad_constants() {
+  // zero
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", n!(0)));
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", DEC_QUAD_ZERO));
   // one
@@ -173,6 +174,14 @@ fn test_dec_quad_minus() {
 #[test]
 fn test_dec_quad_multiply() {
   assert_eq!("4.4", s!(dec_quad_multiply(&n!(1.1), &n!(4), c!())));
+}
+
+#[test]
+fn test_dec_quad_plus() {
+  assert_eq!("0", s!(dec_quad_plus(&n!(-0), c!())));
+  assert_eq!("0", s!(dec_quad_plus(&n!(0), c!())));
+  assert_eq!("-1.1", s!(dec_quad_plus(&n!(-1.1), c!())));
+  assert_eq!("1.1", s!(dec_quad_plus(&n!(1.1), c!())));
 }
 
 #[test]

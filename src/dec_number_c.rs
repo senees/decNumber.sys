@@ -49,6 +49,8 @@ extern "C" {
   pub fn decNumberMinus(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberMultiply* function.
   pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  /// Unsafe binding to *decNumberPlus* function.
+  pub fn decNumberPlus(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberPower* function.
   pub fn decNumberPower(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberQuantize* function.

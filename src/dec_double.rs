@@ -26,10 +26,18 @@
 
 use crate::dec_context::DecContext;
 use crate::dec_double_c::*;
+use libc::c_char;
+use std::ffi::{CStr, CString};
 use std::fmt::Debug;
 
 /// Length in bytes of [DecDouble] union.
 pub const DEC_DOUBLE_BYTES: usize = 8;
+
+/// Maximum length of the [DecDouble] string.
+pub const DEC_DOUBLE_STRING: usize = 25;
+
+/// Buffer for [DecDouble] string.
+pub const DEC_DOUBLE_STRING_BUFFER: [c_char; DEC_DOUBLE_STRING] = [0; DEC_DOUBLE_STRING];
 
 /// Convenient constant for [DecDouble] equal to positive zero.
 #[rustfmt::skip]
@@ -80,6 +88,27 @@ pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, dc: &mut DecContext) -> 
     decDoubleAdd(&mut res, lhs, rhs, dc);
   }
   res
+}
+
+/// Safe binding to *decDoubleFromString* function.
+pub fn dec_double_from_string(s: &str, dc: &mut DecContext) -> DecDouble {
+  let c_s = CString::new(s).unwrap();
+  let mut ds_res = DecDouble::default();
+  unsafe {
+    decDoubleFromString(&mut ds_res, c_s.as_ptr(), dc);
+  }
+  ds_res
+}
+
+/// Safe binding to *decDoubleToString* function.
+pub fn dec_double_to_string(ds: &DecDouble) -> String {
+  unsafe {
+    let mut buf = DEC_DOUBLE_STRING_BUFFER;
+    decDoubleToString(ds, buf.as_mut_ptr() as *mut c_char);
+    CStr::from_ptr(buf.as_ptr() as *const c_char)
+      .to_string_lossy()
+      .into_owned()
+  }
 }
 
 /// Safe binding to *decDoubleZero* function.

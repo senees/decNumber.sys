@@ -32,49 +32,52 @@ use crate::dec_single::DecSingle;
 use crate::DecContext;
 
 /// Safe binding to *decimal32ToNumber* function.
-pub fn decimal32_to_number(ds: &DecSingle, dn: &mut DecNumber) {
+pub fn decimal32_to_number<'a>(ds: &'a DecSingle, dn: &'a mut DecNumber) -> &'a DecNumber {
   unsafe {
     decimal32ToNumber(ds, dn);
+    dn
   }
 }
 
 /// Safe binding to *decimal32FromNumber* function.
 pub fn decimal32_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecSingle {
-  let mut ds_res = DecSingle::default();
+  let mut ds = DecSingle::default();
   unsafe {
-    decimal32FromNumber(&mut ds_res, dn, dc);
+    decimal32FromNumber(&mut ds, dn, dc);
   }
-  ds_res
+  ds
 }
 
 /// Safe binding to *decimal64ToNumber* function.
-pub fn decimal64_to_number(dd: &DecDouble, dn: &mut DecNumber) {
+pub fn decimal64_to_number<'a>(dd: &'a DecDouble, dn: &'a mut DecNumber) -> &'a DecNumber {
   unsafe {
     decimal64ToNumber(dd, dn);
+    dn
   }
 }
 
 /// Safe binding to *decimal64FromNumber* function.
 pub fn decimal64_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecDouble {
-  let mut dd_res = DecDouble::default();
+  let mut dd = DecDouble::default();
   unsafe {
-    decimal64FromNumber(&mut dd_res, dn, dc);
+    decimal64FromNumber(&mut dd, dn, dc);
   }
-  dd_res
+  dd
 }
 
 /// Safe binding to *decimal128ToNumber* function.
-pub fn decimal128_to_number(dq: &DecQuad, dn: &mut DecNumber) {
+pub fn decimal128_to_number<'a>(dq: &'a DecQuad, dn: &'a mut DecNumber) -> &'a DecNumber {
   unsafe {
     decimal128ToNumber(dq, dn);
+    dn
   }
 }
 
 /// Safe binding to *decimal128FromNumber* function.
 pub fn decimal128_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DecQuad::default();
   unsafe {
-    decimal128FromNumber(&mut dq_res, dn, dc);
+    decimal128FromNumber(&mut dq, dn, dc);
   }
-  dq_res
+  dq
 }

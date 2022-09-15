@@ -44,6 +44,70 @@ pub const DEC_SNAN: u8 = 0x10;
 /// Special value mask: 1 = special (Infinity, NaN or sNaN).
 pub const DEC_SPECIAL: u8 = DEC_INF | DEC_NAN | DEC_SNAN;
 
+/// [DecNumber] value 0 (zero).
+pub const DEC_NUMBER_ZERO: DecNumber = DecNumber {
+  digits: 1,
+  exponent: 0,
+  bits: 0,
+  lsu: [0; 12],
+};
+
+/// [DecNumber] value 1 (one).
+pub const DEC_NUMBER_ONE: DecNumber = DecNumber {
+  digits: 1,
+  exponent: 0,
+  bits: 0,
+  lsu: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 2 (two).
+pub const DEC_NUMBER_TWO: DecNumber = DecNumber {
+  digits: 1,
+  exponent: 0,
+  bits: 0,
+  lsu: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 10 (ten).
+pub const DEC_NUMBER_TEN: DecNumber = DecNumber {
+  digits: 2,
+  exponent: 0,
+  bits: 0,
+  lsu: [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 100 (hundred).
+pub const DEC_NUMBER_HUNDRED: DecNumber = DecNumber {
+  digits: 3,
+  exponent: 0,
+  bits: 0,
+  lsu: [100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 1000 (thousand).
+pub const DEC_NUMBER_THOUSAND: DecNumber = DecNumber {
+  digits: 4,
+  exponent: 0,
+  bits: 0,
+  lsu: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 1000000 (million).
+pub const DEC_NUMBER_MILLION: DecNumber = DecNumber {
+  digits: 7,
+  exponent: 0,
+  bits: 0,
+  lsu: [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
+/// [DecNumber] value 1000000000 (billion).
+pub const DEC_NUMBER_BILLION: DecNumber = DecNumber {
+  digits: 10,
+  exponent: 0,
+  bits: 0,
+  lsu: [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+
 /// Arbitrary precision decimal number.
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -57,73 +121,7 @@ pub struct DecNumber {
 impl Default for DecNumber {
   /// Default value for [DecNumber] is zero.
   fn default() -> Self {
-    let mut dn = Self {
-      digits: 1,
-      exponent: 0,
-      bits: 0,
-      lsu: [0; 12],
-    };
-    unsafe {
-      decNumberZero(&mut dn);
-    }
-    dn
-  }
-}
-
-impl DecNumber {
-  ///
-  pub fn zero() -> Self {
-    DecNumber {
-      digits: 1,
-      exponent: 0,
-      bits: 0,
-      lsu: [0; 12],
-    }
-  }
-  ///
-  pub fn one() -> Self {
-    DecNumber {
-      digits: 1,
-      exponent: 0,
-      bits: 0,
-      lsu: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }
-  }
-  ///
-  pub fn two() -> Self {
-    DecNumber {
-      digits: 1,
-      exponent: 0,
-      bits: 0,
-      lsu: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }
-  }
-  ///
-  pub fn ten() -> Self {
-    DecNumber {
-      digits: 2,
-      exponent: 0,
-      bits: 0,
-      lsu: [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }
-  }
-  ///
-  pub fn one_hundred() -> Self {
-    DecNumber {
-      digits: 3,
-      exponent: 0,
-      bits: 0,
-      lsu: [100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }
-  }
-  ///
-  pub fn one_thousand() -> Self {
-    DecNumber {
-      digits: 4,
-      exponent: 0,
-      bits: 0,
-      lsu: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }
+    DEC_NUMBER_ZERO
   }
 }
 
@@ -230,6 +228,15 @@ pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext
   let mut res = DecNumber::default();
   unsafe {
     decNumberMultiply(&mut res, dn1, dn2, dc);
+  }
+  res
+}
+
+/// Safe binding to *decNumberPlus* function.
+pub fn dec_number_plus(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
+  let mut res = DecNumber::default();
+  unsafe {
+    decNumberPlus(&mut res, dn, dc);
   }
   res
 }

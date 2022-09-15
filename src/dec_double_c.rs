@@ -25,11 +25,16 @@
 //! Unsafe bindings for 64-bit decimal.
 
 use crate::{DecContext, DecDouble};
+use libc::c_char;
 
 #[rustfmt::skip]
 extern "C" {
   /// Unsafe binding to *decDoubleAdd* function.
   pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, dc: *mut DecContext) -> *mut DecDouble;
+  /// Unsafe binding to *decDoubleFromString* function.
+  pub fn decDoubleFromString(res: *mut DecDouble, s: *const c_char, dc: *mut DecContext) -> *mut DecDouble;
+  /// Unsafe binding to *decDoubleToString* function.
+  pub fn decDoubleToString(ds: *const DecDouble, s: *mut c_char) -> *mut c_char;
   /// Unsafe binding to *decDoubleZero* function.
   pub fn decDoubleZero(res: *mut DecDouble);
 }

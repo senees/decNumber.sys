@@ -261,6 +261,15 @@ pub fn dec_quad_multiply(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> D
   dq_res
 }
 
+/// Safe binding to *decQuadPlus* function.
+pub fn dec_quad_plus(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadPlus(&mut dq_res, dq, dc);
+  }
+  dq_res
+}
+
 /// Safe binding to *decQuadQuantize* function.
 pub fn dec_quad_quantize(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
