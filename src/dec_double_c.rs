@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! `C` bindings for 64-bit decimal.
+//! Unsafe bindings for 64-bit decimal.
 
 use crate::{DecContext, DecDouble};
 

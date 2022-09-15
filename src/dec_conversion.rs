@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! Decimal conversion functions.
+//! Safe bindings for decimal conversion functions.
 
 use crate::dec_conversion_c::*;
 use crate::dec_double::DecDouble;

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! `C` bindings for decimal context.
+//! Unsafe bindings for decimal context.
 
 use crate::DecContext;
 

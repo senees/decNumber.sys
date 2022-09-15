@@ -22,29 +22,29 @@
  * SOFTWARE.
  */
 
-//! Arbitrary precision decimal definitions.
+//! Safe bindings for arbitrary precision decimal.
 
+use crate::dec_context::*;
 use crate::dec_number_c::*;
-use crate::{bcd, DecContext};
-use libc::{c_char, c_uchar};
+use libc::c_char;
 use std::ffi::{CStr, CString};
 
-/// Sign: 1=negative, 0=positive or zero.
+/// Sign mask: 1 = negative, 0 = positive or zero.
 pub const DEC_NEG: u8 = 0x80;
 
-/// 1 = Infinity
+/// Infinity mask: 1 = Infinity.
 pub const DEC_INF: u8 = 0x40;
 
-/// 1 = NaN
+/// Not-a-Number mask: 1 = NaN.
 pub const DEC_NAN: u8 = 0x20;
 
-/// 1 = sNaN
+/// Signalling Not-a-Number mask: 1 = sNaN.
 pub const DEC_SNAN: u8 = 0x10;
 
-/// Any special value.
+/// Special value mask: 1 = special (Infinity, NaN or sNaN).
 pub const DEC_SPECIAL: u8 = DEC_INF | DEC_NAN | DEC_SNAN;
 
-/// Arbitrary precision decimal type.
+/// Arbitrary precision decimal number.
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct DecNumber {
@@ -127,7 +127,7 @@ impl DecNumber {
   }
 }
 
-///
+/// Safe binding to *decNumberAdd* function.
 pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -136,7 +136,7 @@ pub fn dec_number_add(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> 
   res
 }
 
-///
+/// Safe binding to *decNumberCompare* function.
 pub fn dec_number_compare(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -145,7 +145,7 @@ pub fn dec_number_compare(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext)
   res
 }
 
-///
+/// Safe binding to *decNumberDivide* function.
 pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -154,7 +154,7 @@ pub fn dec_number_divide(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) 
   res
 }
 
-///
+/// Safe binding to *decNumberExp* function.
 pub fn dec_number_exp(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -163,7 +163,7 @@ pub fn dec_number_exp(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   res
 }
 
-///
+/// Safe binding to *decNumberFromInt32* function.
 pub fn dec_number_from_i32(n: i32) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -172,97 +172,7 @@ pub fn dec_number_from_i32(n: i32) -> DecNumber {
   res
 }
 
-///
-pub fn dec_number_from_u32(n: u32) -> DecNumber {
-  let mut result = DecNumber::default();
-  unsafe {
-    decNumberFromUInt32(&mut result, n);
-  }
-  result
-}
-
-///
-pub fn dec_number_from_u64(n: u64) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n as u128);
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-  }
-  res
-}
-
-///
-pub fn dec_number_from_i64(n: i64, dc: &mut DecContext) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n.unsigned_abs() as u128);
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if n < 0 {
-      decNumberMinus(&mut res, &res, dc);
-    }
-  }
-  res
-}
-
-///
-pub fn dec_number_from_u128(n: u128) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n);
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-  }
-  res
-}
-
-///
-pub fn dec_number_from_i128(n: i128, dc: &mut DecContext) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n.unsigned_abs());
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if n < 0 {
-      decNumberMinus(&mut res, &res, dc);
-    }
-  }
-  res
-}
-
-///
-pub fn dec_number_from_usize(n: usize) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n as u128);
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-  }
-  res
-}
-
-///
-pub fn dec_number_from_isize(n: isize, dc: &mut DecContext) -> DecNumber {
-  let mut res = DecNumber::default();
-  let digits = bcd(n.unsigned_abs() as u128);
-  let count = digits.len();
-  res.digits = count as i32;
-  unsafe {
-    decNumberSetBCD(&mut res, digits.as_ptr() as *const c_uchar, count as u32);
-    if n < 0 {
-      decNumberMinus(&mut res, &res, dc);
-    }
-  }
-  res
-}
-
-/// Converts [DecNumber]  from string.
+/// Safe binding to *decNumberFromString* function.
 pub fn dec_number_from_string(s: &str, dc: &mut DecContext) -> DecNumber {
   let c_s = CString::new(s).unwrap();
   let mut value = DecNumber::default();
@@ -272,7 +182,32 @@ pub fn dec_number_from_string(s: &str, dc: &mut DecContext) -> DecNumber {
   value
 }
 
+/// Safe binding to *decNumberFromUInt32* function.
+pub fn dec_number_from_u32(n: u32) -> DecNumber {
+  let mut result = DecNumber::default();
+  unsafe {
+    decNumberFromUInt32(&mut result, n);
+  }
+  result
+}
+
+/// Safe binding to *decNumberIsNegative* function.
 ///
+/// This function was replaced by macro and removed from public API.
+/// This implementation is the Rust version of original library macro.
+pub fn dec_number_is_negative(dn: &DecNumber) -> bool {
+  dn.bits & DEC_NEG != 0
+}
+
+/// Safe binding to *decNumberIsZero* function.
+///
+/// This function was replaced by macro and removed from public API.
+/// This implementation is the Rust version of original library macro.
+pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
+  dn.lsu[0] == 0 && dn.digits == 1 && (dn.bits & DEC_SPECIAL == 0)
+}
+
+/// Safe binding to *decNumberLn* function.
 pub fn dec_number_ln(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -281,7 +216,7 @@ pub fn dec_number_ln(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   res
 }
 
-///
+/// Safe binding to *decNumberMinus* function.
 pub fn dec_number_minus(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -290,7 +225,7 @@ pub fn dec_number_minus(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   res
 }
 
-///
+/// Safe binding to *decNumberMultiply* function.
 pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -299,17 +234,7 @@ pub fn dec_number_multiply(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext
   res
 }
 
-///
-pub fn dec_number_is_negative(dn: &DecNumber) -> bool {
-  dn.bits & DEC_NEG != 0
-}
-
-///
-pub fn dec_number_is_zero(dn: &DecNumber) -> bool {
-  dn.lsu[0] == 0 && dn.digits == 1 && (dn.bits & DEC_SPECIAL == 0)
-}
-
-///
+/// Safe binding to *decNumberReduce* function.
 pub fn dec_number_reduce(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -318,7 +243,7 @@ pub fn dec_number_reduce(dn: &DecNumber, dc: &mut DecContext) -> DecNumber {
   res
 }
 
-///
+/// Safe binding to *decNumberRescale* function.
 pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -327,7 +252,7 @@ pub fn dec_number_rescale(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext)
   res
 }
 
-///
+/// Safe binding to *decNumberScaleB* function.
 pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -336,7 +261,7 @@ pub fn dec_number_scale_b(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext)
   res
 }
 
-///
+/// Safe binding to *decNumberSubtract* function.
 pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext) -> DecNumber {
   let mut res = DecNumber::default();
   unsafe {
@@ -345,7 +270,7 @@ pub fn dec_number_subtract(dn1: &DecNumber, dn2: &DecNumber, dc: &mut DecContext
   res
 }
 
-/// Converts [DecNumber] into [String].
+/// Safe binding to *decNumberToString* function.
 pub fn dec_number_to_string(dn: &DecNumber) -> String {
   unsafe {
     let mut buf = Vec::<char>::with_capacity((dn.digits + 14) as usize);
@@ -356,7 +281,7 @@ pub fn dec_number_to_string(dn: &DecNumber) -> String {
   }
 }
 
-/// Sets [DecNumber] to zero.
+/// Safe binding to *decNumberZero* function.
 pub fn dec_number_zero(dn: &mut DecNumber) {
   unsafe {
     decNumberZero(dn);

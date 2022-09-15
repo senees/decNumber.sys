@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! `C` bindings for arbitrary precision decimal.
+//! Unsafe bindings for arbitrary precision decimal.
 
 use crate::{DecContext, DecNumber};
 use libc::{c_char, c_int, c_uchar, c_uint};
@@ -31,10 +31,10 @@ use libc::{c_char, c_int, c_uchar, c_uint};
 extern "C" {
   /// Unsafe binding to *decNumberAdd* function.
   pub fn decNumberAdd(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
-  /// Unsafe binding to *decNumberDivide* function.
-  pub fn decNumberDivide(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberCompare* function.
   pub fn decNumberCompare(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  /// Unsafe binding to *decNumberDivide* function.
+  pub fn decNumberDivide(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberExp* function.
   pub fn decNumberExp(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberFromInt32* function.

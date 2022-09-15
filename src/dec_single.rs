@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! 32-bit decimal definitions.
+//! Safe bindings for 32-bit decimal.
 
 use crate::dec_context::DecContext;
 use crate::dec_single_c::*;
@@ -47,7 +47,7 @@ pub const DEC_SINGLE_ZERO: DecSingle = {
   { DecSingle { bytes: [0x22, 0x50, 0x00, 0x00] }}
 };
 
-/// 32-bit decimal type, accessible by all sizes.
+/// 32-bit decimal number.
 #[repr(C)]
 pub union DecSingle {
   pub bytes: [u8; DEC_SINGLE_BYTES],

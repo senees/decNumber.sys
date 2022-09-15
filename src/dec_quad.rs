@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! 128-bit decimal definitions.
+//! Safe bindings for 128-bit decimal.
 
 use crate::dec_context::DecContext;
 use crate::dec_quad_c::*;
@@ -112,7 +112,7 @@ pub const DEC_QUAD_BILLION: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00] }}
 };
 
-/// 128-bit decimal type, accessible by all sizes.
+/// 128-bit decimal number.
 #[repr(C)]
 pub union DecQuad {
   pub bytes: [u8; DEC_QUAD_BYTES],
@@ -144,7 +144,7 @@ impl Debug for DecQuad {
   }
 }
 
-/// Returns absolute value of [DecQuad].
+/// Safe binding to *decQuadAbs* function.
 pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
@@ -153,7 +153,7 @@ pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
   dq_res
 }
 
-/// Adds two [DecQuads](DecQuad).
+/// Safe binding to *decQuadAdd* function.
 pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
@@ -171,7 +171,7 @@ pub fn dec_quad_from_bcd(bcd: &[u8; DEC_QUAD_PMAX], exp: i32, sign: bool) -> Dec
   dq_res
 }
 
-/// Converts [DecQuad] from signed integer.
+/// Safe binding to *decQuadFromInt32* function.
 pub fn dec_quad_from_i32(n: i32) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
@@ -180,7 +180,7 @@ pub fn dec_quad_from_i32(n: i32) -> DecQuad {
   dq_res
 }
 
-/// Converts [DecQuad] from unsigned integer.
+/// Safe binding to *decQuadFromUInt32* function.
 pub fn dec_quad_from_u32(n: u32) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
@@ -189,7 +189,7 @@ pub fn dec_quad_from_u32(n: u32) -> DecQuad {
   dq_res
 }
 
-/// Converts [DecQuad] from string.
+/// Safe binding to *decQuadFromString* function.
 pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
   let mut dq_res = DecQuad::default();
@@ -197,6 +197,11 @@ pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
     decQuadFromString(&mut dq_res, c_s.as_ptr(), dc);
   }
   dq_res
+}
+
+/// Safe binding to *decQuadIsFinite* function.
+pub fn dec_quad_is_finite(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsFinite(dn) == 1 }
 }
 
 /// Safe binding to *decQuadReduce* function.
@@ -217,7 +222,7 @@ pub fn dec_quad_scale_b(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> De
   dq_res
 }
 
-/// Converts [DecQuad] into integral value.
+/// Safe binding to *decQuadToIntegralValue* function.
 pub fn dec_quad_to_integral_value(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
@@ -226,7 +231,7 @@ pub fn dec_quad_to_integral_value(dq: &DecQuad, dc: &mut DecContext, rounding: u
   dq_res
 }
 
-/// Converts [DecQuad] into [String].
+/// Safe binding to *decQuadToString* function.
 pub fn dec_quad_to_string(dq: &DecQuad) -> String {
   unsafe {
     let mut buf = DEC_QUAD_STRING_BUFFER;
@@ -237,7 +242,7 @@ pub fn dec_quad_to_string(dq: &DecQuad) -> String {
   }
 }
 
-/// Sets [DecQuad] to zero.
+/// Safe binding to *decQuadZero* function.
 pub fn dec_quad_zero(dq: &mut DecQuad) {
   unsafe {
     decQuadZero(dq);

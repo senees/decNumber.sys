@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! `C` bindings for decimal conversion functions.
+//! Unsafe bindings for decimal conversion functions.
 
 use crate::{DecContext, DecDouble, DecNumber, DecQuad, DecSingle};
 

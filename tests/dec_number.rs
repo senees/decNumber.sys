@@ -20,23 +20,40 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+*/
 
-//! Unsafe bindings for 32-bit decimal.
+//! [DecNumber] smoke tests.
+//!
+//! The purpose of smoke tests is to verify if bindings compile properly.
 
-use crate::{DecContext, DecDouble, DecSingle};
-use libc::c_char;
+use dec_number_sys::*;
 
-#[rustfmt::skip]
-extern "C" {
-  /// Unsafe binding to *decSingleFromString* function.
-  pub fn decSingleFromString(res: *mut DecSingle, s: *const c_char, dc: *mut DecContext) -> *mut DecSingle;
-  /// Unsafe binding to *decSingleFromWider* function.
-  pub fn decSingleFromWider(res: *mut DecSingle, ds: *const DecDouble, dc: *mut DecContext) -> *mut DecSingle;
-  /// Unsafe binding to *decSingleToString* function.
-  pub fn decSingleToString(ds: *const DecSingle, s: *mut c_char) -> *mut c_char;
-  /// Unsafe binding to *decSingleToWider* function.
-  pub fn decSingleToWider(res: *const DecSingle, ds: *mut DecDouble, dc: *mut DecContext) -> *mut DecDouble;
-  /// Unsafe binding to *decSingleZero* function.
-  pub fn decSingleZero(res: *mut DecSingle);
+macro_rules! c {
+  () => {
+    &mut dec_context_128()
+  };
+}
+
+macro_rules! n {
+  ($s:expr) => {
+    dec_number_from_string(stringify!($s), c!())
+  };
+}
+
+macro_rules! s {
+  ($v:expr) => {
+    dec_number_to_string(&$v)
+  };
+}
+
+#[test]
+fn test_number_add() {
+  assert_eq!("1.999", s!(dec_number_add(&n!(1.234), &n!(0.765), c!())));
+}
+
+#[test]
+fn test_number_is_zero() {
+  assert!(dec_number_is_zero(&n!(0)));
+  assert!(!dec_number_is_zero(&n!(0.1)));
+  assert!(!dec_number_is_zero(&n!(-0.1)));
 }

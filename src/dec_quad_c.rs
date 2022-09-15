@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! `C` bindings for 128-bit decimal.
+//! Unsafe bindings for 128-bit decimal.
 
 use crate::{DecContext, DecQuad};
 use libc::{c_char, c_int, c_uchar, c_uint};

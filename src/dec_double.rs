@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-//! 64-bit decimal definitions.
+//! Safe bindings for 64-bit decimal.
 
 use crate::dec_context::DecContext;
 use crate::dec_double_c::*;
@@ -39,7 +39,7 @@ pub const DEC_DOUBLE_ZERO: DecDouble = {
   { DecDouble { bytes: [0x22, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
 };
 
-/// 64-bit decimal type, accessible by all sizes.
+/// 64-bit decimal number.
 #[repr(C)]
 pub union DecDouble {
   pub bytes: [u8; DEC_DOUBLE_BYTES],
@@ -55,7 +55,7 @@ impl Default for DecDouble {
   }
 }
 
-/// Adds two [DecDoubles](DecDouble).
+/// Safe binding to *decDoubleAdd* function.
 pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, dc: &mut DecContext) -> DecDouble {
   let mut res = DecDouble::default();
   unsafe {
@@ -64,7 +64,7 @@ pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, dc: &mut DecContext) -> 
   res
 }
 
-/// Sets [DecDouble] to the unsigned integer zero.
+/// Safe binding to *decDoubleZero* function.
 pub fn dec_double_zero(res: &mut DecDouble) {
   unsafe {
     decDoubleZero(res);
