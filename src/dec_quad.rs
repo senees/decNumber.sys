@@ -163,6 +163,15 @@ pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQua
   dq_res
 }
 
+/// Safe binding to *decQuadCompare* function.
+pub fn dec_quad_compare(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadCompare(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
 /// Safe binding to *decQuadDivide* function.
 pub fn dec_quad_divide(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
@@ -212,6 +221,26 @@ pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
 /// Safe binding to *decQuadIsFinite* function.
 pub fn dec_quad_is_finite(dn: &DecQuad) -> bool {
   unsafe { decQuadIsFinite(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsInteger* function.
+pub fn dec_quad_is_integer(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsInteger(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsNegative* function.
+pub fn dec_quad_is_negative(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsNegative(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsPositive* function.
+pub fn dec_quad_is_positive(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsPositive(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsZero* function.
+pub fn dec_quad_is_zero(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsZero(dn) == 1 }
 }
 
 /// Safe binding to *decQuadMinus* function.

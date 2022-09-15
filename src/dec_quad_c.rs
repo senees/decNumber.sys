@@ -33,6 +33,8 @@ extern "C" {
   pub fn decQuadAbs(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadAdd* function.
   pub fn decQuadAdd(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCompare* function.
+  pub fn decQuadCompare(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadDivide* function.
   pub fn decQuadDivide(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromBCD* function.

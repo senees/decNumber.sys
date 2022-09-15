@@ -57,6 +57,15 @@ fn test_dec_quad_add() {
 }
 
 #[test]
+fn test_dec_quad_compare() {
+  assert_eq!("0", s!(dec_quad_compare(&n!(1), &n!(1), c!())));
+  assert_eq!("1", s!(dec_quad_compare(&n!(2), &n!(1), c!())));
+  assert_eq!("-1", s!(dec_quad_compare(&n!(1), &n!(2), c!())));
+  assert_eq!("NaN", s!(dec_quad_compare(&n!(1), &n!(NaN), c!())));
+  assert_eq!("NaN", s!(dec_quad_compare(&n!(NaN), &n!(1), c!())));
+}
+
+#[test]
 #[rustfmt::skip]
 fn test_dec_quad_constants() {
   assert_eq!("[22 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00]", format!("{:?}", n!(0)));
@@ -85,6 +94,16 @@ fn test_dec_quad_constants() {
 }
 
 #[test]
+#[allow(clippy::clone_on_copy)]
+fn test_dec_quad_copy_clone() {
+  let n1 = n!(1.2345);
+  let n2 = n1;
+  let n3 = n1.clone();
+  assert_eq!("1.2345", s!(n2));
+  assert_eq!("1.2345", s!(n3));
+}
+
+#[test]
 fn test_dec_quad_divide() {
   assert_eq!("0.25", s!(dec_quad_divide(&n!(1), &n!(4), c!())));
 }
@@ -98,6 +117,49 @@ fn test_dec_quad_from_bcd() {
   assert_eq!("9223372036854775807", s!(dec_quad_from_bcd(&bcd_quad(i64::MAX.unsigned_abs().into()), 0, false)));
   assert_eq!("-9223372036854775808", s!(dec_quad_from_bcd(&bcd_quad(i64::MIN.unsigned_abs().into()), 0, true)));
   assert_eq!("1844674407.3709551615", s!(dec_quad_from_bcd(&bcd_quad(u64::MAX.into()), -10, false)));
+}
+
+#[test]
+fn test_dec_quad_from_i32() {
+  assert_eq!("-12", s!(dec_quad_from_i32(-12)));
+}
+
+#[test]
+fn test_dec_quad_from_u32() {
+  assert_eq!("12", s!(dec_quad_from_u32(12)));
+}
+
+#[test]
+fn test_dec_quad_is_finite() {
+  assert!(dec_quad_is_finite(&n!(1)));
+  assert!(!dec_quad_is_finite(&n!(NaN)));
+}
+
+#[test]
+fn test_dec_quad_is_integer() {
+  assert!(dec_quad_is_integer(&n!(1)));
+  assert!(!dec_quad_is_integer(&n!(1.1)));
+}
+
+#[test]
+fn test_dec_quad_is_negative() {
+  assert!(dec_quad_is_negative(&n!(-1)));
+  assert!(!dec_quad_is_negative(&n!(1)));
+  assert!(!dec_quad_is_negative(&n!(NaN)));
+}
+
+#[test]
+fn test_dec_quad_is_positive() {
+  assert!(dec_quad_is_positive(&n!(1)));
+  assert!(!dec_quad_is_positive(&n!(-1)));
+  assert!(!dec_quad_is_positive(&n!(NaN)));
+}
+
+#[test]
+fn test_dec_quad_is_zero() {
+  assert!(dec_quad_is_zero(&n!(0)));
+  assert!(!dec_quad_is_zero(&n!(1)));
+  assert!(!dec_quad_is_zero(&n!(NaN)));
 }
 
 #[test]
@@ -134,4 +196,11 @@ fn test_dec_quad_to_integral_value() {
     "-0",
     s!(dec_quad_to_integral_value(&n!(-0.75), c!(), DEC_ROUND_CEILING))
   );
+}
+
+#[test]
+fn test_dec_quad_zero() {
+  let mut n = n!(-0.75);
+  dec_quad_zero(&mut n);
+  assert_eq!("0", s!(n));
 }
