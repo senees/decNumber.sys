@@ -176,8 +176,18 @@ fn test_dec_quad_multiply() {
 }
 
 #[test]
+fn test_dec_quad_quantize() {
+  assert_eq!("123.5", s!(dec_quad_quantize(&n!(123.456), &n!(1.0), c!())));
+}
+
+#[test]
 fn test_dec_quad_reduce() {
   assert_eq!("1.2345678E+11", s!(dec_quad_reduce(&n!(12345678E+4), c!())));
+}
+
+#[test]
+fn test_dec_quad_remainder() {
+  assert_eq!("1", s!(dec_quad_remainder(&n!(10), &n!(3), c!())));
 }
 
 #[test]

@@ -51,12 +51,14 @@ extern "C" {
   pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberPower* function.
   pub fn decNumberPower(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  /// Unsafe binding to *decNumberQuantize* function.
+  pub fn decNumberQuantize(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberReduce* function.
   pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberRescale* function.
-  pub fn decNumberRescale(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberRescale(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberScaleB* function.
-  pub fn decNumberScaleB(res: *mut DecNumber, lhs: *const DecNumber, rhs: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberScaleB(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSetBCD* function.
   pub fn decNumberSetBCD(res: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSubtract* function.

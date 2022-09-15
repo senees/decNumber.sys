@@ -59,8 +59,12 @@ extern "C" {
   pub fn decQuadMinus(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadMultiply* function.
   pub fn decQuadMultiply(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadQuantize* function.
+  pub fn decQuadQuantize(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadReduce* function.
   pub fn decQuadReduce(res: *mut DecQuad, dq: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadRemainder* function.
+  pub fn decQuadRemainder(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadScaleB* function.
   pub fn decQuadScaleB(res: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadSubtract* function.

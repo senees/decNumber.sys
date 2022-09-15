@@ -67,3 +67,13 @@ fn test_number_is_zero() {
 fn test_number_power() {
   assert_eq!("8", s!(dec_number_power(&n!(2), &n!(3), c!())));
 }
+
+#[test]
+fn test_number_quantize() {
+  assert_eq!("123.5", s!(dec_number_quantize(&n!(123.456), &n!(10.0), c!())));
+}
+
+#[test]
+fn test_number_rescale() {
+  assert_eq!("123.5", s!(dec_number_rescale(&n!(123.456), &n!(-1), c!())));
+}

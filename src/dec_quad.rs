@@ -261,11 +261,29 @@ pub fn dec_quad_multiply(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> D
   dq_res
 }
 
-/// Safe binding to *decQuadReduce* function.
-pub fn dec_quad_reduce(dn: &DecQuad, dc: &mut DecContext) -> DecQuad {
+/// Safe binding to *decQuadQuantize* function.
+pub fn dec_quad_quantize(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq_res = DecQuad::default();
   unsafe {
-    decQuadReduce(&mut dq_res, dn, dc);
+    decQuadQuantize(&mut dq_res, dq1, dq2, dc);
+  }
+  dq_res
+}
+
+/// Safe binding to *decQuadReduce* function.
+pub fn dec_quad_reduce(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadReduce(&mut dq_res, dq, dc);
+  }
+  dq_res
+}
+
+/// Safe binding to *decQuadRemainder* function.
+pub fn dec_quad_remainder(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq_res = DecQuad::default();
+  unsafe {
+    decQuadRemainder(&mut dq_res, dq1, dq2, dc);
   }
   dq_res
 }
