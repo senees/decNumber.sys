@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 WORKING_DIRECTORY=$(pwd)
-DMNTK_BINARY_PATH="$WORKING_DIRECTORY"/target/debug
 
 # clean before proceeding
 cargo clean
@@ -17,11 +16,14 @@ cargo test
 # prepare output directories for coverage results
 mkdir ./target/lcov
 mkdir ./target/coverage
+
 # generate coverage info
 grcov . --llvm -s . -t lcov --branch --ignore-not-existing --ignore "*cargo*" --ignore "*chrono-tz*" --ignore "*tests*" -o ./target/lcov/lcov.info
+
 # generate coverage report
 genhtml -t "dec-number-sys" -q -o ./target/coverage ./target/lcov/lcov.info
+
 # display final message
 echo ""
-echo "open coverage report: file://$WORKING_DIRECTORY/target/coverage/index.html"
+echo "To open the coverage report, go to: file://$WORKING_DIRECTORY/target/coverage/index.html"
 echo ""
