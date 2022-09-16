@@ -40,88 +40,88 @@ extern "C" {
 }
 
 /*
-decDoubleAbs
-decDoubleAnd
-decDoubleCanonical
-decDoubleClass
-decDoubleClassString
-decDoubleCompare
-decDoubleCompareSignal
-decDoubleCompareTotal
-decDoubleCompareTotalMag
-decDoubleCopy
-decDoubleCopyAbs
-decDoubleCopyNegate
-decDoubleCopySign
-decDoubleDigits
-decDoubleDivide
-decDoubleDivideInteger
-decDoubleFMA
-decDoubleFromBCD
-decDoubleFromInt32
-decDoubleFromNumber
-decDoubleFromPacked
-decDoubleFromPackedChecked
-decDoubleFromUInt32
-decDoubleFromWider
-decDoubleGetCoefficient
-decDoubleGetExponent
-decDoubleInvert
-decDoubleIsCanonical
-decDoubleIsFinite
-decDoubleIsInfinite
-decDoubleIsInteger
-decDoubleIsLogical
-decDoubleIsNaN
-decDoubleIsNegative
-decDoubleIsNormal
-decDoubleIsPositive
-decDoubleIsSignaling
-decDoubleIsSignalling
-decDoubleIsSigned
-decDoubleIsSubnormal
-decDoubleIsZero
-decDoubleLogB
-decDoubleMax
-decDoubleMaxMag
-decDoubleMin
-decDoubleMinMag
-decDoubleMinus
-decDoubleMultiply
-decDoubleNextMinus
-decDoubleNextPlus
-decDoubleNextToward
-decDoubleOr
-decDoublePlus
-decDoubleQuantize
-decDoubleRadix
-decDoubleReduce
-decDoubleRemainder
-decDoubleRemainderNear
-decDoubleRotate
-decDoubleSameQuantum
-decDoubleScaleB
-decDoubleSetCoefficient
-decDoubleSetExponent
-decDoubleShift
-decDoubleShow
-decDoubleSubtract
-decDoubleToBCD
-decDoubleToEngString
-decDoubleToInt32
-decDoubleToInt32Exact
-decDoubleToIntegralExact
-decDoubleToIntegralValue
-decDoubleToNumber
-decDoubleToPacked
-decDoubleToUInt32
-decDoubleToUInt32Exact
-decDoubleToWider
-decDoubleVersion
-decDoubleXor
-decDoubleToUInt32
-decDoubleToUInt32Exact
-decDoubleToWider
-decDoubleVersion
-decDoubleXor
+  pub fn decDoubleAbs() {}
+  pub fn decDoubleAnd() {}
+  pub fn decDoubleCanonical() {}
+  pub fn decDoubleClass() {}
+  pub fn decDoubleClassString() {}
+  pub fn decDoubleCompare() {}
+  pub fn decDoubleCompareSignal() {}
+  pub fn decDoubleCompareTotal() {}
+  pub fn decDoubleCompareTotalMag() {}
+  pub fn decDoubleCopy() {}
+  pub fn decDoubleCopyAbs() {}
+  pub fn decDoubleCopyNegate() {}
+  pub fn decDoubleCopySign() {}
+  pub fn decDoubleDigits() {}
+  pub fn decDoubleDivide() {}
+  pub fn decDoubleDivideInteger() {}
+  pub fn decDoubleFMA() {}
+  pub fn decDoubleFromBCD() {}
+  pub fn decDoubleFromInt32() {}
+  pub fn decDoubleFromNumber() {}
+  pub fn decDoubleFromPacked() {}
+  pub fn decDoubleFromPackedChecked() {}
+  pub fn decDoubleFromUInt32() {}
+  pub fn decDoubleFromWider() {}
+  pub fn decDoubleGetCoefficient() {}
+  pub fn decDoubleGetExponent() {}
+  pub fn decDoubleInvert() {}
+  pub fn decDoubleIsCanonical() {}
+  pub fn decDoubleIsFinite() {}
+  pub fn decDoubleIsInfinite() {}
+  pub fn decDoubleIsInteger() {}
+  pub fn decDoubleIsLogical() {}
+  pub fn decDoubleIsNaN() {}
+  pub fn decDoubleIsNegative() {}
+  pub fn decDoubleIsNormal() {}
+  pub fn decDoubleIsPositive() {}
+  pub fn decDoubleIsSignaling() {}
+  pub fn decDoubleIsSignalling() {}
+  pub fn decDoubleIsSigned() {}
+  pub fn decDoubleIsSubnormal() {}
+  pub fn decDoubleIsZero() {}
+  pub fn decDoubleLogB() {}
+  pub fn decDoubleMax() {}
+  pub fn decDoubleMaxMag() {}
+  pub fn decDoubleMin() {}
+  pub fn decDoubleMinMag() {}
+  pub fn decDoubleMinus() {}
+  pub fn decDoubleMultiply() {}
+  pub fn decDoubleNextMinus() {}
+  pub fn decDoubleNextPlus() {}
+  pub fn decDoubleNextToward() {}
+  pub fn decDoubleOr() {}
+  pub fn decDoublePlus() {}
+  pub fn decDoubleQuantize() {}
+  pub fn decDoubleRadix() {}
+  pub fn decDoubleReduce() {}
+  pub fn decDoubleRemainder() {}
+  pub fn decDoubleRemainderNear() {}
+  pub fn decDoubleRotate() {}
+  pub fn decDoubleSameQuantum() {}
+  pub fn decDoubleScaleB() {}
+  pub fn decDoubleSetCoefficient() {}
+  pub fn decDoubleSetExponent() {}
+  pub fn decDoubleShift() {}
+  pub fn decDoubleShow() {}
+  pub fn decDoubleSubtract() {}
+  pub fn decDoubleToBCD() {}
+  pub fn decDoubleToEngString() {}
+  pub fn decDoubleToInt32() {}
+  pub fn decDoubleToInt32Exact() {}
+  pub fn decDoubleToIntegralExact() {}
+  pub fn decDoubleToIntegralValue() {}
+  pub fn decDoubleToNumber() {}
+  pub fn decDoubleToPacked() {}
+  pub fn decDoubleToUInt32() {}
+  pub fn decDoubleToUInt32Exact() {}
+  pub fn decDoubleToWider() {}
+  pub fn decDoubleVersion() {}
+  pub fn decDoubleXor() {}
+  pub fn decDoubleToUInt32() {}
+  pub fn decDoubleToUInt32Exact() {}
+  pub fn decDoubleToWider() {}
+  pub fn decDoubleVersion() {}
+  pub fn decDoubleXor() {}
 */

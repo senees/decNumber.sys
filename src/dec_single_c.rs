@@ -42,92 +42,92 @@ extern "C" {
 }
 
 /*
-decSingleAbs
-decSingleAdd
-decSingleAnd
-decSingleCanonical
-decSingleClass
-decSingleClassString
-decSingleCompare
-decSingleCompareSignal
-decSingleCompareTotal
-decSingleCompareTotalMag
-decSingleCopy
-decSingleCopyAbs
-decSingleCopyNegate
-decSingleCopySign
-decSingleDigits
-decSingleDivide
-decSingleDivideInteger
-decSingleFMA
-decSingleFromBCD
-decSingleFromInt32
-decSingleFromNumber
-decSingleFromPacked
-decSingleFromPackedChecked
-decSingleFromString
-decSingleFromUInt32
-decSingleFromWider
-decSingleGetCoefficient
-decSingleGetExponent
-decSingleInvert
-decSingleIsCanonical
-decSingleIsFinite
-decSingleIsInfinite
-decSingleIsInteger
-decSingleIsLogical
-decSingleIsNaN
-decSingleIsNegative
-decSingleIsNormal
-decSingleIsPositive
-decSingleIsSignaling
-decSingleIsSignalling
-decSingleIsSigned
-decSingleIsSubnormal
-decSingleIsZero
-decSingleLogB
-decSingleMax
-decSingleMaxMag
-decSingleMin
-decSingleMinMag
-decSingleMinus
-decSingleMultiply
-decSingleNextMinus
-decSingleNextPlus
-decSingleNextToward
-decSingleOr
-decSinglePlus
-decSingleQuantize
-decSingleRadix
-decSingleReduce
-decSingleRemainder
-decSingleRemainderNear
-decSingleRotate
-decSingleSameQuantum
-decSingleScaleB
-decSingleSetCoefficient
-decSingleSetExponent
-decSingleShift
-decSingleShow
-decSingleSubtract
-decSingleToBCD
-decSingleToEngString
-decSingleToInt32
-decSingleToInt32Exact
-decSingleToIntegralExact
-decSingleToIntegralValue
-decSingleToNumber
-decSingleToPacked
-decSingleToString
-decSingleToUInt32
-decSingleToUInt32Exact
-decSingleToWider
-decSingleVersion
-decSingleXor
-decSingleToUInt32
-decSingleToUInt32Exact
-decSingleToWider
-decSingleVersion
-decSingleXor
-decSingleZero
+  pub fn decSingleAbs() {}
+  pub fn decSingleAdd() {}
+  pub fn decSingleAnd() {}
+  pub fn decSingleCanonical() {}
+  pub fn decSingleClass() {}
+  pub fn decSingleClassString() {}
+  pub fn decSingleCompare() {}
+  pub fn decSingleCompareSignal() {}
+  pub fn decSingleCompareTotal() {}
+  pub fn decSingleCompareTotalMag() {}
+  pub fn decSingleCopy() {}
+  pub fn decSingleCopyAbs() {}
+  pub fn decSingleCopyNegate() {}
+  pub fn decSingleCopySign() {}
+  pub fn decSingleDigits() {}
+  pub fn decSingleDivide() {}
+  pub fn decSingleDivideInteger() {}
+  pub fn decSingleFMA() {}
+  pub fn decSingleFromBCD() {}
+  pub fn decSingleFromInt32() {}
+  pub fn decSingleFromNumber() {}
+  pub fn decSingleFromPacked() {}
+  pub fn decSingleFromPackedChecked() {}
+  pub fn decSingleFromString() {}
+  pub fn decSingleFromUInt32() {}
+  pub fn decSingleFromWider() {}
+  pub fn decSingleGetCoefficient() {}
+  pub fn decSingleGetExponent() {}
+  pub fn decSingleInvert() {}
+  pub fn decSingleIsCanonical() {}
+  pub fn decSingleIsFinite() {}
+  pub fn decSingleIsInfinite() {}
+  pub fn decSingleIsInteger() {}
+  pub fn decSingleIsLogical() {}
+  pub fn decSingleIsNaN() {}
+  pub fn decSingleIsNegative() {}
+  pub fn decSingleIsNormal() {}
+  pub fn decSingleIsPositive() {}
+  pub fn decSingleIsSignaling() {}
+  pub fn decSingleIsSignalling() {}
+  pub fn decSingleIsSigned() {}
+  pub fn decSingleIsSubnormal() {}
+  pub fn decSingleIsZero() {}
+  pub fn decSingleLogB() {}
+  pub fn decSingleMax() {}
+  pub fn decSingleMaxMag() {}
+  pub fn decSingleMin() {}
+  pub fn decSingleMinMag() {}
+  pub fn decSingleMinus() {}
+  pub fn decSingleMultiply() {}
+  pub fn decSingleNextMinus() {}
+  pub fn decSingleNextPlus() {}
+  pub fn decSingleNextToward() {}
+  pub fn decSingleOr() {}
+  pub fn decSinglePlus() {}
+  pub fn decSingleQuantize() {}
+  pub fn decSingleRadix() {}
+  pub fn decSingleReduce() {}
+  pub fn decSingleRemainder() {}
+  pub fn decSingleRemainderNear() {}
+  pub fn decSingleRotate() {}
+  pub fn decSingleSameQuantum() {}
+  pub fn decSingleScaleB() {}
+  pub fn decSingleSetCoefficient() {}
+  pub fn decSingleSetExponent() {}
+  pub fn decSingleShift() {}
+  pub fn decSingleShow() {}
+  pub fn decSingleSubtract() {}
+  pub fn decSingleToBCD() {}
+  pub fn decSingleToEngString() {}
+  pub fn decSingleToInt32() {}
+  pub fn decSingleToInt32Exact() {}
+  pub fn decSingleToIntegralExact() {}
+  pub fn decSingleToIntegralValue() {}
+  pub fn decSingleToNumber() {}
+  pub fn decSingleToPacked() {}
+  pub fn decSingleToString() {}
+  pub fn decSingleToUInt32() {}
+  pub fn decSingleToUInt32Exact() {}
+  pub fn decSingleToWider() {}
+  pub fn decSingleVersion() {}
+  pub fn decSingleXor() {}
+  pub fn decSingleToUInt32() {}
+  pub fn decSingleToUInt32Exact() {}
+  pub fn decSingleToWider() {}
+  pub fn decSingleVersion() {}
+  pub fn decSingleXor() {}
+  pub fn decSingleZero() {}
 */
