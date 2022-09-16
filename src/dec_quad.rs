@@ -163,6 +163,15 @@ pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQua
   dq
 }
 
+/// Safe binding to *decQuadAnd* function.
+pub fn dec_quad_and(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadAnd(&mut dq, dq1, dq2, dc);
+  }
+  dq
+}
+
 /// Safe binding to *decQuadCompare* function.
 pub fn dec_quad_compare(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq = DEC_QUAD_ZERO;

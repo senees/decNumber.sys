@@ -57,6 +57,13 @@ fn test_dec_quad_add() {
 }
 
 #[test]
+fn test_dec_quad_and() {
+  assert_eq!("3", s!(dec_quad_add(&n!(1), &n!(2), c!())));
+  assert_eq!("15", s!(dec_quad_add(&n!(10), &n!(5), c!())));
+  assert_eq!("16.00", s!(dec_quad_add(&n!(10.25), &n!(5.75), c!())));
+}
+
+#[test]
 fn test_dec_quad_compare() {
   assert_eq!("0", s!(dec_quad_compare(&n!(1), &n!(1), c!())));
   assert_eq!("1", s!(dec_quad_compare(&n!(2), &n!(1), c!())));
