@@ -30,11 +30,11 @@ use libc::c_char;
 #[rustfmt::skip]
 extern "C" {
   /// Unsafe binding to *decDoubleAdd* function.
-  pub fn decDoubleAdd(res: *mut DecDouble, lhs: *const DecDouble, rhs: *const DecDouble, dc: *mut DecContext) -> *mut DecDouble;
+  pub fn decDoubleAdd(dd: *mut DecDouble, dd1: *const DecDouble, dd2: *const DecDouble, dc: *mut DecContext) -> *mut DecDouble;
   /// Unsafe binding to *decDoubleFromString* function.
-  pub fn decDoubleFromString(res: *mut DecDouble, s: *const c_char, dc: *mut DecContext) -> *mut DecDouble;
+  pub fn decDoubleFromString(dd: *mut DecDouble, s: *const c_char, dc: *mut DecContext) -> *mut DecDouble;
   /// Unsafe binding to *decDoubleToString* function.
-  pub fn decDoubleToString(ds: *const DecDouble, s: *mut c_char) -> *mut c_char;
+  pub fn decDoubleToString(dd1: *const DecDouble, s: *mut c_char) -> *mut c_char;
   /// Unsafe binding to *decDoubleZero* function.
-  pub fn decDoubleZero(res: *mut DecDouble);
+  pub fn decDoubleZero(dd: *mut DecDouble);
 }

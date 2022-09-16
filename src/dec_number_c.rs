@@ -30,45 +30,45 @@ use libc::{c_char, c_int, c_uchar, c_uint};
 #[rustfmt::skip]
 extern "C" {
   /// Unsafe binding to *decNumberAdd* function.
-  pub fn decNumberAdd(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberAdd(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberCompare* function.
-  pub fn decNumberCompare(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberCompare(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberDivide* function.
-  pub fn decNumberDivide(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberDivide(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberExp* function.
-  pub fn decNumberExp(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberExp(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberFromInt32* function.
-  pub fn decNumberFromInt32(res: *mut DecNumber, n: c_int) -> *mut DecNumber;
+  pub fn decNumberFromInt32(dn: *mut DecNumber, n: c_int) -> *mut DecNumber;
   /// Unsafe binding to *decNumberFromString* function.
-  pub fn decNumberFromString(res: *mut DecNumber, s: *const c_char, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberFromString(dn: *mut DecNumber, s: *const c_char, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberFromUInt32* function.
-  pub fn decNumberFromUInt32(res: *mut DecNumber, n: c_uint) -> *mut DecNumber;
+  pub fn decNumberFromUInt32(dn: *mut DecNumber, n: c_uint) -> *mut DecNumber;
   /// Unsafe binding to *decNumberLn* function.
-  pub fn decNumberLn(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberLn(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberMinus* function.
-  pub fn decNumberMinus(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberMinus(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberMultiply* function.
-  pub fn decNumberMultiply(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberMultiply(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberPlus* function.
-  pub fn decNumberPlus(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberPlus(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberPower* function.
-  pub fn decNumberPower(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberPower(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberQuantize* function.
-  pub fn decNumberQuantize(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberQuantize(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberReduce* function.
-  pub fn decNumberReduce(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberReduce(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberRescale* function.
-  pub fn decNumberRescale(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberRescale(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberScaleB* function.
-  pub fn decNumberScaleB(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberScaleB(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSetBCD* function.
-  pub fn decNumberSetBCD(res: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
+  pub fn decNumberSetBCD(dn: *mut DecNumber, bcd: *const c_uchar, n: c_uint) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSquareRoot* function.
-  pub fn decNumberSquareRoot(res: *mut DecNumber, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberSquareRoot(dn: *mut DecNumber, dn1: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberSubtract* function.
-  pub fn decNumberSubtract(res: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
+  pub fn decNumberSubtract(dn: *mut DecNumber, dn1: *const DecNumber, dn2: *const DecNumber, dc: *mut DecContext) -> *mut DecNumber;
   /// Unsafe binding to *decNumberToString* function.
-  pub fn decNumberToString(dn: *const DecNumber, s: *mut c_char) -> *mut c_char;
+  pub fn decNumberToString(dn1: *const DecNumber, s: *mut c_char) -> *mut c_char;
   /// Unsafe binding to *decNumberZero* function.
-  pub fn decNumberZero(res: *mut DecNumber);
+  pub fn decNumberZero(dn: *mut DecNumber);
 }

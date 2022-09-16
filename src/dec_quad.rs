@@ -31,16 +31,16 @@ use libc::c_char;
 use std::ffi::{CStr, CString};
 use std::fmt::Debug;
 
-/// Length in bytes of [DecQuad] union.
+/// Length in bytes of the [DecQuad] union.
 pub const DEC_QUAD_BYTES: usize = 16;
 
 /// Maximum length of the [DecQuad] string.
 pub const DEC_QUAD_STRING: usize = 43;
 
-/// Buffer for [DecQuad] string.
+/// [DecQuad] string buffer.
 pub const DEC_QUAD_STRING_BUFFER: [c_char; DEC_QUAD_STRING] = [0; DEC_QUAD_STRING];
 
-/// [DecQuad] equal to zero `0`.
+/// [DecQuad] value `0` (zero).
 #[rustfmt::skip]
 pub const DEC_QUAD_ZERO: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -49,7 +49,7 @@ pub const DEC_QUAD_ZERO: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] }}
 };
 
-/// [DecQuad] equal to one `1`.
+/// [DecQuad] value `1` (one).
 #[rustfmt::skip]
 pub const DEC_QUAD_ONE: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -58,7 +58,7 @@ pub const DEC_QUAD_ONE: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01] }}
 };
 
-/// [DecQuad] equal to two `2`.
+/// [DecQuad] value `2` (two).
 #[rustfmt::skip]
 pub const DEC_QUAD_TWO: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -67,7 +67,7 @@ pub const DEC_QUAD_TWO: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02] }}
 };
 
-/// [DecQuad] equal to ten `10`.
+/// [DecQuad] value `10` (ten).
 #[rustfmt::skip]
 pub const DEC_QUAD_TEN: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -76,7 +76,7 @@ pub const DEC_QUAD_TEN: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10] }}
 };
 
-/// [DecQuad] equal to hundred `100`.
+/// [DecQuad] value `100` (hundred).
 #[rustfmt::skip]
 pub const DEC_QUAD_HUNDRED: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -85,7 +85,7 @@ pub const DEC_QUAD_HUNDRED: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80] }}
 };
 
-/// [DecQuad] equal to thousand `1000`.
+/// [DecQuad] value `1000` (thousand).
 #[rustfmt::skip]
 pub const DEC_QUAD_THOUSAND: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -94,7 +94,7 @@ pub const DEC_QUAD_THOUSAND: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x04, 0x00] }}
 };
 
-/// [DecQuad] equal to million `1000000`.
+/// [DecQuad] value `1000000` (million).
 #[rustfmt::skip]
 pub const DEC_QUAD_MILLION: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -103,7 +103,7 @@ pub const DEC_QUAD_MILLION: DecQuad = {
   { DecQuad { bytes: [0x22, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00] }}
 };
 
-/// [DecQuad] equal to billion `1000000000`.
+/// [DecQuad] value `1000000000` (billion).
 #[rustfmt::skip]
 pub const DEC_QUAD_BILLION: DecQuad = {
   #[cfg(target_endian = "little")]
@@ -146,76 +146,76 @@ impl Debug for DecQuad {
 }
 
 /// Safe binding to *decQuadAbs* function.
-pub fn dec_quad_abs(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+pub fn dec_quad_abs(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadAbs(&mut dq_res, dq, dc);
+    decQuadAbs(&mut dq, dq1, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadAdd* function.
 pub fn dec_quad_add(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadAdd(&mut dq_res, dq1, dq2, dc);
+    decQuadAdd(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadCompare* function.
 pub fn dec_quad_compare(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadCompare(&mut dq_res, dq1, dq2, dc);
+    decQuadCompare(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadDivide* function.
 pub fn dec_quad_divide(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadDivide(&mut dq_res, dq1, dq2, dc);
+    decQuadDivide(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadFromBCD* function.
 pub fn dec_quad_from_bcd(bcd: &[u8; DEC_QUAD_PMAX], exp: i32, sign: bool) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadFromBCD(&mut dq_res, exp, bcd.as_ptr(), if sign { DEC_FLOAT_SIGN } else { 0 });
+    decQuadFromBCD(&mut dq, exp, bcd.as_ptr(), if sign { DEC_FLOAT_SIGN } else { 0 });
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadFromInt32* function.
 pub fn dec_quad_from_i32(n: i32) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadFromInt32(&mut dq_res, n);
+    decQuadFromInt32(&mut dq, n);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadFromUInt32* function.
 pub fn dec_quad_from_u32(n: u32) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadFromUInt32(&mut dq_res, n);
+    decQuadFromUInt32(&mut dq, n);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadFromString* function.
 pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   let c_s = CString::new(s).unwrap();
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadFromString(&mut dq_res, c_s.as_ptr(), dc);
+    decQuadFromString(&mut dq, c_s.as_ptr(), dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadIsFinite* function.
@@ -245,90 +245,90 @@ pub fn dec_quad_is_zero(dn: &DecQuad) -> bool {
 
 /// Safe binding to *decQuadMinus* function.
 pub fn dec_quad_minus(dn: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadMinus(&mut dq_res, dn, dc);
+    decQuadMinus(&mut dq, dn, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadMultiply* function.
 pub fn dec_quad_multiply(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadMultiply(&mut dq_res, dq1, dq2, dc);
+    decQuadMultiply(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadPlus* function.
-pub fn dec_quad_plus(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+pub fn dec_quad_plus(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadPlus(&mut dq_res, dq, dc);
+    decQuadPlus(&mut dq, dq1, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadQuantize* function.
 pub fn dec_quad_quantize(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadQuantize(&mut dq_res, dq1, dq2, dc);
+    decQuadQuantize(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadReduce* function.
-pub fn dec_quad_reduce(dq: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+pub fn dec_quad_reduce(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadReduce(&mut dq_res, dq, dc);
+    decQuadReduce(&mut dq, dq1, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadRemainder* function.
 pub fn dec_quad_remainder(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadRemainder(&mut dq_res, dq1, dq2, dc);
+    decQuadRemainder(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadScaleB* function.
 pub fn dec_quad_scale_b(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadScaleB(&mut dq_res, dq1, dq2, dc);
+    decQuadScaleB(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadSubtract* function.
 pub fn dec_quad_subtract(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadSubtract(&mut dq_res, dq1, dq2, dc);
+    decQuadSubtract(&mut dq, dq1, dq2, dc);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadToIntegralValue* function.
-pub fn dec_quad_to_integral_value(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> DecQuad {
-  let mut dq_res = DecQuad::default();
+pub fn dec_quad_to_integral_value(dq1: &DecQuad, dc: &mut DecContext, rounding: u32) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
   unsafe {
-    decQuadToIntegralValue(&mut dq_res, dq, dc, rounding);
+    decQuadToIntegralValue(&mut dq, dq1, dc, rounding);
   }
-  dq_res
+  dq
 }
 
 /// Safe binding to *decQuadToString* function.
-pub fn dec_quad_to_string(dq: &DecQuad) -> String {
+pub fn dec_quad_to_string(dq1: &DecQuad) -> String {
   unsafe {
     let mut buf = DEC_QUAD_STRING_BUFFER;
-    decQuadToString(dq, buf.as_mut_ptr() as *mut c_char);
+    decQuadToString(dq1, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
@@ -336,8 +336,8 @@ pub fn dec_quad_to_string(dq: &DecQuad) -> String {
 }
 
 /// Safe binding to *decQuadZero* function.
-pub fn dec_quad_zero(dq: &mut DecQuad) {
+pub fn dec_quad_zero(dq1: &mut DecQuad) {
   unsafe {
-    decQuadZero(dq);
+    decQuadZero(dq1);
   }
 }

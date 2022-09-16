@@ -80,55 +80,21 @@ impl Debug for DecSingle {
   }
 }
 
-// /// Adds two [DecSingles](DecSingle).
-// pub fn dec_single_add(lhs: &DecSingle, rhs: &DecSingle, dc: &mut DecContext) -> DecSingle {
-//   let mut result = DecSingle::default();
-//   let mut dl = DecDouble::default();
-//   let mut dr = DecDouble::default();
-//   let mut d_res = DecDouble::default();
-//   unsafe {
-//     decSingleToWider(lhs, &mut dl, dc);
-//     decSingleToWider(rhs, &mut dr, dc);
-//     decSingleAdd(&mut result, lhs, rhs, dc);
-//   }
-//   result
-// }
-
-// /// Converts [DecSingle] from signed integer.
-// pub fn dec_single_from_i32(n: i32) -> DecSingle {
-//
-//   let mut result = DecSingle::default();
-//   let mut dq = DecDouble::default();
-//   unsafe {
-//     decSingleFromInt32(&mut result, n);
-//   }
-//   result
-// }
-//
-// /// Converts [DecSingle] from unsigned integer.
-// pub fn dec_single_from_u32(n: u32) -> DecSingle {
-//   let mut result = DecSingle::default();
-//   unsafe {
-//     decSingleFromUInt32(&mut result, n);
-//   }
-//   result
-// }
-
 /// Safe binding to *decSingleFromString* function.
 pub fn dec_single_from_string(s: &str, dc: &mut DecContext) -> DecSingle {
   let c_s = CString::new(s).unwrap();
-  let mut ds_res = DecSingle::default();
+  let mut ds = DEC_SINGLE_ZERO;
   unsafe {
-    decSingleFromString(&mut ds_res, c_s.as_ptr(), dc);
+    decSingleFromString(&mut ds, c_s.as_ptr(), dc);
   }
-  ds_res
+  ds
 }
 
 /// Safe binding to *decSingleToString* function.
-pub fn dec_single_to_string(ds: &DecSingle) -> String {
+pub fn dec_single_to_string(ds1: &DecSingle) -> String {
   unsafe {
     let mut buf = DEC_SINGLE_STRING_BUFFER;
-    decSingleToString(ds, buf.as_mut_ptr() as *mut c_char);
+    decSingleToString(ds1, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
@@ -136,8 +102,8 @@ pub fn dec_single_to_string(ds: &DecSingle) -> String {
 }
 
 /// Safe binding to *decSingleZero* function.
-pub fn dec_single_zero(ds: &mut DecSingle) {
+pub fn dec_single_zero(ds1: &mut DecSingle) {
   unsafe {
-    decSingleZero(ds);
+    decSingleZero(ds1);
   }
 }

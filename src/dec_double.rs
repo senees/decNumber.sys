@@ -82,29 +82,29 @@ impl Debug for DecDouble {
 }
 
 /// Safe binding to *decDoubleAdd* function.
-pub fn dec_double_add(lhs: &DecDouble, rhs: &DecDouble, dc: &mut DecContext) -> DecDouble {
-  let mut res = DecDouble::default();
+pub fn dec_double_add(dd1: &DecDouble, dd2: &DecDouble, dc: &mut DecContext) -> DecDouble {
+  let mut dd = DEC_DOUBLE_ZERO;
   unsafe {
-    decDoubleAdd(&mut res, lhs, rhs, dc);
+    decDoubleAdd(&mut dd, dd1, dd2, dc);
   }
-  res
+  dd
 }
 
 /// Safe binding to *decDoubleFromString* function.
 pub fn dec_double_from_string(s: &str, dc: &mut DecContext) -> DecDouble {
   let c_s = CString::new(s).unwrap();
-  let mut ds_res = DecDouble::default();
+  let mut dd = DEC_DOUBLE_ZERO;
   unsafe {
-    decDoubleFromString(&mut ds_res, c_s.as_ptr(), dc);
+    decDoubleFromString(&mut dd, c_s.as_ptr(), dc);
   }
-  ds_res
+  dd
 }
 
 /// Safe binding to *decDoubleToString* function.
-pub fn dec_double_to_string(ds: &DecDouble) -> String {
+pub fn dec_double_to_string(dd1: &DecDouble) -> String {
   unsafe {
     let mut buf = DEC_DOUBLE_STRING_BUFFER;
-    decDoubleToString(ds, buf.as_mut_ptr() as *mut c_char);
+    decDoubleToString(dd1, buf.as_mut_ptr() as *mut c_char);
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
@@ -112,8 +112,8 @@ pub fn dec_double_to_string(ds: &DecDouble) -> String {
 }
 
 /// Safe binding to *decDoubleZero* function.
-pub fn dec_double_zero(res: &mut DecDouble) {
+pub fn dec_double_zero(dd1: &mut DecDouble) {
   unsafe {
-    decDoubleZero(res);
+    decDoubleZero(dd1);
   }
 }
