@@ -7,6 +7,7 @@ cargo clean
 
 # set instrumenting variables
 export CARGO_INCREMENTAL=0
+export RUSTUP_TOOLCHAIN=nightly-2022-05-18 # this is the last toolchain that correctly profiles libc
 export RUSTDOCFLAGS="-Cpanic=abort"
 export RUSTFLAGS="-Zprofile -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Zpanic_abort_tests -Cpanic=abort"
 
