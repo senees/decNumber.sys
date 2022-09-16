@@ -41,10 +41,10 @@ extern "C" {
   pub fn decQuadFromBCD(dq: *mut DecQuad, exp: c_int, bcd: *const c_uchar, sign: c_int) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromInt32* function.
   pub fn decQuadFromInt32(dq: *mut DecQuad, n: c_int) -> *mut DecQuad;
-  /// Unsafe binding to *decQuadFromUInt32* function.
-  pub fn decQuadFromUInt32(dq: *mut DecQuad, n: c_uint) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromString* function.
   pub fn decQuadFromString(dq: *mut DecQuad, s: *const c_char, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadFromUInt32* function.
+  pub fn decQuadFromUInt32(dq: *mut DecQuad, n: c_uint) -> *mut DecQuad;
   /// Unsafe binding to *decQuadIsFinite* function.
   pub fn decQuadIsFinite(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsInteger* function.
@@ -78,3 +78,71 @@ extern "C" {
   /// Unsafe binding to *decQuadZero* function.
   pub fn decQuadZero(dq: *mut DecQuad);
 }
+
+/*
+  pub fn decQuadAnd(){}
+  pub fn decQuadCanonical(){}
+  pub fn decQuadClass(){}
+  pub fn decQuadClassString(){}
+  pub fn decQuadCompareSignal(){}
+  pub fn decQuadCompareTotal(){}
+  pub fn decQuadCompareTotalMag(){}
+  pub fn decQuadCopy(){}
+  pub fn decQuadCopyAbs(){}
+  pub fn decQuadCopyNegate(){}
+  pub fn decQuadCopySign(){}
+  pub fn decQuadDigits(){}
+  pub fn decQuadDivideInteger(){}
+  pub fn decQuadFMA(){}
+  pub fn decQuadFromNumber(){}
+  pub fn decQuadFromPacked(){}
+  pub fn decQuadFromPackedChecked(){}
+  pub fn decQuadFromWider(){}
+  pub fn decQuadGetCoefficient(){}
+  pub fn decQuadGetExponent(){}
+  pub fn decQuadInvert(){}
+  pub fn decQuadIsCanonical(){}
+  pub fn decQuadIsInfinite(){}
+  pub fn decQuadIsLogical(){}
+  pub fn decQuadIsNaN(){}
+  pub fn decQuadIsNormal(){}
+  pub fn decQuadIsSignaling(){}
+  pub fn decQuadIsSignalling(){}
+  pub fn decQuadIsSigned(){}
+  pub fn decQuadIsSubnormal(){}
+  pub fn decQuadLogB(){}
+  pub fn decQuadMax(){}
+  pub fn decQuadMaxMag(){}
+  pub fn decQuadMin(){}
+  pub fn decQuadMinMag(){}
+  pub fn decQuadNextMinus(){}
+  pub fn decQuadNextPlus(){}
+  pub fn decQuadNextToward(){}
+  pub fn decQuadOr(){}
+  pub fn decQuadRadix(){}
+  pub fn decQuadRemainderNear(){}
+  pub fn decQuadRotate(){}
+  pub fn decQuadSameQuantum(){}
+  pub fn decQuadSetCoefficient(){}
+  pub fn decQuadSetExponent(){}
+  pub fn decQuadShift(){}
+  pub fn decQuadShow(){}
+  pub fn decQuadToBCD(){}
+  pub fn decQuadToEngString(){}
+  pub fn decQuadToInt32(){}
+  pub fn decQuadToInt32Exact(){}
+  pub fn decQuadToIntegralExact(){}
+  pub fn decQuadToNumber(){}
+  pub fn decQuadToPacked(){}
+  pub fn decQuadToUInt32(){}
+  pub fn decQuadToUInt32Exact(){}
+  pub fn decQuadToWider(){}
+  pub fn decQuadVersion(){}
+  pub fn decQuadXor(){}
+  pub fn decQuadToUInt32(){}
+  pub fn decQuadToUInt32Exact(){}
+  pub fn decQuadToWider(){}
+  pub fn decQuadVersion(){}
+  pub fn decQuadXor(){}
+  pub fn decQuadZero(){}
+*/
