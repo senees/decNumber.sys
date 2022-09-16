@@ -6,10 +6,13 @@ WORKING_DIRECTORY=$(pwd)
 cargo clean
 
 # set instrumenting variables
-export CARGO_INCREMENTAL=0
 export RUSTUP_TOOLCHAIN=nightly-2022-05-18 # this is the last toolchain that correctly profiles libc
-export RUSTDOCFLAGS="-Cpanic=abort"
+export CARGO_INCREMENTAL=0
 export RUSTFLAGS="-Zprofile -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Zpanic_abort_tests -Cpanic=abort"
+export RUSTDOCFLAGS="-Cpanic=abort"
+
+# build the code
+cargo build
 
 # run all tests
 cargo test
