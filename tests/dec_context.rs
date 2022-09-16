@@ -23,12 +23,6 @@ fn test_dec_context_decimal_32_002() {
 
 #[test]
 #[rustfmt::skip]
-fn test_dec_context_decimal_32_003() {
-  assert_eq!("DecContext { digits: 7, emax: 96, emin: -95, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", DEC_CONTEXT_32));
-}
-
-#[test]
-#[rustfmt::skip]
 fn test_dec_context_decimal_64_001() {
   let context = dec_context_64();
   assert_eq!("DecContext { digits: 16, emax: 384, emin: -383, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", context));
@@ -43,12 +37,6 @@ fn test_dec_context_decimal_64_002() {
 
 #[test]
 #[rustfmt::skip]
-fn test_dec_context_decimal_64_003() {
-  assert_eq!("DecContext { digits: 16, emax: 384, emin: -383, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", DEC_CONTEXT_64));
-}
-
-#[test]
-#[rustfmt::skip]
 fn test_dec_context_decimal_128_001() {
   let context = dec_context_128();
   assert_eq!("DecContext { digits: 34, emax: 6144, emin: -6143, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", context));
@@ -59,12 +47,6 @@ fn test_dec_context_decimal_128_001() {
 fn test_dec_context_decimal_128_002() {
   let context = dec_context_default(DEC_INIT_DECIMAL128);
   assert_eq!("DecContext { digits: 34, emax: 6144, emin: -6143, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", context));
-}
-
-#[test]
-#[rustfmt::skip]
-fn test_dec_context_decimal_128_003() {
-  assert_eq!("DecContext { digits: 34, emax: 6144, emin: -6143, round: 3, traps: 0, status: 0, clamp: 1 }", format!("{:?}", DEC_CONTEXT_128));
 }
 
 #[test]

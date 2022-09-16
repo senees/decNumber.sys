@@ -38,39 +38,6 @@ pub const DEC_INIT_DECIMAL64: i32 = 64;
 /// Initializes context to IEEE 754 defaults, 128-bit.
 pub const DEC_INIT_DECIMAL128: i32 = 128;
 
-/// Default 32-bit decimal context.
-pub const DEC_CONTEXT_32: DecContext = DecContext {
-  digits: 7,
-  emax: 96,
-  emin: -95,
-  round: 3,
-  traps: 0,
-  status: 0,
-  clamp: 1,
-};
-
-/// Default 62-bit decimal context.
-pub const DEC_CONTEXT_64: DecContext = DecContext {
-  digits: 16,
-  emax: 384,
-  emin: -383,
-  round: 3,
-  traps: 0,
-  status: 0,
-  clamp: 1,
-};
-
-/// Default 128-bit decimal context.
-pub const DEC_CONTEXT_128: DecContext = DecContext {
-  digits: 34,
-  emax: 6144,
-  emin: -6143,
-  round: 3,
-  traps: 0,
-  status: 0,
-  clamp: 1,
-};
-
 /// Decimal context.
 #[repr(C)]
 #[derive(Default, Debug, Copy, Clone)]
