@@ -58,10 +58,19 @@ fn test_dec_quad_add() {
 
 #[test]
 fn test_dec_quad_and() {
-  assert_eq!("3", s!(dec_quad_add(&n!(1), &n!(2), c!())));
-  assert_eq!("15", s!(dec_quad_add(&n!(10), &n!(5), c!())));
-  assert_eq!("16.00", s!(dec_quad_add(&n!(10.25), &n!(5.75), c!())));
+  assert_eq!("1", s!(dec_quad_and(&n!(11), &n!(1), c!())));
+  assert_eq!("11", s!(dec_quad_and(&n!(111), &n!(11), c!())));
+  assert_eq!("101", s!(dec_quad_and(&n!(10101), &n!(1101), c!())));
+  assert_eq!("1000", s!(dec_quad_and(&n!(1111), &n!(11000), c!())));
 }
+
+#[test]
+fn test_dec_quad_canonical() {
+  assert_eq!("1", s!(dec_quad_canonical(&n!(1))));
+  assert_eq!("-10", s!(dec_quad_canonical(&n!(-10))));
+  assert_eq!("10.25", s!(dec_quad_canonical(&n!(10.25))));
+}
+
 
 #[test]
 fn test_dec_quad_compare() {
@@ -70,6 +79,64 @@ fn test_dec_quad_compare() {
   assert_eq!("-1", s!(dec_quad_compare(&n!(1), &n!(2), c!())));
   assert_eq!("NaN", s!(dec_quad_compare(&n!(1), &n!(NaN), c!())));
   assert_eq!("NaN", s!(dec_quad_compare(&n!(NaN), &n!(1), c!())));
+}
+
+#[test]
+fn test_dec_quad_compare_signal() {
+  assert_eq!("0", s!(dec_quad_compare_signal(&n!(1), &n!(1), c!())));
+  assert_eq!("1", s!(dec_quad_compare_signal(&n!(2), &n!(1), c!())));
+  assert_eq!("-1", s!(dec_quad_compare_signal(&n!(1), &n!(2), c!())));
+  assert_eq!("NaN", s!(dec_quad_compare_signal(&n!(1), &n!(NaN), c!())));
+  assert_eq!("NaN", s!(dec_quad_compare_signal(&n!(NaN), &n!(1), c!())));
+  assert_eq!("NaN", s!(dec_quad_compare_signal(&n!(NaN), &n!(NaN), c!())));
+}
+
+#[test]
+fn test_dec_quad_compare_total() {
+  assert_eq!("0", s!(dec_quad_compare_total(&n!(1), &n!(1))));
+  assert_eq!("1", s!(dec_quad_compare_total(&n!(2), &n!(1))));
+  assert_eq!("-1", s!(dec_quad_compare_total(&n!(1), &n!(2))));
+  assert_eq!("-1", s!(dec_quad_compare_total(&n!(1), &n!(NaN))));
+  assert_eq!("1", s!(dec_quad_compare_total(&n!(NaN), &n!(1))));
+  assert_eq!("0", s!(dec_quad_compare_total(&n!(NaN), &n!(NaN))));
+}
+
+#[test]
+fn test_dec_quad_compare_total_mag() {
+  assert_eq!("0", s!(dec_quad_compare_total_mag(&n!(1), &n!(1))));
+  assert_eq!("1", s!(dec_quad_compare_total_mag(&n!(2), &n!(1))));
+  assert_eq!("-1", s!(dec_quad_compare_total_mag(&n!(1), &n!(2))));
+  assert_eq!("-1", s!(dec_quad_compare_total_mag(&n!(1), &n!(NaN))));
+  assert_eq!("1", s!(dec_quad_compare_total_mag(&n!(NaN), &n!(1))));
+  assert_eq!("0", s!(dec_quad_compare_total_mag(&n!(NaN), &n!(NaN))));
+}
+
+#[test]
+fn test_dec_quad_copy() {
+  assert_eq!("1", s!(dec_quad_copy(&n!(1))));
+  assert_eq!("-10", s!(dec_quad_copy(&n!(-10))));
+  assert_eq!("10.25", s!(dec_quad_copy(&n!(10.25))));
+}
+
+#[test]
+fn test_dec_quad_copy_abs() {
+  assert_eq!("1", s!(dec_quad_copy_abs(&n!(1))));
+  assert_eq!("10", s!(dec_quad_copy_abs(&n!(-10))));
+  assert_eq!("10.25", s!(dec_quad_copy_abs(&n!(10.25))));
+}
+
+#[test]
+fn test_dec_quad_copy_negate() {
+  assert_eq!("-1", s!(dec_quad_copy_negate(&n!(1))));
+  assert_eq!("10", s!(dec_quad_copy_negate(&n!(-10))));
+  assert_eq!("-10.25", s!(dec_quad_copy_negate(&n!(10.25))));
+}
+
+#[test]
+fn test_dec_quad_copy_sign() {
+  assert_eq!("1", s!(dec_quad_copy_sign(&n!(1), &n!(1))));
+  assert_eq!("10", s!(dec_quad_copy_sign(&n!(-10), &n!(1))));
+  assert_eq!("-10.25", s!(dec_quad_copy_sign(&n!(10.25), &n!(-1))));
 }
 
 #[test]
@@ -112,8 +179,21 @@ fn test_dec_quad_copy_clone() {
 }
 
 #[test]
+fn test_dec_quad_digits() {
+  assert_eq!(1, dec_quad_digits(&n!(1)));
+  assert_eq!(2, dec_quad_digits(&n!(10)));
+  assert_eq!(2, dec_quad_digits(&n!(0.75)));
+}
+
+#[test]
 fn test_dec_quad_divide() {
   assert_eq!("0.25", s!(dec_quad_divide(&n!(1), &n!(4), c!())));
+}
+
+#[test]
+fn test_dec_quad_divide_integer() {
+  assert_eq!("0", s!(dec_quad_divide_integer(&n!(1), &n!(4), c!())));
+  assert_eq!("1", s!(dec_quad_divide_integer(&n!(5), &n!(4), c!())));
 }
 
 #[test]

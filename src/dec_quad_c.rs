@@ -35,10 +35,30 @@ extern "C" {
   pub fn decQuadAdd(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadAnd* function.
   pub fn decQuadAnd(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decDoubleCanonical* function.
+  pub fn decQuadCanonical(dq: *mut DecQuad, dq1: *const DecQuad) -> *mut DecQuad;
   /// Unsafe binding to *decQuadCompare* function.
   pub fn decQuadCompare(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCompareSignal* function.
+  pub fn decQuadCompareSignal(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCompareTotal* function.
+  pub fn decQuadCompareTotal(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCompareTotalMag* function.
+  pub fn decQuadCompareTotalMag(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCopy* function.
+  pub fn decQuadCopy(dq: *mut DecQuad, dq1: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCopyAbs* function.
+  pub fn decQuadCopyAbs(dq: *mut DecQuad, dq1: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCopyNegate* function.
+  pub fn decQuadCopyNegate(dq: *mut DecQuad, dq1: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadCopySign* function.
+  pub fn decQuadCopySign(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadDigits* function.
+  pub fn decQuadDigits(dq1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadDivide* function.
   pub fn decQuadDivide(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadDivideInteger* function.
+  pub fn decQuadDivideInteger(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromBCD* function.
   pub fn decQuadFromBCD(dq: *mut DecQuad, exp: c_int, bcd: *const c_uchar, sign: c_int) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromInt32* function.
@@ -83,18 +103,10 @@ extern "C" {
 
 /*
 
-  pub fn decQuadCanonical(){}
+
   pub fn decQuadClass(){}
   pub fn decQuadClassString(){}
-  pub fn decQuadCompareSignal(){}
-  pub fn decQuadCompareTotal(){}
-  pub fn decQuadCompareTotalMag(){}
-  pub fn decQuadCopy(){}
-  pub fn decQuadCopyAbs(){}
-  pub fn decQuadCopyNegate(){}
-  pub fn decQuadCopySign(){}
-  pub fn decQuadDigits(){}
-  pub fn decQuadDivideInteger(){}
+
   pub fn decQuadFMA(){}
   pub fn decQuadFromNumber(){}
   pub fn decQuadFromPacked(){}

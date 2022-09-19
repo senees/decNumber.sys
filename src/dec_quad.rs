@@ -30,6 +30,7 @@ use crate::{DEC_FLOAT_SIGN, DEC_QUAD_PMAX};
 use libc::c_char;
 use std::ffi::{CStr, CString};
 use std::fmt::Debug;
+use libc::c_uint;
 
 /// Length in bytes of the [DecQuad] union.
 pub const DEC_QUAD_BYTES: usize = 16;
@@ -172,6 +173,15 @@ pub fn dec_quad_and(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQua
   dq
 }
 
+/// Safe binding to *decQuadCanonical* function.
+pub fn dec_quad_canonical(dq1: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCanonical(&mut dq, dq1);
+  }
+  dq
+}
+
 /// Safe binding to *decQuadCompare* function.
 pub fn dec_quad_compare(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq = DEC_QUAD_ZERO;
@@ -181,11 +191,92 @@ pub fn dec_quad_compare(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> De
   dq
 }
 
+/// Safe binding to *decQuadCompareSignal* function.
+pub fn dec_quad_compare_signal(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCompareSignal(&mut dq, dq1, dq2, dc);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCompareTotal* function.
+pub fn dec_quad_compare_total(dq1: &DecQuad, dq2: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCompareTotal(&mut dq, dq1, dq2);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCompareTotalMag* function.
+pub fn dec_quad_compare_total_mag(dq1: &DecQuad, dq2: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCompareTotalMag(&mut dq, dq1, dq2);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCopy* function.
+pub fn dec_quad_copy(dq1: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCopy(&mut dq, dq1);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCopyAbs* function.
+pub fn dec_quad_copy_abs(dq1: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCopyAbs(&mut dq, dq1);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCopyNegate* function.
+pub fn dec_quad_copy_negate(dq1: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCopyNegate(&mut dq, dq1);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadCopySign* function.
+pub fn dec_quad_copy_sign(dq1: &DecQuad, dq2: &DecQuad) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadCopySign(&mut dq, dq1, dq2);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadDigits* function.
+pub fn dec_quad_digits(dq1: &DecQuad) -> c_uint {
+  let dq;
+  unsafe {
+    dq = decQuadDigits(dq1);
+  }
+  dq
+}
+
 /// Safe binding to *decQuadDivide* function.
 pub fn dec_quad_divide(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
   let mut dq = DEC_QUAD_ZERO;
   unsafe {
     decQuadDivide(&mut dq, dq1, dq2, dc);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadDivideInteger* function.
+pub fn dec_quad_divide_integer(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadDivideInteger(&mut dq, dq1, dq2, dc);
   }
   dq
 }
