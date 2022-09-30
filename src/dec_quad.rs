@@ -31,6 +31,7 @@ use libc::c_char;
 use std::ffi::{CStr, CString};
 use std::fmt::Debug;
 use libc::c_uint;
+use libc::c_int;
 
 /// Length in bytes of the [DecQuad] union.
 pub const DEC_QUAD_BYTES: usize = 16;
@@ -281,6 +282,15 @@ pub fn dec_quad_divide_integer(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext
   dq
 }
 
+/// Safe binding to *decQuadFMA* function.
+pub fn dec_quad_fma(dq1: &DecQuad, dq2: &DecQuad, dq3: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadFMA(&mut dq, dq1, dq2, dq3, dc);
+  }
+  dq
+}
+
 /// Safe binding to *decQuadFromBCD* function.
 pub fn dec_quad_from_bcd(bcd: &[u8; DEC_QUAD_PMAX], exp: i32, sign: bool) -> DecQuad {
   let mut dq = DEC_QUAD_ZERO;
@@ -299,14 +309,23 @@ pub fn dec_quad_from_i32(n: i32) -> DecQuad {
   dq
 }
 
-/// Safe binding to *decQuadFromUInt32* function.
-pub fn dec_quad_from_u32(n: u32) -> DecQuad {
-  let mut dq = DEC_QUAD_ZERO;
-  unsafe {
-    decQuadFromUInt32(&mut dq, n);
-  }
-  dq
-}
+// /// Safe binding to *decQuadFromNumber* function.
+// pub fn dec_quad_from_number(dn: &DecNumber, dc: &mut DecContext) -> DecQuad {
+//   let mut dq = DEC_QUAD_ZERO;
+//   unsafe {
+//     decQuadFromNumber(&mut dq, dn, dc);
+//   }
+//   dq
+// }
+
+// /// Safe binding to *decQuadFromPacked* function.
+// pub fn dec_quad_from_packed(exp: i32, pack: &[u8; DEC_QUAD_PMAX]) -> DecQuad {
+//   let mut dq = DEC_QUAD_ZERO;
+//   unsafe {
+//     decQuadFromPacked(&mut dq, exp, pack.as_ptr());
+//   }
+//   dq
+// }
 
 /// Safe binding to *decQuadFromString* function.
 pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
@@ -318,14 +337,80 @@ pub fn dec_quad_from_string(s: &str, dc: &mut DecContext) -> DecQuad {
   dq
 }
 
+/// Safe binding to *decQuadFromUInt32* function.
+pub fn dec_quad_from_u32(n: u32) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadFromUInt32(&mut dq, n);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadFromWider* function.
+pub fn dec_quad_from_wider(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadFromWider(&mut dq, dq1, dc);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadGetCoefficient* function.
+pub fn dec_quad_get_coefficient(x: &DecQuad, bcd: &[u8; DEC_QUAD_PMAX]) -> c_int {
+  unsafe {
+    decQuadGetCoefficient(x, bcd.as_ptr())
+  }
+}
+
+/// Safe binding to *decQuadGetExponent* function.
+pub fn dec_quad_get_exponent(x: &DecQuad) -> DecQuad {
+  unsafe {
+    decQuadGetExponent(x)
+  }
+}
+
+/// Safe binding to *decQuadInvert* function.
+pub fn dec_quad_invert(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
+  let mut dq = DEC_QUAD_ZERO;
+  unsafe {
+    decQuadInvert(&mut dq, dq1, dc);
+  }
+  dq
+}
+
+/// Safe binding to *decQuadIsCanonical* function.
+pub fn dec_quad_is_canonical(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsCanonical(dn) == 1 }
+}
+
 /// Safe binding to *decQuadIsFinite* function.
 pub fn dec_quad_is_finite(dn: &DecQuad) -> bool {
   unsafe { decQuadIsFinite(dn) == 1 }
 }
 
+/// Safe binding to *decQuadIsInfinite* function.
+pub fn dec_quad_is_infinite(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsInfinite(dn) == 1 }
+}
+
 /// Safe binding to *decQuadIsInteger* function.
 pub fn dec_quad_is_integer(dn: &DecQuad) -> bool {
   unsafe { decQuadIsInteger(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsLogical* function.
+pub fn dec_quad_is_logical(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsLogical(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsNaN* function.
+pub fn dec_quad_is_nan(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsNaN(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsNormal* function.
+pub fn dec_quad_is_normal(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsNormal(dn) == 1 }
 }
 
 /// Safe binding to *decQuadIsNegative* function.
@@ -336,6 +421,16 @@ pub fn dec_quad_is_negative(dn: &DecQuad) -> bool {
 /// Safe binding to *decQuadIsPositive* function.
 pub fn dec_quad_is_positive(dn: &DecQuad) -> bool {
   unsafe { decQuadIsPositive(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsSignaling* function.
+pub fn dec_quad_is_signaling(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsSignaling(dn) == 1 }
+}
+
+/// Safe binding to *decQuadIsSignalling* function.
+pub fn dec_quad_is_signalling(dn: &DecQuad) -> bool {
+  unsafe { decQuadIsSignalling(dn) == 1 }
 }
 
 /// Safe binding to *decQuadIsZero* function.

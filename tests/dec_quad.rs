@@ -191,6 +191,13 @@ fn test_dec_quad_divide() {
 }
 
 #[test]
+fn test_dec_quad_divide_fma() {
+  assert_eq!("2", s!(dec_quad_fma(&n!(1), &n!(1), &n!(1), c!())));
+  assert_eq!("24", s!(dec_quad_fma(&n!(5), &n!(4), &n!(4), c!())));
+  assert_eq!("0.00", s!(dec_quad_fma(&n!(2.5), &n!(2.5), &n!(-6.25), c!())));
+}
+
+#[test]
 fn test_dec_quad_divide_integer() {
   assert_eq!("0", s!(dec_quad_divide_integer(&n!(1), &n!(4), c!())));
   assert_eq!("1", s!(dec_quad_divide_integer(&n!(5), &n!(4), c!())));
@@ -212,9 +219,56 @@ fn test_dec_quad_from_i32() {
   assert_eq!("-12", s!(dec_quad_from_i32(-12)));
 }
 
+// #[test]
+// fn test_dec_quad_from_number() {
+//   let dn = dec_number_from_u32(32);
+//   assert_eq!("32", s!(dec_quad_from_number(&dn, c!())));
+// }
+
+// #[test]
+// #[rustfmt::skip]
+// fn test_dec_quad_from_packed() {
+//   assert_eq!("2366920938463463374607431768211455", s!(dec_quad_from_packed(&bcd_quad(u128::MAX), 0, false)));
+//   assert_eq!("18446744073709551615", s!(dec_quad_from_packed(&bcd_quad(u64::MAX.into()), 0, false)));
+//   assert_eq!("-18446744073709551615", s!(dec_quad_from_packed(&bcd_quad(u64::MAX.into()), 0, true)));
+//   assert_eq!("9223372036854775807", s!(dec_quad_from_packed(&bcd_quad(i64::MAX.unsigned_abs().into()), 0, false)));
+//   assert_eq!("-9223372036854775808", s!(dec_quadec_quad_from_packedd_from_bcd(&bcd_quad(i64::MIN.unsigned_abs().into()), 0, true)));
+//   assert_eq!("1844674407.3709551615", s!(dec_quad_from_packed(&bcd_quad(u64::MAX.into()), -10, false)));
+// }
+
 #[test]
 fn test_dec_quad_from_u32() {
   assert_eq!("12", s!(dec_quad_from_u32(12)));
+}
+
+// #[test]
+// fn test_dec_quad_from_wider() {
+//   assert_eq!("12", s!(dec_quad_from_wider(&n!(10), c!())));
+// }
+
+#[test]
+fn test_dec_quad_get_coefficient() {
+  assert_eq!(0, dec_quad_get_coefficient(&n!(1), &bcd_quad(u128::MAX)));
+  assert_eq!(-2147483648, dec_quad_get_coefficient(&n!(-1), &bcd_quad(u128::MAX)));
+}
+
+#[test]
+fn test_dec_quad_get_exponent() {
+  assert_eq!("4.0000000000000000000000E-6154", s!(dec_quad_get_exponent(&n!(1))));
+  assert_eq!("4.0000000000000000000000E-6154", s!(dec_quad_get_exponent(&n!(10000))));
+}
+
+#[test]
+fn test_dec_quad_invert() {
+  assert_eq!("1111111111111111111111111111111111", s!(dec_quad_invert(&n!(0), c!())));
+  assert_eq!("1111111111111111111111111111111110", s!(dec_quad_invert(&n!(1), c!())));
+  assert_eq!("1111111111111111111111111111111100", s!(dec_quad_invert(&n!(11), c!())));
+}
+
+#[test]
+fn test_dec_quad_is_canonical() {
+  assert!(dec_quad_is_canonical(&n!(1)));
+  assert!(dec_quad_is_canonical(&n!(0)));
 }
 
 #[test]
@@ -224,9 +278,33 @@ fn test_dec_quad_is_finite() {
 }
 
 #[test]
+fn test_dec_quad_is_infinite() {
+  assert!(!dec_quad_is_infinite(&n!(1)));
+  assert!(!dec_quad_is_infinite(&n!(0)));
+}
+
+#[test]
 fn test_dec_quad_is_integer() {
   assert!(dec_quad_is_integer(&n!(1)));
   assert!(!dec_quad_is_integer(&n!(1.1)));
+}
+
+#[test]
+fn test_dec_quad_is_logical() {
+  assert!(dec_quad_is_logical(&n!(1)));
+  assert!(!dec_quad_is_logical(&n!(1.1)));
+}
+
+#[test]
+fn test_dec_quad_is_nan() {
+  assert!(!dec_quad_is_nan(&n!(1)));
+  assert!(dec_quad_is_nan(&n!(NaN)));
+}
+
+#[test]
+fn test_dec_quad_is_normal() {
+  assert!(dec_quad_is_normal(&n!(1)));
+  assert!(!dec_quad_is_normal(&n!(NaN)));
 }
 
 #[test]
@@ -241,6 +319,20 @@ fn test_dec_quad_is_positive() {
   assert!(dec_quad_is_positive(&n!(1)));
   assert!(!dec_quad_is_positive(&n!(-1)));
   assert!(!dec_quad_is_positive(&n!(NaN)));
+}
+
+#[test]
+fn test_dec_quad_is_signaling() {
+  assert!(!dec_quad_is_signaling(&n!(1)));
+  assert!(!dec_quad_is_signaling(&n!(0)));
+  assert!(dec_quad_is_signaling(&n!(sNaN)));
+}
+
+#[test]
+fn test_dec_quad_is_signalling() {
+  assert!(!dec_quad_is_signalling(&n!(1)));
+  assert!(!dec_quad_is_signalling(&n!(0)));
+  assert!(dec_quad_is_signalling(&n!(sNaN)));
 }
 
 #[test]

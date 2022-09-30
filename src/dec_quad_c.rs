@@ -59,22 +59,50 @@ extern "C" {
   pub fn decQuadDivide(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadDivideInteger* function.
   pub fn decQuadDivideInteger(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadFMA* function.
+  pub fn decQuadFMA(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dq3: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromBCD* function.
   pub fn decQuadFromBCD(dq: *mut DecQuad, exp: c_int, bcd: *const c_uchar, sign: c_int) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromInt32* function.
   pub fn decQuadFromInt32(dq: *mut DecQuad, n: c_int) -> *mut DecQuad;
+//  /// Unsafe binding to *decQuadFromNumber* function.
+//  pub fn decQuadFromNumber(dq: *mut DecQuad, dn: *const DecNumber, dc: *mut DecContext) -> *mut DecQuad;
+//   /// Unsafe binding to *decQuadFromPacked* function.
+//   pub fn decQuadFromPacked(dq: *mut DecQuad, exp: c_int, pack: *const c_uchar) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromString* function.
   pub fn decQuadFromString(dq: *mut DecQuad, s: *const c_char, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadFromUInt32* function.
   pub fn decQuadFromUInt32(dq: *mut DecQuad, n: c_uint) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadFromWider* function.
+  pub fn decQuadFromWider(dq: *mut DecQuad, dq1: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadGetCoefficient* function.
+  pub fn decQuadGetCoefficient(dq1: *const DecQuad, bcd: *const c_uchar) -> c_int;
+  /// Unsafe binding to *decQuadGetExponent* function.
+  pub fn decQuadGetExponent(dq1: *const DecQuad) ->  DecQuad;
+  /// Unsafe binding to *decQuadInvert* function.
+  pub fn decQuadInvert(dq: *mut DecQuad, dq1: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadIsCanonical* function.
+  pub fn decQuadIsCanonical(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsFinite* function.
   pub fn decQuadIsFinite(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsInfinite* function.
+  pub fn decQuadIsInfinite(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsInteger* function.
   pub fn decQuadIsInteger(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsLogical* function.
+  pub fn decQuadIsLogical(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsNaN* function.
+  pub fn decQuadIsNaN(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsNegative* function.
   pub fn decQuadIsNegative(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsNormal* function.
+  pub fn decQuadIsNormal(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsPositive* function.
   pub fn decQuadIsPositive(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsSignaling* function.
+  pub fn decQuadIsSignaling(arg1: *const DecQuad) -> c_uint;
+  /// Unsafe binding to *decQuadIsSignalling* function.
+  pub fn decQuadIsSignalling(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadIsZero* function.
   pub fn decQuadIsZero(arg1: *const DecQuad) -> c_uint;
   /// Unsafe binding to *decQuadMinus* function.
@@ -106,22 +134,12 @@ extern "C" {
 
   pub fn decQuadClass(){}
   pub fn decQuadClassString(){}
-
-  pub fn decQuadFMA(){}
   pub fn decQuadFromNumber(){}
   pub fn decQuadFromPacked(){}
   pub fn decQuadFromPackedChecked(){}
   pub fn decQuadFromWider(){}
-  pub fn decQuadGetCoefficient(){}
-  pub fn decQuadGetExponent(){}
-  pub fn decQuadInvert(){}
-  pub fn decQuadIsCanonical(){}
-  pub fn decQuadIsInfinite(){}
-  pub fn decQuadIsLogical(){}
-  pub fn decQuadIsNaN(){}
-  pub fn decQuadIsNormal(){}
-  pub fn decQuadIsSignaling(){}
-  pub fn decQuadIsSignalling(){}
+
+
   pub fn decQuadIsSigned(){}
   pub fn decQuadIsSubnormal(){}
   pub fn decQuadLogB(){}
