@@ -1,10 +1,10 @@
 [package]
 name = "dec-number-sys"
-version = "0.0.22"
-authors = ["Dariusz Depta <dariusz.depta@engos.software>"]
+version = "0.0.23"
+authors = ["senees <code@senees.de>"]
 description = "Rust bindings for The decNumber C library by IBM Fellow Mike Cowlishaw"
 documentation = "https://docs.rs/dec-number-sys"
-repository = "https://github.com/EngosSoftware/decNumber.sys.git"
+repository = "https://github.com/senees/decNumber.sys.git"
 license = "MIT"
 edition = "2021"
 
