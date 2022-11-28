@@ -51,7 +51,7 @@ pub const DEC_ROUND_DOWN: u32 = 5;
 /// Round towards -Infinity.
 pub const DEC_ROUND_FLOOR: u32 = 6;
 
-/// Round for reround.
+/// Round for re-round.
 pub const DEC_ROUND_05UP: u32 = 7;
 
 /// Converts unsigned integer into BCD representation.

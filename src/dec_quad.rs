@@ -510,6 +510,13 @@ pub fn dec_quad_subtract(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> D
   dq
 }
 
+/// Safe binding to *decQuadToInt32* function.
+pub fn dec_quad_to_int32(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> i32 {
+  unsafe {
+    decQuadToInt32(dq, dc, rounding)
+  }
+}
+
 /// Safe binding to *decQuadToIntegralValue* function.
 pub fn dec_quad_to_integral_value(dq1: &DecQuad, dc: &mut DecContext, rounding: u32) -> DecQuad {
   let mut dq = DEC_QUAD_ZERO;
@@ -527,6 +534,13 @@ pub fn dec_quad_to_string(dq1: &DecQuad) -> String {
     CStr::from_ptr(buf.as_ptr() as *const c_char)
       .to_string_lossy()
       .into_owned()
+  }
+}
+
+/// Safe binding to *decQuadToUInt32* function.
+pub fn dec_quad_to_uint32(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> u32 {
+  unsafe {
+    decQuadToUInt32(dq, dc, rounding)
   }
 }
 

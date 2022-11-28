@@ -389,10 +389,50 @@ fn test_dec_quad_subtract() {
 }
 
 #[test]
+fn test_dec_quad_to_int32() {
+  assert_eq!(
+    0,
+    dec_quad_to_int32(&n!(0.999), c!(), DEC_ROUND_DOWN)
+  );
+  assert_eq!(
+    0,
+    dec_quad_to_int32(&n!(-0.999), c!(), DEC_ROUND_DOWN)
+  );
+  assert_eq!(
+    1,
+    dec_quad_to_int32(&n!(0.5), c!(), DEC_ROUND_HALF_UP)
+  );
+  assert_eq!(
+    -1,
+    dec_quad_to_int32(&n!(-0.5), c!(), DEC_ROUND_HALF_UP)
+  );
+  assert_eq!(
+    0,
+    dec_quad_to_int32(&n!(0.4), c!(), DEC_ROUND_HALF_UP)
+  );
+}
+
+#[test]
 fn test_dec_quad_to_integral_value() {
   assert_eq!(
     "-0",
     s!(dec_quad_to_integral_value(&n!(-0.75), c!(), DEC_ROUND_CEILING))
+  );
+}
+
+#[test]
+fn test_dec_quad_to_uint32() {
+  assert_eq!(
+    0,
+    dec_quad_to_uint32(&n!(0.999), c!(), DEC_ROUND_DOWN)
+  );
+  assert_eq!(
+    1,
+    dec_quad_to_uint32(&n!(0.5), c!(), DEC_ROUND_HALF_UP)
+  );
+  assert_eq!(
+    0,
+    dec_quad_to_uint32(&n!(0.4), c!(), DEC_ROUND_HALF_UP)
   );
 }
 

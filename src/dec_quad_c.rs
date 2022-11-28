@@ -121,10 +121,14 @@ extern "C" {
   pub fn decQuadScaleB(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
   /// Unsafe binding to *decQuadSubtract* function.
   pub fn decQuadSubtract(dq: *mut DecQuad, dq1: *const DecQuad, dq2: *const DecQuad, dc: *mut DecContext) -> *mut DecQuad;
+  /// Unsafe binding to *decQuadToInt32* function.
+  pub fn decQuadToInt32(dq: *const DecQuad, dc: *mut DecContext, rounding: u32) -> c_int;
   /// Unsafe binding to *decQuadToIntegralValue* function.
   pub fn decQuadToIntegralValue(dq: *mut DecQuad, dq1: *const DecQuad, dc: *mut DecContext, rounding: u32) -> *mut DecQuad;
   /// Unsafe binding to *decQuadToString* function.
   pub fn decQuadToString(dq: *const DecQuad, s: *mut c_char) -> *mut c_char;
+  /// Unsafe binding to *decQuadToUInt32* function.
+  pub fn decQuadToUInt32(dq: *const DecQuad, dc: *mut DecContext, rounding: u32) -> c_uint;
   /// Unsafe binding to *decQuadZero* function.
   pub fn decQuadZero(dq: *mut DecQuad);
 }
@@ -138,8 +142,6 @@ extern "C" {
   pub fn decQuadFromPacked(){}
   pub fn decQuadFromPackedChecked(){}
   pub fn decQuadFromWider(){}
-
-
   pub fn decQuadIsSigned(){}
   pub fn decQuadIsSubnormal(){}
   pub fn decQuadLogB(){}
@@ -161,7 +163,6 @@ extern "C" {
   pub fn decQuadShow(){}
   pub fn decQuadToBCD(){}
   pub fn decQuadToEngString(){}
-  pub fn decQuadToInt32(){}
   pub fn decQuadToInt32Exact(){}
   pub fn decQuadToIntegralExact(){}
   pub fn decQuadToNumber(){}
@@ -171,7 +172,6 @@ extern "C" {
   pub fn decQuadToWider(){}
   pub fn decQuadVersion(){}
   pub fn decQuadXor(){}
-  pub fn decQuadToUInt32(){}
   pub fn decQuadToUInt32Exact(){}
   pub fn decQuadToWider(){}
   pub fn decQuadVersion(){}
