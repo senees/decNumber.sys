@@ -27,11 +27,9 @@
 use crate::dec_context::DecContext;
 use crate::dec_quad_c::*;
 use crate::{DEC_FLOAT_SIGN, DEC_QUAD_PMAX};
-use libc::c_char;
+use libc::{c_char, c_int, c_uint};
 use std::ffi::{CStr, CString};
 use std::fmt::Debug;
-use libc::c_uint;
-use libc::c_int;
 
 /// Length in bytes of the [DecQuad] union.
 pub const DEC_QUAD_BYTES: usize = 16;
@@ -357,16 +355,12 @@ pub fn dec_quad_from_wider(dq1: &DecQuad, dc: &mut DecContext) -> DecQuad {
 
 /// Safe binding to *decQuadGetCoefficient* function.
 pub fn dec_quad_get_coefficient(x: &DecQuad, bcd: &[u8; DEC_QUAD_PMAX]) -> c_int {
-  unsafe {
-    decQuadGetCoefficient(x, bcd.as_ptr())
-  }
+  unsafe { decQuadGetCoefficient(x, bcd.as_ptr()) }
 }
 
 /// Safe binding to *decQuadGetExponent* function.
 pub fn dec_quad_get_exponent(x: &DecQuad) -> DecQuad {
-  unsafe {
-    decQuadGetExponent(x)
-  }
+  unsafe { decQuadGetExponent(x) }
 }
 
 /// Safe binding to *decQuadInvert* function.
@@ -512,9 +506,7 @@ pub fn dec_quad_subtract(dq1: &DecQuad, dq2: &DecQuad, dc: &mut DecContext) -> D
 
 /// Safe binding to *decQuadToInt32* function.
 pub fn dec_quad_to_int32(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> i32 {
-  unsafe {
-    decQuadToInt32(dq, dc, rounding)
-  }
+  unsafe { decQuadToInt32(dq, dc, rounding) }
 }
 
 /// Safe binding to *decQuadToIntegralValue* function.
@@ -539,9 +531,7 @@ pub fn dec_quad_to_string(dq1: &DecQuad) -> String {
 
 /// Safe binding to *decQuadToUInt32* function.
 pub fn dec_quad_to_uint32(dq: &DecQuad, dc: &mut DecContext, rounding: u32) -> u32 {
-  unsafe {
-    decQuadToUInt32(dq, dc, rounding)
-  }
+  unsafe { decQuadToUInt32(dq, dc, rounding) }
 }
 
 /// Safe binding to *decQuadZero* function.

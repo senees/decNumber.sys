@@ -25,6 +25,7 @@
 //! Safe bindings for decimal context.
 
 use crate::dec_context_c::*;
+use std::ffi::CStr;
 
 /// Initializes context to ANSI X3-274 defaults.
 pub const DEC_INIT_BASE: i32 = 0;
@@ -106,6 +107,19 @@ pub fn dec_context_default(kind: i32) -> DecContext {
     decContextDefault(&mut context, kind);
     context.traps = 0;
     context
+  }
+}
+
+/// Safe binding to *decContextGetStatus* function.
+pub fn dec_context_get_status(dc: &mut DecContext) -> u32 {
+  unsafe { decContextGetStatus(dc) }
+}
+
+/// Safe binding to *decContextStatusToString* function.
+pub fn dec_context_status_to_string(dc: &mut DecContext) -> String {
+  unsafe {
+    let s = decContextStatusToString(dc);
+    CStr::from_ptr(s).to_string_lossy().into_owned()
   }
 }
 

@@ -71,7 +71,6 @@ fn test_dec_quad_canonical() {
   assert_eq!("10.25", s!(dec_quad_canonical(&n!(10.25))));
 }
 
-
 #[test]
 fn test_dec_quad_compare() {
   assert_eq!("0", s!(dec_quad_compare(&n!(1), &n!(1), c!())));
@@ -390,26 +389,11 @@ fn test_dec_quad_subtract() {
 
 #[test]
 fn test_dec_quad_to_int32() {
-  assert_eq!(
-    0,
-    dec_quad_to_int32(&n!(0.999), c!(), DEC_ROUND_DOWN)
-  );
-  assert_eq!(
-    0,
-    dec_quad_to_int32(&n!(-0.999), c!(), DEC_ROUND_DOWN)
-  );
-  assert_eq!(
-    1,
-    dec_quad_to_int32(&n!(0.5), c!(), DEC_ROUND_HALF_UP)
-  );
-  assert_eq!(
-    -1,
-    dec_quad_to_int32(&n!(-0.5), c!(), DEC_ROUND_HALF_UP)
-  );
-  assert_eq!(
-    0,
-    dec_quad_to_int32(&n!(0.4), c!(), DEC_ROUND_HALF_UP)
-  );
+  assert_eq!(0, dec_quad_to_int32(&n!(0.999), c!(), DEC_ROUND_DOWN));
+  assert_eq!(0, dec_quad_to_int32(&n!(-0.999), c!(), DEC_ROUND_DOWN));
+  assert_eq!(1, dec_quad_to_int32(&n!(0.5), c!(), DEC_ROUND_HALF_UP));
+  assert_eq!(-1, dec_quad_to_int32(&n!(-0.5), c!(), DEC_ROUND_HALF_UP));
+  assert_eq!(0, dec_quad_to_int32(&n!(0.4), c!(), DEC_ROUND_HALF_UP));
 }
 
 #[test]
@@ -422,18 +406,14 @@ fn test_dec_quad_to_integral_value() {
 
 #[test]
 fn test_dec_quad_to_uint32() {
-  assert_eq!(
-    0,
-    dec_quad_to_uint32(&n!(0.999), c!(), DEC_ROUND_DOWN)
-  );
-  assert_eq!(
-    1,
-    dec_quad_to_uint32(&n!(0.5), c!(), DEC_ROUND_HALF_UP)
-  );
-  assert_eq!(
-    0,
-    dec_quad_to_uint32(&n!(0.4), c!(), DEC_ROUND_HALF_UP)
-  );
+  assert_eq!(0, dec_quad_to_uint32(&n!(0.999), c!(), DEC_ROUND_DOWN));
+  assert_eq!(1, dec_quad_to_uint32(&n!(0.5), c!(), DEC_ROUND_HALF_UP));
+  assert_eq!(0, dec_quad_to_uint32(&n!(0.4), c!(), DEC_ROUND_HALF_UP));
+  assert_eq!(4294967295, dec_quad_to_uint32(&n!(4294967295), c!(), DEC_ROUND_DOWN));
+  let ctx = &mut dec_context_128();
+  assert_eq!(0, dec_quad_to_uint32(&n!(4294967296), ctx, DEC_ROUND_DOWN));
+  assert_ne!(0, dec_context_get_status(ctx));
+  assert_eq!("Invalid operation", dec_context_status_to_string(ctx));
 }
 
 #[test]
